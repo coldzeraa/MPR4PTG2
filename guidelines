@@ -1,0 +1,30 @@
+
+### 1. Branching-Strategie
+- **Main/Master Branch**: Der Hauptbranch, der immer die Produktionsversion des Codes enthält. Direktes Pushen sollte vermieden werden.
+- **Develop Branch**: Ein Zweig, der als Integration für Features, Bugfixes und andere Entwicklungen dient, bevor sie in den Main-Branch gemerged werden.
+- **Feature Branches**: Für jede neue Funktion oder Verbesserung. Benenne sie nach dem Muster `feature/<feature-name>`.
+- **Bugfix Branches**: Für die Behebung von Fehlern. Benutze das Muster `bugfix/<bugfix-description>`.
+- **Hotfix Branches**: Für dringende Fixes direkt auf dem Main-Branch. Benenne diese nach `hotfix/<hotfix-description>`.
+
+### 2. Commit-Nachrichten
+- klare, prägnante Commit-Nachrichten im Imperativ, z.B. "Add login functionality" statt "Added login functionality".
+- Nachricht beginnen mit einem Großbuchstaben und Punkt am Ende soll vermeidet werden 
+- Bei größeren Änderungen sollte eine kurze Zusammenfassung in der ersten Zeile geschrieben werden, gefolgt von einer detaillierteren Beschreibung, wenn nötig.
+
+### 3. Code Reviews
+- Für jeden Merge ins Develop- oder Main-Branch sollte ein Pull Request (PR) erstellt werden.
+- Jeder PR sollte von mindestens einem anderen Teammitglied überprüft werden, bevor er gemerged wird.
+- PR-Beschreibungen, um die Änderungen zu erklären und Testanweisungen oder besondere Hinweise hinzuzufügen.
+
+### 4. Merge-Regeln
+- Kein Push direkt auf den Main- oder Develop-Branch. Stattdessen sollte immer ein PR erstellt werden.
+- Ausführliches testen, bevor Sie einen Merge durchführen.
+- Verwendung "Squash and Merge" für Feature- und Bugfix-Branches, um die Historie sauber zu halten.
+
+### 5. Konflikte lösen
+- Vor der Einreichung eines PR, sollte sichergestellt werden, dass der Branch mit dem aktuellen Stand des Develop-Branches (oder des entsprechenden Zielbranches) aktualisiert wurde.
+- Lösen Merge-Konflikte lokal auf dem Branch, bevor der PR zum Merge vorschlagen wird.
+
+### 6. Versionierung und Tags
+- Verwende Semantic Versioning für Ihre Releases. Jeder Release sollte mit der entsprechenden Version getaggt werden, z.B. `v1.0.0`.
+
