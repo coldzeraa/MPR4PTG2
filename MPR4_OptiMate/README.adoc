@@ -1,0 +1,32 @@
+= Informationen
+
+== Wie benutze ich das Projekt?
+
+Schritt 1: Öffnen von einem Terminal in /backend
+
+Schritt 2: Ausführen von `python manage.py runserver`
+
+Schritt 3: Öffnen eines weiteren Terminals in /frontend
+
+Schritt 4: Ausführen von `npm start`
+
+
+== Wie wurde das Projekt erstellt?
+
+Projekt erstellt nach Anweisung von: 
+
+https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
+
+Achtung: 
+
+Bei Punkt 2 Umänderung in: 
+
+* Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass (für Bypassing von Ausführungsrechten)
+* npm install -g create-react-app
+* create-react-app myapp
+
+Weiters nicht vergessen, bevor der Server gestartet wird: 
+
+* python manage.py makemigrations
+* python manage.py migrate
+
