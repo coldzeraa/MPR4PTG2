@@ -3,34 +3,41 @@ from django.db import models
 
 
 class Point(models.Model):
-    pID = models.IntegerField(primary_key=True)
-    x = models.IntegerField()
-    y = models.IntegerField()
-    quadrant = models.IntegerField()
+    pID = models.IntegerField(primary_key=True)  # ID
+    x = models.IntegerField()                    # x coordinate
+    y = models.IntegerField()                    # y coordinate
+    quadrant = models.IntegerField()             # quadrant
 
     def __str__(self):
-        return f"({self.x}|{self.y})"
+        return f"({self.x}|{self.y})"  # string representation as (x|y)
 
 
 class Patient(models.Model):
-    ssNr = models.IntegerField(primary_key=True, validators=[
-        RegexValidator(r'^\d{10}$')])
-    lastName = models.CharField()
-    firstName = models.CharField()
+    ssNr = models.IntegerField(primary_key=True,    # social security number
+                               validators=[RegexValidator(r'^\d{10}$')])
+    lastName = models.CharField()       # last name
+    firstName = models.CharField()      # first name
 
     def __str__(self):
-        return f"{self.lastName} {self.firstName}"
+        return f"{self.lastName} {self.firstName}"  # string representation as lastname firstname
 
 
 class Examination(models.Model):
-    exID = models.IntegerField(primary_key=True)
-    date = models.DateField()
-    result = models.ManyToOneRel
+    exID = models.IntegerField(primary_key=True)    # ID
+    date = models.DateField()                       # date of examination
+
+    result = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
 
 
-class Result(models.Model):
-    resID = models.IntegerField(primary_key=True)
-    seen = models.BooleanField()
+class PointResult(models.Model):
+    resID = models.IntegerField(primary_key=True)   # ID
+    seen = models.BooleanField()                    # point seen (t/f)
+
+    point = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
+    examination = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination
+
+
+
 
 
 
