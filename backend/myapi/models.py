@@ -15,8 +15,8 @@ class Point(models.Model):
 class Patient(models.Model):
     ssNr = models.IntegerField(primary_key=True,    # social security number
                                validators=[RegexValidator(r'^\d{10}$')])
-    lastName = models.CharField()       # last name
-    firstName = models.CharField()      # first name
+    lastName = models.CharField(max_length=50)       # last name
+    firstName = models.CharField(max_length=50)      # first name
 
     def __str__(self):
         return f"{self.lastName} {self.firstName}"  # string representation as lastname firstname
