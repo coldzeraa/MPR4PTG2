@@ -1,4 +1,3 @@
-from django.core.validators import RegexValidator
 from django.db import models
 
 
@@ -13,8 +12,7 @@ class Point(models.Model):
 
 
 class Patient(models.Model):
-    ssNr = models.IntegerField(primary_key=True,    # social security number
-                               validators=[RegexValidator(r'^\d{10}$')])
+    id = models.IntegerField(primary_key=True)
     lastName = models.CharField(max_length=50)       # last name
     firstName = models.CharField(max_length=50)      # first name
 
@@ -35,11 +33,3 @@ class PointResult(models.Model):
 
     point = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
     examination = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination
-
-
-
-
-
-
-
-
