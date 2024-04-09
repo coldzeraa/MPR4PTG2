@@ -1,5 +1,6 @@
 from models import Point
 
+
 def create_point(x: int, y: int, q: int):
     """
         Create a new Point object
