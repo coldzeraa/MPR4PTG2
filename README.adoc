@@ -17,6 +17,8 @@ Schritt 6: Ausführen von `npm start`
 
 == Wie wurde das Projekt erstellt?
 
+
+
 Projekt erstellt nach Anweisung von: 
 
 https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
@@ -33,4 +35,3 @@ Weiters nicht vergessen, bevor der Server gestartet wird:
 
 * python manage.py makemigrations
 * python manage.py migrate
-
