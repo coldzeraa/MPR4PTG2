@@ -7,9 +7,6 @@ class Point(models.Model):
     y = models.IntegerField()                    # y coordinate
     quadrant = models.IntegerField()             # quadrant
 
-    class Meta:
-        app_label = 'myapi'
-
     def __str__(self):
         return f"({self.x}|{self.y})"  # string representation as (x|y)
 
@@ -20,12 +17,8 @@ class Patient(models.Model):
     lastName = models.CharField(max_length=50)       # last name
     firstName = models.CharField(max_length=50)      # first name
 
-    class Meta:
-        app_label = 'myapi'
-
     def __str__(self):
         return f"{self.lastName} {self.firstName}"  # string representation as lastname firstname
-
 
 
 class Examination(models.Model):
@@ -34,9 +27,6 @@ class Examination(models.Model):
 
     result = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
 
-    class Meta:
-        app_label = 'myapi'
-
 
 class PointResult(models.Model):
     resID = models.IntegerField(primary_key=True)   # ID
@@ -44,5 +34,3 @@ class PointResult(models.Model):
 
     point = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
     examination = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination
-    class Meta:
-        app_label = 'myapi'
