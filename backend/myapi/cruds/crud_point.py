@@ -1,4 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import AutoField
 
 from myapi.models import Point
 
@@ -19,7 +20,7 @@ def create_point(x: int, y: int, q: int):
 
 
 
-def get_point_by_id(pID: int):
+def get_point_by_id(pID: AutoField):
     """
        Get Point by given ID
 
@@ -29,7 +30,7 @@ def get_point_by_id(pID: int):
     return Point.objects.get(pID=pID)
 
 
-def update_point(pID: int, x: int, y: int, quadrant: int):
+def update_point(pID: AutoField, x: int, y: int, quadrant: int):
     """
        Update Point, set given parameters
 
@@ -50,7 +51,7 @@ def update_point(pID: int, x: int, y: int, quadrant: int):
     return point
 
 
-def delete_point(pID: int):
+def delete_point(pID: AutoField):
     """
     Delete Point
 

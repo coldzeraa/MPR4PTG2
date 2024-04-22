@@ -1,7 +1,9 @@
+from django.db.models import AutoField
+
 from backend.myapi.models import Patient
 
 
-def create_patient(id: int, lastName: str, firstName: str):
+def create_patient(pID: AutoField, lastName: str, firstName: str):
     """
         Create a new Patient object
 
@@ -13,7 +15,7 @@ def create_patient(id: int, lastName: str, firstName: str):
     return Patient.objects.create(id=id, lastName=lastName, firstName=firstName)
 
 
-def get_patient_by_id(id: int):
+def get_patient_by_id(pID: AutoField):
     """
        Get Patient by given id
 
@@ -23,7 +25,7 @@ def get_patient_by_id(id: int):
     return Patient.objects.get(id=id)
 
 
-def update_patient(id: int, firstName: str, lastName: str):
+def update_patient(pID: AutoField, firstName: str, lastName: str):
     """
           Update Patient
 
@@ -39,7 +41,7 @@ def update_patient(id: int, firstName: str, lastName: str):
     return patient
 
 
-def delete_patient(id: int):
+def delete_patient(pID: AutoField):
     """
           Delete Patient
 

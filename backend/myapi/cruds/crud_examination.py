@@ -1,9 +1,10 @@
 from datetime import date
 
-from backend.myapi.models import Examination
+from myapi.models import Examination
+from django.db.models import AutoField
 
 
-def create_examination(examinationID: int, exDate: date, pID: int):
+def create_examination(exDate: date, pID: AutoField):
     """
         Create a new Examination object
 
@@ -12,10 +13,10 @@ def create_examination(examinationID: int, exDate: date, pID: int):
         :param pID: patient ID
         :return: new examination
        """
-    return Examination.objects.create(exID=examinationID, date=exDate, pID=pID)
+    return Examination.objects.create(date=exDate, pID=pID)
 
 
-def get_examination_by_id(exID: int):
+def get_examination_by_id(exID: AutoField):
     """
        Get Examination by given ID
 
@@ -25,7 +26,7 @@ def get_examination_by_id(exID: int):
     return Examination.objects.get(exID=exID)
 
 
-def update_examination(exID: int, exDate: date):
+def update_examination(exID: AutoField, exDate: date):
     """
           Update Examination
 
@@ -39,7 +40,7 @@ def update_examination(exID: int, exDate: date):
     return examination
 
 
-def delete_examination(exID: int):
+def delete_examination(exID: AutoField):
     """
           Delete Examination
 

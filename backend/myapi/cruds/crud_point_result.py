@@ -1,7 +1,9 @@
+from django.db.models import AutoField
+
 from backend.myapi.models import PointResult
 
 
-def create_point_result(resultID: int, seen: bool, pID: int, exID: int):
+def create_point_result(resID: AutoField, seen: bool, pID: int, exID: int):
     """
         Create a new PointResult Object
 
@@ -11,10 +13,10 @@ def create_point_result(resultID: int, seen: bool, pID: int, exID: int):
         :param exID: examination ID
         :return: new PointResult
        """
-    return PointResult.objects.create(resID=resultID, seen=seen, point=pID, examination=exID)
+    return PointResult.objects.create(resID=resID, seen=seen, point=pID, examination=exID)
 
 
-def get_point_result_by_id(resID: int):
+def get_point_result_by_id(resID: AutoField):
     """
        Get PointResult by given ID
 
@@ -24,7 +26,7 @@ def get_point_result_by_id(resID: int):
     return PointResult.objects.get(resID=resID)
 
 
-def update_point_result(resID: int, seen: bool):
+def update_point_result(resID: AutoField, seen: bool):
     """
           Update PointResult
 
@@ -38,7 +40,7 @@ def update_point_result(resID: int, seen: bool):
     return point_result
 
 
-def delete_point_result(resID: int):
+def delete_point_result(resID: AutoField):
     """
           Delete PointResult
 
