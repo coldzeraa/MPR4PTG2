@@ -8,7 +8,6 @@ def create_examination(exDate: date, pID: AutoField):
     """
         Create a new Examination object
 
-        :param examinationID: examination ID
         :param exDate: date of examination
         :param pID: patient ID
         :return: new examination

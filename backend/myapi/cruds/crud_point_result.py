@@ -7,7 +7,6 @@ def create_point_result(seen: bool, pID: int, exID: int):
     """
         Create a new PointResult Object
 
-        :param resultID: result ID
         :param seen: specifies if Point was recognized
         :param pID: patient ID
         :param exID: examination ID

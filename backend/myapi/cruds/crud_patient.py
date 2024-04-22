@@ -1,18 +1,42 @@
 from django.db.models import AutoField
 
-from backend.myapi.models import Patient
+from myapi.models import Patient
 
 
-def create_patient(lastName: str, firstName: str):
+
+def create_patient(email: str):
     """
         Create a new Patient object
 
-        :param patID: id of patient
+        :param email: email of the patient
+        :return: new patient
+    """
+    default_first = "John"
+    default_last = "Doe"
+    return create_patient(default_first, default_last, None)
+
+
+def create_patient(firstName: str, lastName: str):
+    """
+        Create a new Patient object
+
         :param lastName: last name of patient
         :param firstName: first name of patient
         :return: new patient
     """
-    return Patient.objects.create(lastName=lastName, firstName=firstName)
+    return create_patient(lastName, firstName, None)
+
+
+def create_patient(firstName: str, lastName: str, email: str):
+    """
+        Create a new Patient object
+
+        :param lastName: last name of patient
+        :param firstName: first name of patient
+        :param email: email of the patient
+        :return: new patient
+    """
+    return Patient.objects.create(firstName=firstName, lastName=lastName, email=email)
 
 
 def get_patient_by_id(patID: AutoField):

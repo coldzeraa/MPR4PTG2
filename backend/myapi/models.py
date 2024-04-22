@@ -16,6 +16,7 @@ class Patient(models.Model):
     patID = models.AutoField(primary_key=True)
     lastName = models.CharField(max_length=50)       # last name
     firstName = models.CharField(max_length=50)      # first name
+    email = models.EmailField(max_length=50, default=None)      # first name
 
     def __str__(self):
         return f"{self.lastName} {self.firstName}"  # string representation as lastname firstname
