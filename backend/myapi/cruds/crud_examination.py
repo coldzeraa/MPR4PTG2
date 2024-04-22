@@ -1,6 +1,6 @@
 from datetime import date
 
-from myapi.models import Examination
+from myapi.models import Examination, Patient
 from django.db.models import AutoField
 
 
@@ -13,7 +13,8 @@ def create_examination(exDate: date, pID: AutoField):
         :param pID: patient ID
         :return: new examination
        """
-    return Examination.objects.create(date=exDate, pID=pID)
+    patient = Patient.objects.get(patID=pID)
+    return Examination.objects.create(date=exDate, patientID=patient)
 
 
 def get_examination_by_id(exID: AutoField):

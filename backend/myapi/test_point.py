@@ -3,7 +3,6 @@ from django.test import TestCase
 
 from myapi.cruds.crud_point import create_point, get_point_by_id, delete_point, update_point
 
-
 class TestPointMethods(TestCase):
 
     def test_create_point_valid(self):
@@ -53,5 +52,4 @@ class TestPointMethods(TestCase):
             create_point(2, 3, 1)
             pID = -1
             delete_point(pID)
-
 
