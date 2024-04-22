@@ -2,7 +2,13 @@ from django.db.models import AutoField
 
 from myapi.models import Patient
 
+def create_patient():
+    """
+        Create a new Patient object
 
+        :return: new patient
+    """
+    return create_patient("unknown")
 
 def create_patient(email: str):
     """
@@ -13,7 +19,7 @@ def create_patient(email: str):
     """
     default_first = "John"
     default_last = "Doe"
-    return create_patient(default_first, default_last, None)
+    return create_patient(default_first, default_last, email)
 
 
 def create_patient(firstName: str, lastName: str):
