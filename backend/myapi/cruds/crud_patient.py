@@ -2,38 +2,11 @@ from django.db.models import AutoField
 
 from myapi.models import Patient
 
-def create_patient():
-    """
-        Create a new Patient object
+DEFAULT_FIRSTNAME = "John"
+DEFAULT_LASTNAME = "Doe"
+DEFAULT_EMAIL = "unknown"
 
-        :return: new patient
-    """
-    return create_patient("unknown")
-
-def create_patient(email: str):
-    """
-        Create a new Patient object
-
-        :param email: email of the patient
-        :return: new patient
-    """
-    default_first = "John"
-    default_last = "Doe"
-    return create_patient(default_first, default_last, email)
-
-
-def create_patient(firstName: str, lastName: str):
-    """
-        Create a new Patient object
-
-        :param lastName: last name of patient
-        :param firstName: first name of patient
-        :return: new patient
-    """
-    return create_patient(lastName, firstName, None)
-
-
-def create_patient(firstName: str, lastName: str, email: str):
+def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
     """
         Create a new Patient object
 
@@ -42,6 +15,11 @@ def create_patient(firstName: str, lastName: str, email: str):
         :param email: email of the patient
         :return: new patient
     """
+    if firstName == "" or lastName == "":
+        firstName = DEFAULT_FIRSTNAME
+        lastName = DEFAULT_LASTNAME
+    if email == "":
+        email = DEFAULT_EMAIL
     return Patient.objects.create(firstName=firstName, lastName=lastName, email=email)
 
 
