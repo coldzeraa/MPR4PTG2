@@ -1,16 +1,17 @@
-from backend.myapi.models import Patient
+from myapi.models import Patient
 
 
-def create_patient(id: int, lastName: str, firstName: str):
+def create_patient(lastName: str, firstName: str, email: str):
     """
         Create a new Patient object
 
         :param id: id of patient
         :param lastName: last name of patient
         :param firstName: first name of patient
+        :param email: email of patient
         :return: new patient
     """
-    return Patient.objects.create(id=id, lastName=lastName, firstName=firstName)
+    return Patient.objects.create(lastName=lastName, firstName=firstName, email=email)
 
 
 def get_patient_by_id(id: int):
@@ -23,18 +24,20 @@ def get_patient_by_id(id: int):
     return Patient.objects.get(id=id)
 
 
-def update_patient(id: int, firstName: str, lastName: str):
+def update_patient(id: int, firstName: str, lastName: str, email: str):
     """
           Update Patient
 
           :param id: id of patient
           :param firstName: first name of patient
           :param lastName: last name of patient
+          :param email: email of patient
           :return: Patient Object
        """
     patient = Patient.objects.get(id)
     patient.lastName = lastName
     patient.firstName = firstName
+    patient.email = email
     patient.save()
     return patient
 
