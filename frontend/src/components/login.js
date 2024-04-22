@@ -4,9 +4,7 @@ import { useState } from 'react';
 function Login() {
   // Handle Navigation To Hello World Page
   const navigate = useNavigate();
-  const navigateToHelloWorld = () => {
-    navigate("/hello_world");
-  };
+
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -91,7 +89,7 @@ function Login() {
           <button type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button type="submit" onClick={navigateToHelloWorld}>Überspringen</button>
+          <button type="submit" onClick={navigate("/hello_world")}>Überspringen</button>
         </form>
       </div>
     </div>
