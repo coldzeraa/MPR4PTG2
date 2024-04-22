@@ -6,7 +6,7 @@ DEFAULT_FIRSTNAME = "John"
 DEFAULT_LASTNAME = "Doe"
 DEFAULT_EMAIL = "unknown"
 
-def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
+def create_patient(lastName: str, firstName: str, email: str):
     """
         Create a new Patient object
 
@@ -40,11 +40,13 @@ def update_patient(patID: AutoField, firstName: str, lastName: str):
           :param patID: id of patient
           :param firstName: first name of patient
           :param lastName: last name of patient
+          :param email: email of patient
           :return: Patient Object
        """
     patient = Patient.objects.get(id)
     patient.lastName = lastName
     patient.firstName = firstName
+    patient.email = email
     patient.save()
     return patient
 
