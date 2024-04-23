@@ -19,7 +19,7 @@ class Patient(models.Model):
     email = models.EmailField(max_length=50, default=None)      # first name
 
     def __str__(self):
-        return f"{self.lastName} {self.firstName}"  # string representation as lastname firstname
+        return f"{self.lastName} {self.firstName} ({self.email})"  # string representation as lastname firstname (email)
 
 
 class Examination(models.Model):
