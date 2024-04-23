@@ -42,8 +42,3 @@ class TestPointMethods(TestCase):
     def test_delete_point_invalid(self):
         with self.assertRaises(ObjectDoesNotExist):
             delete_patient(-1)
-
-
-
-
-

@@ -52,7 +52,6 @@ class TestPatientMethods(TestCase):
     def test_delete_patient_valid(self):
         pat = create_patient("Elisabeth", "Mayrhuber")
         patID = pat.patID
-        pat = get_patient_by_id(patID)
         delete_patient(patID)
         with self.assertRaises(ObjectDoesNotExist):
             get_patient_by_id(patID)

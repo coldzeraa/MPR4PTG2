@@ -42,14 +42,11 @@ class TestPointMethods(TestCase):
     def test_delete_point_valid(self):
         p = create_point(2, 3, 1)
         pID = p.pID
-        get_point_by_id(pID)
         delete_point(p.pID)
         with self.assertRaises(ObjectDoesNotExist):
             get_point_by_id(pID)
 
     def test_delete_point_invalid(self):
         with self.assertRaises(ObjectDoesNotExist):
-            create_point(2, 3, 1)
-            pID = -1
-            delete_point(pID)
+            delete_point(-1)
 
