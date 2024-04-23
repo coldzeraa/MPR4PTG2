@@ -26,20 +26,24 @@ function WelcomeScreen() {
 
     return (
         // Formatting
-        <div className="welcome-screen-container">
-            <div className="welcome-screen-background"></div>
-            <div className="content">
+        <div className="container-fluid welcome-screen d-flex align-items-center justify-content-center">
+            {/* Info Button on top right corner */}
+            <button className="info-button" onClick={handleInfoClick}>
+            </button>
 
-                {/*Info Button, Logo and Text on Page*/}
-                <InfoButton onClick={handleInfoClick} />
+            <div className="text-center text-white content">
+                {/* Logo and Text on Page */}
                 <Logo className="App-logo" />
                 <h1>OptiMate</h1>
                 <h3>Simply VIEWtiful</h3>
 
-                {/*Login Button*/}
-                <button onClick={navigateToLogin}>Starten</button>
+                {/* Login Button */}
+                <button className="button start-button" onClick={navigateToLogin}>
+                    ➠ Starten
+                </button>
             </div>
         </div>
+
     );
 }
 

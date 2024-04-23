@@ -2,9 +2,8 @@ import React from "react";
 import Login from "./components/login";
 import HelloWorld from "./components/HelloWorld";
 import WelcomeScreen from "./components/WelcomeScreen";
-import Tutorial from "./components/tutorial";
+import Tutorial from "./components/Tutorial";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 
 function App() {
   return (

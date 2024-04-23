@@ -3,7 +3,7 @@
 function HelloWorld() {
 
   return (
-    <div>
+    <div className="container-fluid d-flex align-items-center justify-content-center">
       <h1>Hello, World!</h1>
     </div>
   );

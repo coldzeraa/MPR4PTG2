@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Oxanium');
+@import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+
+
 .App {
   text-align: center;
 }
@@ -37,35 +41,63 @@
   }
 }
 
-body .welcome-screen-container {
-  position: absolute;
-  width: 100%;
-  height: 100vh; /* how much of the screen is displaying */
+/*GENERAL DESIGN*/
+
+html, body {
+  height: 100%; 
 }
 
-body .welcome-screen-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle, rgb(145, 181, 240), white); /* gradient from blue to white */
+.container-fluid {
+  min-height: 100vh;
+}
+
+/*BODY WELCOME SCREEN*/
+
+.welcome-screen {
+  background: radial-gradient(circle at center, #66a8d4, white);
+  height: 100%; 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  font-family: 'Oxanium', sans-serif; 
+  font-weight: bold; 
 }
 
 .content {
-  position: relative;
-  z-index: 1; /* make sure content appears above the background */
   text-align: center;
-  padding-top: 40vh; /* vertical centering */
 }
 
+/*BUTTONS*/
+
+.button {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.back-button {
+  position: fixed;
+  top: 10px; 
+  left: 10px; 
+}
+
+.start-button {
+  position: relative;
+}
 
 .info-button {
-  position: fixed;
-  top: 10px; /* Adjust as needed */
-  right: 10px; /* Adjust as needed */
+  position: absolute;
+  top: 10px; 
+  right: 10px; 
   background-color: transparent;
   border: none;
   font-size: 24px;
   cursor: pointer;
 }
+
+
