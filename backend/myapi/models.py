@@ -26,12 +26,12 @@ class Examination(models.Model):
     exID = models.AutoField(primary_key=True)    # ID
     date = models.DateField()                       # date of examination
 
-    patientID = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
+    pat = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
 
 
 class PointResult(models.Model):
     resID = models.AutoField(primary_key=True)   # ID
     seen = models.BooleanField()                    # point seen (t/f)
 
-    pointID = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
-    examinationID = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination
+    p = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
+    ex = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination

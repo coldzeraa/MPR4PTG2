@@ -7,7 +7,7 @@ DEFAULT_LASTNAME = "Doe"
 DEFAULT_EMAIL = "unknown"
 
 
-def create_patient(lastName: str, firstName: str, email: str):
+def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
     """
         Create a new Patient object
 
@@ -31,34 +31,32 @@ def get_patient_by_id(patID: AutoField):
        :param patID: id of patient
        :return: Patient Object
     """
-    return Patient.objects.get(id=id)
+    return Patient.objects.get(patID=patID)
 
 
-def update_patient(patID: AutoField, firstName: str, lastName: str, email: str):
+def update_patient(patID: AutoField, firstName: str, lastName: str):
     """
-          Update Patient
+    Update Patient
 
-          :param patID: id of patient
-          :param firstName: first name of patient
-          :param lastName: last name of patient
-          :param email: email of patient
-          :return: Patient Object
-       """
-    patient = Patient.objects.get(id)
+    :param patID: id of patient
+    :param firstName: first name of patient
+    :param lastName: last name of patient
+    :return: Patient Object
+    """
+    patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID)
     patient.lastName = lastName
     patient.firstName = firstName
-    patient.email = email
-    patient.email = email
     patient.save()
     return patient
 
 
 def delete_patient(patID: AutoField):
     """
-          Delete Patient
+    Delete Patient
 
-          :param id: id of patient
-       """
-    patient = Patient.objects.get(id=id)
+    :param patID: id of patient
+    """
+    patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID=patID)
     patient.delete()
+
 

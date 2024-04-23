@@ -4,16 +4,16 @@ from myapi.models import Examination, Patient
 from django.db.models import AutoField
 
 
-def create_examination(exDate: date, pID: AutoField):
+def create_examination(exDate: date, patID: AutoField):
     """
         Create a new Examination object
 
         :param exDate: date of examination
-        :param pID: patient ID
+        :param patID: patient ID
         :return: new examination
        """
-    patient = Patient.objects.get(patID=pID)
-    return Examination.objects.create(date=exDate, patientID=patient)
+    patient = Patient.objects.get(patID=patID)
+    return Examination.objects.create(date=exDate, pat=patient)
 
 
 def get_examination_by_id(exID: AutoField):
@@ -26,7 +26,7 @@ def get_examination_by_id(exID: AutoField):
     return Examination.objects.get(exID=exID)
 
 
-def update_examination(exID: AutoField, exDate: date):
+def update_examination(exID: AutoField, exDate: date, pat: Patient):
     """
           Update Examination
 
@@ -36,6 +36,7 @@ def update_examination(exID: AutoField, exDate: date):
        """
     examination = Examination.objects.get(exID=exID)
     examination.date = exDate
+    examination.pat = pat
     examination.save()
     return examination
 
