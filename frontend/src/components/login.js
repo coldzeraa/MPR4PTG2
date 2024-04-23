@@ -1,18 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState } from "react";
 
 function Login() {
   // Handle Navigation To Hello World Page
   const navigate = useNavigate();
 
   // Navigate to tutorial
-  const navigateToTutorial = () =>{
-    navigate("/tutorial")
-  }
+  const navigateToTutorial = () => {
+    navigate("/tutorial");
+  };
 
   // Navigate to welcome screen
-  const navigateToWelcomeScreen = () =>{
-    navigate("/")
+  const navigateToWelcomeScreen = () => {
+    navigate("/");
+  };
+
+  const showNameError = () => {
+    window.alert("Bitte Vor- und Nachname eingeben.");
+  };
+
+  const showEmailError = () => {
+    window.alert("Bitte geben Sie eine valide Email ein.");
+  };
+
+  const showInvalidNameError = () => {
+    window.alert("Vor- und Nachname dürfen keine Zahlen enthalten!")
   }
 
   // React hook state to define state "formData"
@@ -33,27 +45,37 @@ function Login() {
 
     try {
       // Fetch data via "POST" to backend
-      await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
-      // Get response
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Sending failed');
-        }
-        // If response is okay navigate to tutorial
-        navigateToTutorial();
-        return response.json();
-      })
-      // Print response on console
-      .then(data => {
-        console.log(data.message);
       });
-    
+
+      if (!response.ok) {
+        throw new Error("Sending failed");
+      }
+
+      // Parse response as JSON
+      const responseData = await response.json();
+
+      // Check response data for "NOT_BOTH_NAMES"
+      switch (responseData) {
+        case "NOT_BOTH_NAMES":
+          showNameError();
+          break;
+        case "NOT_AN_EMAIL":
+          showEmailError();
+          break;
+        // TODO
+        case "INVALID_NAMES":
+          showInvalidNameError();
+          break;
+        default:
+          navigateToTutorial();
+          break;
+      }
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
@@ -91,10 +113,10 @@ function Login() {
           </div>
           <div style={{ marginBottom: "10px" }}>
             <label htmlFor="email" style={{ display: "block" }} />
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
+            <input
+              type="email"
+              id="email"
+              name="email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
@@ -102,7 +124,10 @@ function Login() {
           </div>
 
           {/*Weiter Button, Überspringen Button and Zurück Button */}
-          <button onClick={navigateToWelcomeScreen} style={{ position: 'absolute', top: '10px', left: '10px' }}>
+          <button
+            onClick={navigateToWelcomeScreen}
+            style={{ position: "absolute", top: "10px", left: "10px" }}
+          >
             Zurück
           </button>
           <button type="submit" onClick={handleSubmit}>
