@@ -5,21 +5,34 @@ function Login() {
   // Handle Navigation To Hello World Page
   const navigate = useNavigate();
 
+  // Navigate to tutorial
+  const navigateToTutorial = () =>{
+    navigate("/tutorial")
+  }
 
+  // Navigate to welcome screen
+  const navigateToWelcomeScreen = () =>{
+    navigate("/")
+  }
+
+  // React hook state to define state "formData"
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
   });
 
+  // Function to handle change in fomular
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Function to handle sumbission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // Fetch data via "POST" to backend
       await fetch("http://127.0.0.1:8000/api/login/", {
         method: "POST",
         headers: {
@@ -27,13 +40,16 @@ function Login() {
         },
         body: JSON.stringify(formData),
       })
+      // Get response
       .then(response => {
         if (!response.ok) {
           throw new Error('Sending failed');
         }
-        navigate("/hello_world");
+        // If response is okay navigate to tutorial
+        navigateToTutorial();
         return response.json();
       })
+      // Print response on console
       .then(data => {
         console.log(data.message);
       });
@@ -85,11 +101,16 @@ function Login() {
             />
           </div>
 
-          {/*Submit Button and Skip Button*/}
+          {/*Weiter Button, Überspringen Button and Zurück Button */}
+          <button onClick={navigateToWelcomeScreen} style={{ position: 'absolute', top: '10px', left: '10px' }}>
+            Zurück
+          </button>
           <button type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button type="submit" onClick={navigate("/hello_world")}>Überspringen</button>
+          <button type="submit" onClick={navigateToTutorial}>
+            Überspringen
+          </button>
         </form>
       </div>
     </div>
