@@ -4,11 +4,15 @@
 
 Schritt 1: Öffnen von einem Terminal in /backend
 
-Schritt 2: Ausführen von `python manage.py runserver`
+Schritt 2: Ausführen von `pip install djangorestframework django-cors-headers`
 
-Schritt 3: Öffnen eines weiteren Terminals in /frontend
+Schritt 3: Ausführen von `python manage.py runserver`
 
-Schritt 4: Ausführen von `npm start`
+Schritt 4: Öffnen eines weiteren Terminals in /frontend
+
+Schritt 5: Ausführen von `npm install axios`
+
+Schritt 6: Ausführen von `npm start`
 
 
 == Wie wurde das Projekt erstellt?
