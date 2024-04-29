@@ -15,16 +15,26 @@ function Login() {
     navigate("/");
   };
 
+  // Show alert if just one name was entered
   const showNameError = () => {
     window.alert("Bitte Vor- und Nachname eingeben.");
   };
 
+  // Show alert if email was invalid
   const showEmailError = () => {
     window.alert("Bitte geben Sie eine valide Email ein.");
   };
 
+  // Show alert if enterd name contains numbers or special characters
   const showInvalidNameError = () => {
-    window.alert("Vor- und Nachname dürfen keine Zahlen enthalten!")
+    window.alert(
+      "Vor- und Nachname dürfen keine Zahlen oder Sonderzeichen enthalten!"
+    );
+  };
+
+  // Show alert if no data was provided and "weiter" button was clicked
+  const showNoDataError = () => {
+    window.alert("Bitte geben Sie Ihre Daten ein!");
   }
 
   // React hook state to define state "formData"
@@ -39,9 +49,38 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Funktion to check the response
+  const checkResponse = (e) => {
+    // Check response of backend
+    switch (e) {
+      // Case just one name was entered
+      case "NOT_BOTH_NAMES":
+        console.log("IN CASE");
+        showNameError();
+        break;
+      // Case email was invalid
+      case "NOT_AN_EMAIL":
+        showEmailError();
+        break;
+      // Case names contain numbers or special characters
+      case "INVALID_NAMES":
+        showInvalidNameError();
+        break;
+      // Default case just navigate to next page
+      default:
+        navigateToTutorial();
+        break;
+    }
+  };
+
   // Function to handle sumbission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (Object.values(formData).every(value => value === "")){
+      showNoDataError();
+      return;
+    }
 
     try {
       // Fetch data via "POST" to backend
@@ -60,22 +99,43 @@ function Login() {
       // Parse response as JSON
       const responseData = await response.json();
 
-      // Check response data for "NOT_BOTH_NAMES"
-      switch (responseData) {
-        case "NOT_BOTH_NAMES":
-          showNameError();
-          break;
-        case "NOT_AN_EMAIL":
-          showEmailError();
-          break;
-        // TODO
-        case "INVALID_NAMES":
-          showInvalidNameError();
-          break;
-        default:
-          navigateToTutorial();
-          break;
+      // Check response
+      checkResponse(responseData.message);
+    } catch (error) {
+      console.error("Failed to submit form:", error);
+    }
+  };
+
+  // Funktion to handle skip
+  const handleSkip = async (e) => {
+    e.preventDefault();
+    try {
+      // Empty formular to send to backend
+      const form = {
+        firstName: "",
+        lastName: "",
+        email: "",
+      };
+
+      // Fetch data via "POST" to backend
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      // Check if response is okay
+      if (!response.ok) {
+        throw new Error("Sending failed");
       }
+
+      // Parse response as JSON
+      const responseData = await response.json();
+
+      // Check response
+      checkResponse(responseData.message);
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
@@ -133,7 +193,7 @@ function Login() {
           <button type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button type="submit" onClick={navigateToTutorial}>
+          <button type="submit" onClick={handleSkip}>
             Überspringen
           </button>
         </form>

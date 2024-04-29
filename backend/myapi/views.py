@@ -14,32 +14,37 @@ def hello_world(request):
 def login(request):
     if request.method == 'POST':
         
-        # get data from request
+        # Get data from request
         first_name = str(request.data.get('firstName'))
         last_name = str(request.data.get('lastName'))
         email = str(request.data.get('email'))
         
-        # TODO invalid names
+        # Check if first_name, last_name and email is empty and save dummy in database
+        if (not first_name and not last_name and not email):
+            crud_patient.create_patient()
+            return JsonResponse({'message': 'SUCCESS'}, status=200)
+        
+        # Check for invalid names
         if (not first_name.isalpha() or not last_name.isalpha()):
             return JsonResponse({"message": "INVALID_NAMES"})
         
-        # check if both names are entered
+        # Check if both names are entered
         if (not first_name and last_name) or (first_name and not last_name):
             return JsonResponse({"message": "NOT_BOTH_NAMES"})
     
-        # validate email
+        # Validate email
         try:
             validate_email(email)
         except ValidationError:
             return JsonResponse({"message": "NOT_AN_EMAIL"})
         
-        # save patient in database
+        # Save patient in database
         crud_patient.create_patient(first_name, last_name, email)
         
-        # return a success message
+        # Return a success message
         return JsonResponse({'message': 'SUCCESS'}, status=200)
     else:
         
-        # return a failed message
+        # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
