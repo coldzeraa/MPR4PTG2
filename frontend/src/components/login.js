@@ -10,10 +10,15 @@ function Login() {
     navigate("/tutorial")
   }
 
-  // Navigate to welcome screen
-  const navigateToWelcomeScreen = () =>{
-    navigate("/")
-  }
+      // Define Back Button
+      function BackButton({ onClick }) {
+        return (
+            <button className="button back-button" onClick={onClick}>
+                ← Back
+            </button>
+        );
+    }
+    
 
   // React hook state to define state "formData"
   const [formData, setFormData] = useState({
@@ -25,6 +30,12 @@ function Login() {
   // Function to handle change in fomular
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle click event for the back button
+  const handleBackClick = () => {
+    
+    navigate("/");
   };
 
   // Function to handle sumbission
@@ -61,8 +72,9 @@ function Login() {
 
   return (
     // Formatting
-    <div className="welcome-screen-container">
-      <div className="welcome-screen-background"></div>
+    <div className="container-fluid d-flex align-items-center justify-content-center">
+      {/*Back Button, Logo and Text on Page*/}
+      <BackButton onClick={handleBackClick} />
       <div className="content">
         {/*Input Form*/}
         <h2>Persönliche Daten</h2>
@@ -101,14 +113,11 @@ function Login() {
             />
           </div>
 
-          {/*Weiter Button, Überspringen Button and Zurück Button */}
-          <button onClick={navigateToWelcomeScreen} style={{ position: 'absolute', top: '10px', left: '10px' }}>
-            Zurück
-          </button>
-          <button type="submit" onClick={handleSubmit}>
+
+          <button className="button" type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button type="submit" onClick={navigateToTutorial}>
+          <button className="button" type="submit" onClick={navigateToTutorial}>
             Überspringen
           </button>
         </form>

@@ -6,7 +6,7 @@ function Tutorial() {
     // Define Back Button
     function BackButton({ onClick }) {
         return (
-            <button className="back-button" onClick={onClick}>
+            <button className="button back-button" onClick={onClick}>
                 ← Back
             </button>
         );
@@ -25,17 +25,17 @@ function Tutorial() {
 
     return (
         // Formatting
-        <div className="welcome-screen-container">
-            <div className="welcome-screen-background"></div>
+        <div className="container-fluid d-flex align-items-center justify-content-center">
+            {/*Back Button, Logo and Text on Page*/}
+            <BackButton onClick={handleBackClick} />
             <div className="content">
-
-                {/*Info Button, Logo and Text on Page*/}
-                <BackButton onClick={handleBackClick} />
                 <h1>Information</h1>
-                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-
+                <div className='scroll-box border rounded p-3'>
+                    <p>Lorem ipsum Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                </div>
                 {/*Login Button*/}
-                <button onClick={navigateToStart}>Starten</button>
+                <br></br>
+                <button className="button" onClick={navigateToStart}>➠ Starten</button>
             </div>
         </div>
     );
