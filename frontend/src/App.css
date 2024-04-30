@@ -110,6 +110,23 @@ html, body {
   margin: 0 auto;
 }
 
-
-
+/*PERIMETRY*/
+.split-container {
+  display: flex;
+  height: 100vh;
+}
+.split-left, .split-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.split-midpoint {
+  position: absolute;
+  height: 100vh;
+  width: 2px;
+  background-color: black;
+  left: 50%;
+  z-index: 999;
+}
 
