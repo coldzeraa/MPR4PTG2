@@ -30,7 +30,6 @@ function WelcomeScreen() {
             {/* Info Button on top right corner */}
             <button className="info-button" onClick={handleInfoClick}>
             </button>
-
             <div className="text-center text-white content">
                 {/* Logo and Text on Page */}
                 <Logo className="App-logo" />
