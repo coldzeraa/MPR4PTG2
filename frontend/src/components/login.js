@@ -10,15 +10,32 @@ function Login() {
     navigate("/tutorial")
   }
 
-      // Define Back Button
-      function BackButton({ onClick }) {
-        return (
-            <button className="button back-button" onClick={onClick}>
-                ← Back
-            </button>
-        );
-    }
-    
+  // Navigate to welcome screen
+  const navigateToWelcomeScreen = () => {
+    navigate("/");
+  };
+
+  // Show alert if just one name was entered
+  const showNameError = () => {
+    window.alert("Bitte Vor- und Nachname eingeben.");
+  };
+
+  // Show alert if email was invalid
+  const showEmailError = () => {
+    window.alert("Bitte geben Sie eine valide Email ein.");
+  };
+
+  // Show alert if enterd name contains numbers or special characters
+  const showInvalidNameError = () => {
+    window.alert(
+      "Vor- und Nachname dürfen keine Zahlen oder Sonderzeichen enthalten!"
+    );
+  };
+
+  // Show alert if no data was provided and "weiter" button was clicked
+  const showNoDataError = () => {
+    window.alert("Bitte geben Sie Ihre Daten ein!");
+  }
 
   // React hook state to define state "formData"
   const [formData, setFormData] = useState({
@@ -32,10 +49,28 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle click event for the back button
-  const handleBackClick = () => {
-    
-    navigate("/");
+  // Funktion to check the response
+  const checkResponse = (e) => {
+    // Check response of backend
+    switch (e) {
+      // Case just one name was entered
+      case "NOT_BOTH_NAMES":
+        console.log("IN CASE");
+        showNameError();
+        break;
+      // Case email was invalid
+      case "NOT_AN_EMAIL":
+        showEmailError();
+        break;
+      // Case names contain numbers or special characters
+      case "INVALID_NAMES":
+        showInvalidNameError();
+        break;
+      // Default case just navigate to next page
+      default:
+        navigateToTutorial();
+        break;
+    }
   };
 
   // Function to handle sumbission
@@ -72,9 +107,8 @@ function Login() {
 
   return (
     // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
-      {/*Back Button, Logo and Text on Page*/}
-      <BackButton onClick={handleBackClick} />
+    <div className="welcome-screen-container">
+      <div className="welcome-screen-background"></div>
       <div className="content">
         {/*Input Form*/}
         <h2>Persönliche Daten</h2>
@@ -113,11 +147,17 @@ function Login() {
             />
           </div>
 
-
-          <button className="button" type="submit" onClick={handleSubmit}>
+          {/*Weiter Button, Überspringen Button and Zurück Button */}
+          <button
+            onClick={navigateToWelcomeScreen}
+            style={{ position: "absolute", top: "10px", left: "10px" }}
+          >
+            Zurück
+          </button>
+          <button type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button className="button" type="submit" onClick={navigateToTutorial}>
+          <button type="submit" onClick={handleSkip}>
             Überspringen
           </button>
         </form>
