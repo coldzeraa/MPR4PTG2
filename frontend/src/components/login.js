@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from 'react';
 
 function Login() {
-  // Handle Navigation To Hello World Page
+  // Create navigate
   const navigate = useNavigate();
 
   // Navigate to tutorial
@@ -64,7 +64,6 @@ function Login() {
     switch (e) {
       // Case just one name was entered
       case "NOT_BOTH_NAMES":
-        console.log("IN CASE");
         showNameError();
         break;
       // Case email was invalid
