@@ -8,7 +8,16 @@ function Login() {
   // Navigate to tutorial
   const navigateToTutorial = () =>{
     navigate("/tutorial")
-  }
+  };
+
+  // Define Back Button
+  function BackButton({ onClick }) {
+    return (
+        <button className="button back-button" onClick={onClick}>
+            ← Back
+        </button>
+    );
+  };
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
@@ -77,38 +86,76 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (Object.values(formData).every(value => value === "")){
+      showNoDataError();
+      return;
+    }
+
     try {
       // Fetch data via "POST" to backend
-      await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       })
-      // Get response
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Sending failed');
-        }
-        // If response is okay navigate to tutorial
-        navigateToTutorial();
-        return response.json();
-      })
-      // Print response on console
-      .then(data => {
-        console.log(data.message);
-      });
+      if (!response.ok) {
+        throw new Error("Sending failed");
+      }
+
+      // Parse response as JSON
+      const responseData = await response.json();
+
+      // Check response
+      checkResponse(responseData.message);
     
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
   };
 
+  // Function to handle skip
+  const handleSkip = async (e) => {
+    e.preventDefault();
+    try {
+      // Empty formular to send to backend
+      const form = {
+        firstName: "",
+        lastName: "",
+        email: "",
+      };
+
+      // Fetch data via "POST" to backend
+      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      // Check if response is okay
+      if (!response.ok) {
+        throw new Error("Sending failed");
+      }
+
+      // Parse response as JSON
+      const responseData = await response.json();
+
+      // Check response
+      checkResponse(responseData.message);
+    } catch (error) {
+      console.error("Failed to submit form:", error);
+    }
+  };
+
+
   return (
     // Formatting
-    <div className="welcome-screen-container">
-      <div className="welcome-screen-background"></div>
+    <div className="container-fluid d-flex align-items-center justify-content-center">
+      {/*Back Button, Logo and Text on Page*/}
+      <BackButton onClick={navigateToWelcomeScreen} />
       <div className="content">
         {/*Input Form*/}
         <h2>Persönliche Daten</h2>
@@ -147,17 +194,11 @@ function Login() {
             />
           </div>
 
-          {/*Weiter Button, Überspringen Button and Zurück Button */}
-          <button
-            onClick={navigateToWelcomeScreen}
-            style={{ position: "absolute", top: "10px", left: "10px" }}
-          >
-            Zurück
-          </button>
-          <button type="submit" onClick={handleSubmit}>
+
+          <button className="button" type="submit" onClick={handleSubmit}>
             Weiter
           </button>
-          <button type="submit" onClick={handleSkip}>
+          <button className="button" type="submit" onClick={handleSkip}>
             Überspringen
           </button>
         </form>

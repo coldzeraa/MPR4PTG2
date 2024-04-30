@@ -28,8 +28,8 @@ function WelcomeScreen() {
         // Formatting
         <div className="container-fluid welcome-screen d-flex align-items-center justify-content-center">
             {/* Info Button on top right corner */}
-            <button className="info-button" onClick={handleInfoClick}>
-            </button>
+            <InfoButton className="info-button" onClick={handleInfoClick}>
+            </InfoButton>
             <div className="text-center text-white content">
                 {/* Logo and Text on Page */}
                 <Logo className="App-logo" />
