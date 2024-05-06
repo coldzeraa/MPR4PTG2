@@ -13,9 +13,9 @@ function Tutorial() {
     }
 
     const navigate = useNavigate();
-    const navigateToStart = () => {
-        // Handle Navigation To Start Page
-        navigate("/hello_world"); // CHANGE HERE TO GET TO START PAGE OF TEST
+    const navigateToPerimetry = () => {
+        // Handle Navigation To Start Page of Test
+        navigate("/Perimetry"); 
     };
 
     const handleBackClick = () => {
@@ -35,7 +35,7 @@ function Tutorial() {
                 </div>
                 {/*Login Button*/}
                 <br></br>
-                <button className="button" onClick={navigateToStart}>➠ Starten</button>
+                <button className="button" onClick={navigateToPerimetry}>➠ Starten</button>
             </div>
         </div>
     );
