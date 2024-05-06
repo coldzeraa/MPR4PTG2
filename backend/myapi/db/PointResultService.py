@@ -1,11 +1,8 @@
-import datetime
 from django.db.models import AutoField
-from myapi.cruds import crud_point_result
-from myapi.db import Service
+from backend.myapi.cruds import crud_point_result
 
-class CrudPointResultService():
-    
-    @property
+
+class PointResultService:
     @staticmethod    
     def get_all():
         return crud_point_result.get_all_point_result()

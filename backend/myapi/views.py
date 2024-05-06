@@ -2,13 +2,16 @@ from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from myapi.db.PatientService import PatientService
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+
+from backend.myapi.db.PatientService import PatientService
+
 
 @api_view(['GET'])
 def hello_world(request):
     return Response({'message': 'Hello, world!'})
+
 
 @api_view(['POST'])
 def login(request):
@@ -21,7 +24,7 @@ def login(request):
         
         # Check if first_name, last_name and email is empty and save dummy in database
         if (not first_name and not last_name and not email):
-            PatientService.store()
+            (PatientService.store())
             return JsonResponse({'message': 'SUCCESS'}, status=200)
         
         # Check for invalid names

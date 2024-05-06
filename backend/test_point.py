@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-from myapi.cruds.crud_point import create_point, get_point_by_id, delete_point, update_point
+from cruds.crud_point import create_point, get_point_by_id, delete_point, update_point
 
 class TestPointMethods(TestCase):
 

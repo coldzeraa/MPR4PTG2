@@ -1,11 +1,9 @@
 import datetime
 from django.db.models import AutoField
-from myapi.cruds import crud_examination
-from myapi.db import Service
+from backend.myapi.cruds import crud_examination
 
 
-class ExaminationService():
-    @property
+class ExaminationService:
     @staticmethod    
     def get_all():
         return crud_examination.get_all_examinations()

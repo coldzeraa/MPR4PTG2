@@ -1,7 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-from myapi.cruds.crud_patient import create_patient, get_patient_by_id, update_patient, delete_patient
+from cruds.crud_patient import create_patient, get_patient_by_id, update_patient, delete_patient
+
 
 class TestPatientMethods(TestCase):
     def test_create_patient_def_valid(self):
@@ -43,7 +44,7 @@ class TestPatientMethods(TestCase):
         with self.assertRaises(ObjectDoesNotExist):
             get_patient_by_id(-1)
 
-    def test_update_point_valid(self):
+    def test_update_patient_valid(self):
         patOld = create_patient("David", "Derntl")
         patNew = update_patient(patOld.patID, "Davina", "Derntl")
         self.assertEqual(patNew.firstName, "Davina")
@@ -56,6 +57,6 @@ class TestPatientMethods(TestCase):
         with self.assertRaises(ObjectDoesNotExist):
             get_patient_by_id(patID)
 
-    def test_delete_point_invalid(self):
+    def test_delete_patient_invalid(self):
         with self.assertRaises(ObjectDoesNotExist):
             delete_patient(-1)
