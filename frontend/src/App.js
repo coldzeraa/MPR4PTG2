@@ -3,6 +3,7 @@ import Login from "./components/login";
 import HelloWorld from "./components/HelloWorld";
 import WelcomeScreen from "./components/WelcomeScreen";
 import Tutorial from "./components/tutorial";
+import ExportPage from "./components/exportPage"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 

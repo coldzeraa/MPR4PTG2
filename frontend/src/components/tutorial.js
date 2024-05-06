@@ -15,7 +15,7 @@ function Tutorial() {
     const navigate = useNavigate();
     const navigateToStart = () => {
         // Handle Navigation To Start Page
-        navigate("/hello_world"); // CHANGE HERE TO GET TO START PAGE OF TEST
+        navigate("/export"); // CHANGE HERE TO GET TO START PAGE OF TEST
     };
 
     const handleBackClick = () => {
