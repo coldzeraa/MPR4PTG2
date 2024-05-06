@@ -49,3 +49,10 @@ def delete_examination(exID: AutoField):
        """
     examination = Examination.objects.get(exID=exID)
     examination.delete()
+
+
+def get_all_examinations():
+    """
+        get all Examinations
+    """
+    return Examination.objects.all()
