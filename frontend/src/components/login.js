@@ -1,23 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState } from "react";
 
 function Login() {
-  // Handle Navigation To Hello World Page
+  // Create navigate
   const navigate = useNavigate();
 
   // Navigate to tutorial
-  const navigateToTutorial = () =>{
-    navigate("/tutorial")
+  const navigateToTutorial = () => {
+    navigate("/tutorial");
   };
 
   // Define Back Button
   function BackButton({ onClick }) {
     return (
-        <button className="button back-button" onClick={onClick}>
-            ← Back
-        </button>
+      <button className="button back-button" onClick={onClick}>
+        ← Back
+      </button>
     );
-  };
+  }
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
@@ -44,7 +44,7 @@ function Login() {
   // Show alert if no data was provided and "weiter" button was clicked
   const showNoDataError = () => {
     window.alert("Bitte geben Sie Ihre Daten ein!");
-  }
+  };
 
   // React hook state to define state "formData"
   const [formData, setFormData] = useState({
@@ -64,7 +64,6 @@ function Login() {
     switch (e) {
       // Case just one name was entered
       case "NOT_BOTH_NAMES":
-        console.log("IN CASE");
         showNameError();
         break;
       // Case email was invalid
@@ -86,7 +85,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (Object.values(formData).every(value => value === "")){
+    if (Object.values(formData).every((value) => value === "")) {
       showNoDataError();
       return;
     }
@@ -99,17 +98,21 @@ function Login() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
       if (!response.ok) {
         throw new Error("Sending failed");
       }
+
+      // Store name and email in localStorage
+      localStorage.setItem('firstName', formData.firstName);
+      localStorage.setItem('lastName', formData.lastName);
+      localStorage.setItem('email', formData.email);
 
       // Parse response as JSON
       const responseData = await response.json();
 
       // Check response
       checkResponse(responseData.message);
-    
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
@@ -125,6 +128,11 @@ function Login() {
         lastName: "",
         email: "",
       };
+
+      // Store empty name and empty email in localStorage
+      localStorage.setItem('firstName', form.firstName);
+      localStorage.setItem('lastName', form.lastName);
+      localStorage.setItem('email', form.email);
 
       // Fetch data via "POST" to backend
       const response = await fetch("http://127.0.0.1:8000/api/login/", {
@@ -149,7 +157,6 @@ function Login() {
       console.error("Failed to submit form:", error);
     }
   };
-
 
   return (
     // Formatting
@@ -184,16 +191,15 @@ function Login() {
           </div>
           <div style={{ marginBottom: "10px" }}>
             <label htmlFor="email" style={{ display: "block" }} />
-            <input 
-              type="email" 
-              id="email" 
-              name="email" 
+            <input
+              type="email"
+              id="email"
+              name="email"
               placeholder="Email"
               value={formData.email}
               onChange={handleChange}
             />
           </div>
-
 
           <button className="button" type="submit" onClick={handleSubmit}>
             Weiter
