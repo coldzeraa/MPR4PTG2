@@ -1,19 +1,42 @@
-import { useState, useEffect } from 'react';
-import { ReactComponent as Logo } from './../logo.svg';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './../App.css';
 
+// Point component to render individual points
+const Point = ({ x, y }) => (
+    <div style={{ position: 'absolute', left: `${x}%`, top: `${y}%` }}>
+        <p style={{ margin: 0, fontSize: '10px' }}>⚫</p>
+    </div>
+);
+
+
 function Perimetry() {
-    // State to store the array of points
+    const navigate = useNavigate();
+    const navigateToStart = () => {
+        // Handle Navigation To Start Page
+        navigate("/hello_world"); // TODO CHANGE HERE TO GET TO PDF PAGE OF TEST
+    };
+
+    // States 
     const [points, setPoints] = useState([]);
+    const [currentPointIndex, setCurrentPointIndex] = useState(0);
+    const [showPoint, setShowPoint] = useState(false);
+    const [side, setSide] = useState('left');
 
     // Get Points from Backend
     useEffect(() => {
         const fetchPoints = async () => {
-            // REPLACE WITH ACTUAL BACKEND DATA
+            // TODO REPLACE WITH ACTUAL BACKEND DATA
             const fetchedPoints = [
-                { x: 100, y: 200 },
-                { x: 300, y: 400 },
-                
+                { x: 10, y: 10 },
+                { x: 20, y: 20 },
+                { x: 30, y: 30 },
+                { x: 40, y: 40 },
+                { x: 50, y: 50 },
+                { x: 60, y: 60 },
+                { x: 70, y: 70 },
+                { x: 80, y: 80 },
+                { x: 90, y: 90 }, 
             ];
             setPoints(fetchedPoints);
         };
@@ -21,29 +44,44 @@ function Perimetry() {
         fetchPoints();
     }, []);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setShowPoint(true);
+            setTimeout(() => {
+                setShowPoint(false);
+                // here implement audio i think
+                setCurrentPointIndex(prevIndex => (prevIndex + 1) % points.length);
+                if (currentPointIndex === points.length - 1 && side === 'left') {
+                    setCurrentPointIndex(0);
+                    setSide('right');
+                } else if (currentPointIndex === points.length - 1 && side === 'right') {
+                    navigateToStart();                    
+                }
+            }, 200);
+        }, 1200);
+
+        return () => clearInterval(interval);
+    }, [points, currentPointIndex, side]);
+
     return (
         <div className="split-container">
             <div className="split-left">
-                <p>+</p>
-                {/* Map through the points array and render a point component for each point */}
-                {points.map((point, index) => (
-                    <Point key={index} x={point.x} y={point.y} />
-                ))}
+                {/* Render the current point */}
+                {points.length > 0 && side === 'left' && showPoint && (
+                    <Point key={currentPointIndex} x={(points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                )}
             </div>
-            <div className="split-midpoint"></div>
+            <div className="split-midpoint">
+                <p style={{ fontSize: '20px', fontWeight: 'bold' }}>+</p>
+            </div>
             <div className="split-right">
-            <p>+</p>
-                {/* You can render points on the right side as well if needed */}
+                {/* Render the current point */}
+                {points.length > 0 && side === 'right' && showPoint && (
+                    <Point key={currentPointIndex} x={50 + (points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                )}
             </div>
         </div>
     );
 }
-
-// Point component to render individual points
-const Point = ({ x, y }) => (
-    <div style={{ position: 'absolute', top: y, left: x }}>
-        <p>?</p>
-    </div>
-);
 
 export default Perimetry;
