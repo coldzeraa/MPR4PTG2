@@ -11,6 +11,7 @@ from myapi.cruds.crud_point import create_point
 from myapi.cruds.crud_examination import create_examination
 from myapi.cruds.crud_patient import create_patient
 
+
 class TestPointResultMethods(TestCase):
 
     def test_create_point_result_valid(self):
