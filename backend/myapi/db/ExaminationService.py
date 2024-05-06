@@ -1,6 +1,6 @@
 import datetime
 from django.db.models import AutoField
-from backend.myapi.cruds import crud_examination
+from myapi.cruds import crud_examination
 
 
 class ExaminationService:
@@ -10,7 +10,7 @@ class ExaminationService:
     
     @staticmethod
     def store(patID: AutoField, exDate = datetime.date.today()):
-        crud_examination.create_examination(exDate, patID)
+        return crud_examination.create_examination(exDate, patID)
     
     @staticmethod
     def get(id:AutoField):
@@ -18,10 +18,10 @@ class ExaminationService:
 
     @staticmethod
     def update(patID: AutoField, firstName: str, lastName: str):
-        crud_examination.update_examination(patID, firstName, lastName)
+        return crud_examination.update_examination(patID, firstName, lastName)
 
     @staticmethod
     def delete(pID: AutoField):
-        crud_examination.delete_examination(pID)
+        return crud_examination.delete_examination(pID)
 
     

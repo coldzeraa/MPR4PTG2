@@ -3,11 +3,11 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-import db.PointResultService as PRS
+import myapi.db.PointResultService as PRS
 
-from cruds.crud_point import create_point
-from cruds.crud_examination import create_examination
-from cruds.crud_patient import create_patient
+from myapi.cruds.crud_point import create_point
+from myapi.cruds.crud_examination import create_examination
+from myapi.cruds.crud_patient import create_patient
 
 class TestPointResultServiceMethods(TestCase):
 

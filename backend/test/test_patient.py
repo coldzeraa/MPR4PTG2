@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-from cruds.crud_patient import create_patient, get_patient_by_id, update_patient, delete_patient
+from myapi.cruds.crud_patient import create_patient, get_patient_by_id, update_patient, delete_patient
 
 
 class TestPatientMethods(TestCase):

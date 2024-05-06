@@ -1,6 +1,5 @@
-
 from django.db.models import AutoField
-from backend.myapi.cruds import crud_patient
+from myapi.cruds import crud_patient
 
 
 class PatientService:

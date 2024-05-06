@@ -1,5 +1,5 @@
 from django.db.models import AutoField
-from backend.myapi.cruds import crud_point
+from myapi.cruds import crud_point
 
 
 class PointService:

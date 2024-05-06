@@ -1,6 +1,6 @@
 from datetime import date
 
-from backend.myapi.models import Examination, Patient
+from myapi.models import Examination, Patient
 from django.db.models import AutoField
 
 

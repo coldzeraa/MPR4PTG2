@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-from db.PatientService import PatientService as PatS
+from myapi.db.PatientService import PatientService as PatS
 
 
 class TestPatientServiceMethods(TestCase):

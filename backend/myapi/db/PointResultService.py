@@ -1,5 +1,5 @@
 from django.db.models import AutoField
-from backend.myapi.cruds import crud_point_result
+from myapi.cruds import crud_point_result
 
 
 class PointResultService:
@@ -9,7 +9,7 @@ class PointResultService:
     
     @staticmethod
     def store(seen: bool, pID: int, exID: int):
-        crud_point_result.create_point_result(seen, pID, exID)
+        return crud_point_result.create_point_result(seen, pID, exID)
     
     @staticmethod
     def get(id:AutoField):
@@ -17,10 +17,10 @@ class PointResultService:
 
     @staticmethod
     def update(resID: AutoField, seen: bool, pID: AutoField,  exID: AutoField):
-        crud_point_result.update_point_result(resID, seen, pID, exID)
+        return crud_point_result.update_point_result(resID, seen, pID, exID)
 
     @staticmethod
     def delete(pID: AutoField):
-        crud_point_result.delete_point_result(pID)
+        return crud_point_result.delete_point_result(pID)
 
     

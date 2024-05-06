@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-import db.PointService as PS
+import myapi.db.PointService as PS
 
 
 class TestPointServiceMethods(TestCase):

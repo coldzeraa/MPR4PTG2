@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 
-from db.PatientService import PatientService
+from myapi.db.PatientService import PatientService
 
 
 @api_view(['GET'])
