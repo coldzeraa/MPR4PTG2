@@ -13,10 +13,26 @@ const Point = ({ x, y }) => {
 
 function Perimetry() {
     const navigate = useNavigate();
+    
     const navigateToExport = () => {
+        if (document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.mozFullScreenElement || 
+            document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
         // Handle Navigation To Export Page
         navigate("/export"); 
     };
+    
 
     // States 
     const [points, setPoints] = useState([]);

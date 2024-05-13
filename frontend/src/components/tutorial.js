@@ -13,9 +13,22 @@ function Tutorial() {
     }
 
     const navigate = useNavigate();
+    
     const navigateToPerimetry = () => {
-        // Handle Navigation To Start Page of Test
-        navigate("/Perimetry"); 
+        // Request fullscreen
+        const element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { /* Firefox */
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { /* IE/Edge */
+            element.msRequestFullscreen();
+        }
+
+        // Navigate to the Perimetry page
+        navigate("/Perimetry");
     };
 
     const handleBackClick = () => {

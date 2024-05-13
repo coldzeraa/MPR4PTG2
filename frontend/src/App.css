@@ -148,8 +148,8 @@ html, body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  left: 33%; /*Horizontally at 33% is the middle of 66% -> the entire split */
-  top: 48.5%; /*Otherwise not centered vertically*/
+  left: 33%;
+  top: 50%;
   z-index: 999;
 }
 
