@@ -19,15 +19,6 @@ def create_point(x: int, y: int, q: int):
     return Point.objects.create(x=x, y=y, quadrant=q)
 
 
-def get_all_points():
-
-    """
-        Get All Point Objects
-        :return: all Point object
-    """
-
-    return Point.objects.all()
-
 
 def get_point_by_id(pID: AutoField):
     """
@@ -67,8 +58,6 @@ def delete_point(pID: AutoField):
     :param pID: id of point
     """
     (Point.objects.get(pID=pID)).delete()
-
-
 
 
 def valid_quadrant(q: int):

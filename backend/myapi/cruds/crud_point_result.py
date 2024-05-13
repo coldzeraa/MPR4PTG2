@@ -49,10 +49,3 @@ def delete_point_result(resID: AutoField):
        """
     point_result = PointResult.objects.get(resID=resID)
     point_result.delete()
-
-
-def get_all_point_result():
-    """
-          get all point result
-   """
-    return PointResult.objects.all()

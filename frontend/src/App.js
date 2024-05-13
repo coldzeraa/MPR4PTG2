@@ -16,6 +16,7 @@ function App() {
         <Route path="/hello_world" element={<HelloWorld />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/Perimetry" element={<Perimetry />} />
+        <Route path="/export" element={<ExportPage />} />
       </Routes>
     </BrowserRouter>
   );

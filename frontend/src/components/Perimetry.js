@@ -12,9 +12,9 @@ const Point = ({ x, y }) => (
 
 function Perimetry() {
     const navigate = useNavigate();
-    const navigateToStart = () => {
-        // Handle Navigation To Start Page
-        navigate("/hello_world"); // TODO CHANGE HERE TO GET TO PDF PAGE OF TEST
+    const navigateToExport = () => {
+        // Handle Navigation To Export Page
+        navigate("/export"); 
     };
 
     // States 
@@ -55,10 +55,10 @@ function Perimetry() {
                     setCurrentPointIndex(0);
                     setSide('right');
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
-                    navigateToStart();                    
+                    navigateToExport();                    
                 }
-            }, 200);
-        }, 1200);
+            }, 50); // 200 
+        }, 100); // 1200
 
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);

@@ -7,14 +7,6 @@ DEFAULT_LASTNAME = "Doe"
 DEFAULT_EMAIL = "unknown"
 
 
-def get_all_patients():
-    """
-        Get All Patient Objects
-        :return: all Patient object
-    """
-    return Patient.objects.all()
-
-
 def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
     """
         Create a new Patient object
