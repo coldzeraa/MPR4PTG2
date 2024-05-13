@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './../App.css';
 
-// Point component to render individual points
-const Point = ({ x, y }) => (
-    <div style={{ position: 'absolute', left: `${x}%`, top: `${y}%` }}>
-        <p style={{ margin: 0, fontSize: '10px' }}>⚫</p>
-    </div>
-);
-
+const Point = ({ x, y }) => {
+    const adjustedX = x * 1.32; // 2/3 of the entire screen width
+    return (
+        <div style={{ position: 'absolute', left: `${adjustedX}%`, top: `${y}%` }}>
+            <p style={{ margin: 0, fontSize: '10px' }}>⚫</p>
+        </div>
+    );
+};
 
 function Perimetry() {
     const navigate = useNavigate();
@@ -49,7 +50,6 @@ function Perimetry() {
             setShowPoint(true);
             setTimeout(() => {
                 setShowPoint(false);
-                // here implement audio i think
                 setCurrentPointIndex(prevIndex => (prevIndex + 1) % points.length);
                 if (currentPointIndex === points.length - 1 && side === 'left') {
                     setCurrentPointIndex(0);
@@ -63,21 +63,22 @@ function Perimetry() {
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);
 
+
     return (
         <div className="split-container">
-            <div className="split-left">
+            <div className={side === 'left' ? "split-focus" : "split-unfocus"}>
                 {/* Render the current point */}
                 {points.length > 0 && side === 'left' && showPoint && (
-                    <Point key={currentPointIndex} x={(points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                    <Point key={currentPointIndex} x={(points[currentPointIndex].x * 0.5)} y={points[currentPointIndex].y} />
                 )}
             </div>
-            <div className="split-midpoint">
-                <p style={{ fontSize: '20px', fontWeight: 'bold' }}>+</p>
+            <div className="split-midpoint" style={{ left: side === 'left' ? 'calc(33%)' : 'calc(66%)' }}>
+                <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'green' }}>+</p>
             </div>
-            <div className="split-right">
+            <div className={side === 'right' ? "split-focus" : "split-unfocus"}>
                 {/* Render the current point */}
                 {points.length > 0 && side === 'right' && showPoint && (
-                    <Point key={currentPointIndex} x={50 + (points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                    <Point key={currentPointIndex} x={25 + (points[currentPointIndex].x * 0.5)} y={points[currentPointIndex].y} />
                 )}
             </div>
         </div>

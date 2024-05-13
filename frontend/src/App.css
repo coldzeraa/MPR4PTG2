@@ -126,23 +126,33 @@ html, body {
   display: flex;
   height: 100vh;
 }
-.split-left, .split-right {
-  flex: 1;
+.split-focus {
+  flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+.split-unfocus {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  width: calc(25%)
+}
+
 .split-midpoint {
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 2px;
-  background-color: black;
-  left: 50%;
+  background-color: transparent;
+  left: 33%; /*Horizontally at 33% is the middle of 66% -> the entire split */
+  top: 48.5%; /*Otherwise not centered vertically*/
   z-index: 999;
 }
+
 
 
 @media (min-width: 576px) {
