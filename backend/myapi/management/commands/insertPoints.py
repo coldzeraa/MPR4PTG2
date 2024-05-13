@@ -7,13 +7,13 @@ class Command(BaseCommand):
     
     # Check quadrant of point
     def getQuadrant(self, x, y):
-        if x < 50 and y >= 50:
+        if x < 48 and y >= 48:
             return 1
-        elif x >= 50 and y >= 50:
+        elif x >= 48 and y >= 48:
             return 2
-        elif x < 50 and y < 50:
+        elif x < 48 and y < 48:
             return 3
-        elif x >= 50 and y < 50:
+        elif x >= 48 and y < 48:
             return 4
         
     # Override handle function -> to call script with manage.py
@@ -22,21 +22,30 @@ class Command(BaseCommand):
         # Point DAO
         ps = PointService()  
 
-        num_points = 76
+        # Number of points
+        numPoints = 76
 
-        # Quadrants
-        yRanges = [(0, 50), (50, 100)]
-        xRanges = [(0, 50), (50, 100)]
+        # Quadrants [[1], [2], [3], [4]]
+        quadrants = [[(0, 47), (48, 97)], [(48, 79), (48, 97)], [(0, 47), (0, 47)], [(48, 79), (0, 47)]]
         
-        for _ in range(num_points):
-            
-            xRange = random.choice(xRanges)
-            yRange = random.choice(yRanges)
-            
-            x = random.randint(*xRange)
-            y = random.randint(*yRange)
-            
-            q = self.getQuadrant(x, y)
-            
-            ps.store(x, y, q)
+        # Calculate number of points in every quadrant
+        numPointsQuadrant = (int)(numPoints / 4)
         
+        for quadrant in quadrants:
+            
+            for _ in range(numPointsQuadrant):
+            
+                # Get range of current quadrant
+                xRange = quadrant[0]
+                yRange = quadrant[1]
+                
+                # Gete random number in current quadrant
+                x = random.randint(*xRange)
+                y = random.randint(*yRange)
+                
+                # Identify quadrant
+                q = self.getQuadrant(x, y)
+                
+                # Store point in database
+                ps.store(x, y, q)
+            
