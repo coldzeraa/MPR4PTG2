@@ -19,6 +19,12 @@ def create_point(x: int, y: int, q: int):
     return Point.objects.create(x=x, y=y, quadrant=q)
 
 
+def get_all_points():
+    """
+       Get all Points
+    """
+    return Point.objects.all()
+
 
 def get_point_by_id(pID: AutoField):
     """

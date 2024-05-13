@@ -15,6 +15,12 @@ def create_examination(exDate: date, patID: AutoField):
     patient = Patient.objects.get(patID=patID)
     return Examination.objects.create(date=exDate, pat=patient)
 
+def get_all_examinations():
+    """
+       Get all Examinations
+    """
+    return Examination.objects.all()
+
 
 def get_examination_by_id(exID: AutoField):
     """

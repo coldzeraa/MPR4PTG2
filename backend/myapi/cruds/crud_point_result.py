@@ -15,6 +15,13 @@ def create_point_result(seen: bool, pID: int, exID: int):
     return PointResult.objects.create(seen=seen, p=pID, ex=exID)
 
 
+def get_all_point_results():
+    """
+       Get all PointResults
+    """
+    return PointResult.objects.all()
+
+
 def get_point_result_by_id(resID: AutoField):
     """
        Get PointResult by given ID
