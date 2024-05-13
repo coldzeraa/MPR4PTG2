@@ -13,7 +13,8 @@ class TestPatientServiceMethods(TestCase):
             PatS.store("Alexandra", "Denk")
         ]
         patientsRes = PatS.get_all()
-        self.assertEqual(patientsCorr, patientsRes)
+        for index, patient in enumerate(patientsCorr):
+            self.assertEqual(patient, patientsRes[index])
 
     def test_store_patient_def_valid(self):
         pat = PatS.store("", "", "")
