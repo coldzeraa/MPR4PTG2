@@ -48,3 +48,13 @@ def login(request):
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+
+@api_view(['GET'])
+def getPoints(request):
+    
+    if request.method == 'GET':
+    # TODO get point array from PointLoader and send it to frontend!!!!!!!!!!!!!!!!
+    # TODO ELISABETH NERVEN WEIL KEINE AHNUNG VON PACKAGES!!!!!!
+    
+    
+    
