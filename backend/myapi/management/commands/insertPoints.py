@@ -21,27 +21,10 @@ class Command(BaseCommand):
         
         # Point DAO
         ps = PointService()  
-
-        # Number of points
-        numPoints = 76
-
-        # Quadrants [[1], [2], [3], [4]]
-        quadrants = [[(0, 47), (48, 97)], [(48, 79), (48, 97)], [(0, 47), (0, 47)], [(48, 79), (0, 47)]]
         
-        # Calculate number of points in every quadrant
-        numPointsQuadrant = (int)(numPoints / 4)
-        
-        for quadrant in quadrants:
+        for x in range(0, 98):
             
-            for _ in range(numPointsQuadrant):
-            
-                # Get range of current quadrant
-                xRange = quadrant[0]
-                yRange = quadrant[1]
-                
-                # Gete random number in current quadrant
-                x = random.randint(*xRange)
-                y = random.randint(*yRange)
+            for y in range(0, 98):
                 
                 # Identify quadrant
                 q = self.getQuadrant(x, y)

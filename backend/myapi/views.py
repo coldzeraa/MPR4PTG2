@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from myapi.cruds import crud_patient
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
+from myapi.point_loader.PointLoader import PointLoader
 
 @api_view(['GET'])
 def hello_world(request):
@@ -53,8 +54,16 @@ def login(request):
 def getPoints(request):
     
     if request.method == 'GET':
-    # TODO get point array from PointLoader and send it to frontend!!!!!!!!!!!!!!!!
-    # TODO ELISABETH NERVEN WEIL KEINE AHNUNG VON PACKAGES!!!!!!
+        # Get points from loader
+        points = PointLoader.loadPoints()
+        
+        # Return JSON with all points
+        return Response({'message': [
+            [{'point': str(point)} for point in points]
+        ]})
+        
+    else:
+        raise RuntimeError
     
     
     
