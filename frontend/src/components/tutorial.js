@@ -7,7 +7,7 @@ function Tutorial() {
     function BackButton({ onClick }) {
         return (
             <button className="button back-button" onClick={onClick}>
-                ← Back
+                ← Zurück
             </button>
         );
     }

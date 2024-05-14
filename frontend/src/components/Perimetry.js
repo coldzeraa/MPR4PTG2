@@ -73,8 +73,8 @@ function Perimetry() {
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
                     navigateToExport();                    
                 }
-            }, 50); // 200 
-        }, 100); // 1200
+            }, 100); // 200 
+        }, 300); // 1200
 
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);
