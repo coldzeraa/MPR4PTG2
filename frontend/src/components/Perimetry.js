@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './../App.css';
+import useVolumeLevel from './useVolumeLevel';
 
 const Point = ({ x, y }) => {
     const adjustedX = x * 1.32; // 2/3 of the entire screen width
@@ -12,6 +13,10 @@ const Point = ({ x, y }) => {
 };
 
 function Perimetry() {
+    const [startRecording, stopRecording, volume, max] = useVolumeLevel();
+
+
+
     const navigate = useNavigate();
     
     const navigateToExport = () => {
@@ -61,11 +66,13 @@ function Perimetry() {
         fetchPoints();
     }, []);
 
+
     useEffect(() => {
         const interval = setInterval(() => {
             setShowPoint(true);
             setTimeout(() => {
                 setShowPoint(false);
+                startRecording()
                 setCurrentPointIndex(prevIndex => (prevIndex + 1) % points.length);
                 if (currentPointIndex === points.length - 1 && side === 'left') {
                     setCurrentPointIndex(0);
@@ -73,9 +80,14 @@ function Perimetry() {
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
                     navigateToExport();                    
                 }
-            }, 100); // 200 
-        }, 300); // 1200
+            }, 300); // 200 
+        }, 2000); // 1200
+        console.log(max)
 
+        if(max >= 15) {
+            console.log("seen")
+        }
+        stopRecording()
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);
 
