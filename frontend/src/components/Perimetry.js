@@ -13,10 +13,26 @@ const Point = ({ x, y }) => {
 
 function Perimetry() {
     const navigate = useNavigate();
+    
     const navigateToExport = () => {
+        if (document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.mozFullScreenElement || 
+            document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
         // Handle Navigation To Export Page
         navigate("/export"); 
     };
+    
 
     // States 
     const [points, setPoints] = useState([]);
@@ -57,8 +73,8 @@ function Perimetry() {
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
                     navigateToExport();                    
                 }
-            }, 50); // 200 
-        }, 100); // 1200
+            }, 100); // 200 
+        }, 300); // 1200
 
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);
