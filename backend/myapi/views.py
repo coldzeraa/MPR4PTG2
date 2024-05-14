@@ -5,11 +5,9 @@ from rest_framework.decorators import api_view
 from myapi.cruds import crud_patient
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from myapi.point_loader.PointLoader import PointLoader
+from myapi.point_loader.PointAdministrator import PointAdministrator
+from myapi.db.PointService import PointService
 
-@api_view(['GET'])
-def hello_world(request):
-    return Response({'message': 'Hello, world!'})
 
 @api_view(['POST'])
 def login(request):
@@ -54,16 +52,37 @@ def login(request):
 def getPoints(request):
     
     if request.method == 'GET':
-        # Get points from loader
-        points = PointLoader.loadPoints()
         
+        # Initialize empty list
+        selectedPoints = []
+        
+        # Iterate quadrants
+        for q in range (1, 5):
+
+            # Get points of current quadrant from loader
+            points = PointAdministrator.loadPoints(q)
+            
+            # Get all points from database
+            query = PointService.get_all()
+            
+            # Convert to list
+            query = [point for point in query]
+    
+            # Get 19 uniformed indices 
+            uniformedList = PointAdministrator.getUniformedList(points)
+            
+            # Add uniformed points to dict
+            for i in uniformedList:
+                selectedPoints.append(points[i])                                        
+                    
         # Return JSON with all points
         return Response({'message': [
-            [{'point': str(point)} for point in points]
+            [{'point': str(point)} for point in selectedPoints]
         ]})
         
     else:
         raise RuntimeError
     
     
+
     

@@ -1,19 +1,18 @@
 from myapi.db.PointService import PointService
 from django.core.management.base import BaseCommand
-import random
 
 
 class Command(BaseCommand):
     
     # Check quadrant of point
     def getQuadrant(self, x, y):
-        if x < 48 and y >= 48:
+        if x < 49 and y >= 49:
             return 1
-        elif x >= 48 and y >= 48:
+        elif x >= 49 and y >= 49:
             return 2
-        elif x < 48 and y < 48:
+        elif x < 49 and y < 49:
             return 3
-        elif x >= 48 and y < 48:
+        elif x >= 49 and y < 49:
             return 4
         
     # Override handle function -> to call script with manage.py
