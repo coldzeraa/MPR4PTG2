@@ -8,6 +8,10 @@ class PointService:
         return crud_point.get_all_points()
     
     @staticmethod
+    def get_points_by_quadrant(quadrant: int):
+        return crud_point.get_points_by_quadrant(quadrant)
+    
+    @staticmethod
     def store(x: int, y: int, q: int):
         return crud_point.create_point(x, y, q)
     
