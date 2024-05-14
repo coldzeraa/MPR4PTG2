@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from myapi.cruds import crud_patient
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from myapi.point_loader.PointAdministrator import PointAdministrator
+from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.db.PointService import PointService
 
 
