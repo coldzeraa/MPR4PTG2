@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './../App.css';
+import useVolumeLevel from './useVolumeLevel';
 
 // Point component to render individual points
 const Point = ({ x, y }) => (
@@ -11,6 +12,10 @@ const Point = ({ x, y }) => (
 
 
 function Perimetry() {
+    const [startRecording, stopRecording, volume, max] = useVolumeLevel();
+
+
+
     const navigate = useNavigate();
     const navigateToExport = () => {
         // Handle Navigation To Export Page
@@ -44,12 +49,13 @@ function Perimetry() {
         fetchPoints();
     }, []);
 
+
     useEffect(() => {
         const interval = setInterval(() => {
             setShowPoint(true);
             setTimeout(() => {
                 setShowPoint(false);
-                // here implement audio i think
+                startRecording()
                 setCurrentPointIndex(prevIndex => (prevIndex + 1) % points.length);
                 if (currentPointIndex === points.length - 1 && side === 'left') {
                     setCurrentPointIndex(0);
@@ -57,11 +63,17 @@ function Perimetry() {
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
                     navigateToExport();                    
                 }
-            }, 50); // 200 
-        }, 100); // 1200
+            }, 300); // 200 
+        }, 2000); // 1200
+        console.log(max)
 
+        if(max >= 15) {
+            console.log("seen")
+        }
+        stopRecording()
         return () => clearInterval(interval);
     }, [points, currentPointIndex, side]);
+
 
     return (
         <div className="split-container">

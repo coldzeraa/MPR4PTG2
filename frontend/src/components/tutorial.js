@@ -1,7 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import './../App.css';
+import useVolumeLevel from './useVolumeLevel';
 
 function Tutorial() {
+
+    const [startRecording, stopRecording, volume, max] = useVolumeLevel();
 
     // Define Back Button
     function BackButton({ onClick }) {
@@ -14,6 +17,8 @@ function Tutorial() {
 
     const navigate = useNavigate();
     const navigateToPerimetry = () => {
+        startRecording()
+
         // Handle Navigation To Start Page of Test
         navigate("/Perimetry"); 
     };
@@ -22,6 +27,7 @@ function Tutorial() {
         // Handle click event for the back button
         navigate("/login");
     };
+
 
     return (
         // Formatting
