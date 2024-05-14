@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import './../App.css';
 import useVolumeLevel from './useVolumeLevel';
 
-// Point component to render individual points
-const Point = ({ x, y }) => (
-    <div style={{ position: 'absolute', left: `${x}%`, top: `${y}%` }}>
-        <p style={{ margin: 0, fontSize: '10px' }}>⚫</p>
-    </div>
-);
-
+const Point = ({ x, y }) => {
+    const adjustedX = x * 1.32; // 2/3 of the entire screen width
+    return (
+        <div style={{ position: 'absolute', left: `${adjustedX}%`, top: `${y}%` }}>
+            <p style={{ margin: 0, fontSize: '10px' }}>⚫</p>
+        </div>
+    );
+};
 
 function Perimetry() {
     const [startRecording, stopRecording, volume, max] = useVolumeLevel();
@@ -17,10 +18,26 @@ function Perimetry() {
 
 
     const navigate = useNavigate();
+    
     const navigateToExport = () => {
+        if (document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.mozFullScreenElement || 
+            document.msFullscreenElement) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
         // Handle Navigation To Export Page
         navigate("/export"); 
     };
+    
 
     // States 
     const [points, setPoints] = useState([]);
@@ -77,19 +94,19 @@ function Perimetry() {
 
     return (
         <div className="split-container">
-            <div className="split-left">
+            <div className={side === 'left' ? "split-focus" : "split-unfocus"}>
                 {/* Render the current point */}
                 {points.length > 0 && side === 'left' && showPoint && (
-                    <Point key={currentPointIndex} x={(points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                    <Point key={currentPointIndex} x={(points[currentPointIndex].x * 0.5)} y={points[currentPointIndex].y} />
                 )}
             </div>
-            <div className="split-midpoint">
-                <p style={{ fontSize: '20px', fontWeight: 'bold' }}>+</p>
+            <div className="split-midpoint" style={{ left: side === 'left' ? 'calc(33%)' : 'calc(66%)' }}>
+                <p style={{ fontSize: '20px', fontWeight: 'bold', color: 'green' }}>+</p>
             </div>
-            <div className="split-right">
+            <div className={side === 'right' ? "split-focus" : "split-unfocus"}>
                 {/* Render the current point */}
                 {points.length > 0 && side === 'right' && showPoint && (
-                    <Point key={currentPointIndex} x={50 + (points[currentPointIndex].x * 0.5) % 50} y={points[currentPointIndex].y} />
+                    <Point key={currentPointIndex} x={25 + (points[currentPointIndex].x * 0.5)} y={points[currentPointIndex].y} />
                 )}
             </div>
         </div>
