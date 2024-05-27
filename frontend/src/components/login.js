@@ -104,9 +104,9 @@ function Login() {
       }
 
       // Store name and email in localStorage
-      localStorage.setItem('firstName', formData.firstName);
-      localStorage.setItem('lastName', formData.lastName);
-      localStorage.setItem('email', formData.email);
+      localStorage.setItem("firstName", formData.firstName);
+      localStorage.setItem("lastName", formData.lastName);
+      localStorage.setItem("email", formData.email);
 
       // Parse response as JSON
       const responseData = await response.json();
@@ -130,9 +130,9 @@ function Login() {
       };
 
       // Store empty name and empty email in localStorage
-      localStorage.setItem('firstName', form.firstName);
-      localStorage.setItem('lastName', form.lastName);
-      localStorage.setItem('email', form.email);
+      localStorage.setItem("firstName", form.firstName);
+      localStorage.setItem("lastName", form.lastName);
+      localStorage.setItem("email", form.email);
 
       // Fetch data via "POST" to backend
       const response = await fetch("http://127.0.0.1:8000/api/login/", {

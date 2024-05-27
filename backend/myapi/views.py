@@ -61,12 +61,6 @@ def getPoints(request):
 
             # Get points of current quadrant from loader
             points = PointAdministrator.loadPoints(q)
-            
-            # Get all points from database
-            query = PointService.get_all()
-            
-            # Convert to list
-            query = [point for point in query]
     
             # Get 19 uniformed indices 
             uniformedList = PointAdministrator.getUniformedList(points)

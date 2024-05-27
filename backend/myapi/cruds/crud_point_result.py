@@ -12,6 +12,7 @@ def create_point_result(seen: bool, pID: int, exID: int):
         :param exID: examination ID
         :return: new PointResult
        """
+       
     return PointResult.objects.create(seen=seen, p=pID, ex=exID)
 
 

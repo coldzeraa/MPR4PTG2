@@ -4,7 +4,7 @@ from myapi.models import Examination, Patient
 from django.db.models import AutoField
 
 
-def create_examination(exDate: date, patID: AutoField):
+def create_examination(exDate: date, pat: Patient):
     """
         Create a new Examination object
 
@@ -12,8 +12,7 @@ def create_examination(exDate: date, patID: AutoField):
         :param patID: patient ID
         :return: new examination
        """
-    patient = Patient.objects.get(patID=patID)
-    return Examination.objects.create(date=exDate, pat=patient)
+    return Examination.objects.create(date=exDate, pat=pat)
 
 def get_all_examinations():
     """
