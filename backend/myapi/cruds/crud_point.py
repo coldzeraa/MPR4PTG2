@@ -15,8 +15,11 @@ def create_point(x: int, y: int, q: int):
     """
     if not valid_quadrant(q):
         raise ValueError("Invalid quadrant value")
+    
+    # Hash primary key
+    id = x * 100 + y
 
-    return Point.objects.create(x=x, y=y, quadrant=q)
+    return Point.objects.create(pID=id, x=x, y=y, quadrant=q)
 
 
 def get_all_points():
@@ -36,7 +39,7 @@ def get_points_by_quadrant(quadrant: int):
         raise RuntimeError
 
 
-def get_point_by_id(pID: AutoField):
+def get_point_by_id(pID: int):
     """
        Get Point by given ID
 
@@ -46,7 +49,7 @@ def get_point_by_id(pID: AutoField):
     return Point.objects.get(pID=pID)
 
 
-def update_point(pID: AutoField, x: int, y: int, quadrant: int):
+def update_point(pID: int, x: int, y: int, quadrant: int):
     """
        Update Point, set given parameters
 
@@ -67,7 +70,7 @@ def update_point(pID: AutoField, x: int, y: int, quadrant: int):
     return point
 
 
-def delete_point(pID: AutoField):
+def delete_point(pID: int):
     """
     Delete Point
 
