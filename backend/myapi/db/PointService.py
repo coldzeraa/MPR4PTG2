@@ -24,13 +24,13 @@ class PointService:
         return PointService.store_by_parameters(x, y, q)
     
     @staticmethod
-    def get(id:AutoField):
+    def get(id: int):
         return crud_point.get_point_by_id(id)
 
     @staticmethod
-    def update(pID: AutoField, x: int, y: int, quadrant: int):
+    def update(pID: int, x: int, y: int, quadrant: int):
         return crud_point.update_point(pID, x, y, quadrant)
 
     @staticmethod
-    def delete(pID: AutoField):
+    def delete(pID: int):
         return crud_point.delete_point(pID)

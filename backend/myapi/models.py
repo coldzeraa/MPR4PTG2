@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Point(models.Model):
-    pID = models.AutoField(primary_key=True)     # ID
+    pID = models.IntegerField(primary_key=True)     # ID
     x = models.IntegerField()                    # x coordinate
     y = models.IntegerField()                    # y coordinate
     quadrant = models.IntegerField()             # quadrant
