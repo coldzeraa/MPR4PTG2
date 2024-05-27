@@ -17,7 +17,7 @@ class TestPointResultMethods(TestCase):
     def test_create_point_result_valid(self):
         p = create_point(2, 4, 1)
         pat = create_patient()
-        ex = create_examination(datetime.date.today(), pat.patID)
+        ex = create_examination(datetime.date.today(), pat)
         pr = create_point_result(True, p, ex)
         self.assertEqual(pr.seen, True)
         self.assertEqual(pr.p, p)
@@ -26,7 +26,7 @@ class TestPointResultMethods(TestCase):
     def test_get_point_result_valid_id(self):
         p = create_point(2, 4, 1)
         pat = create_patient()
-        ex = create_examination(datetime.date.today(), pat.patID)
+        ex = create_examination(datetime.date.today(), pat)
         pr1 = create_point_result(True, p, ex)
         pr2 = get_point_result_by_id(pr1.resID)
         self.assertEqual(pr1, pr2)
@@ -39,7 +39,7 @@ class TestPointResultMethods(TestCase):
     def test_update_point_result_valid(self):
         p = create_point(2, 4, 1)
         pat = create_patient()
-        ex = create_examination(datetime.date.today(), pat.patID)
+        ex = create_examination(datetime.date.today(), pat)
         prOld = create_point_result(True, p, ex)
         prNew = update_point_result(prOld.resID, False, p, ex)
         prCorr = create_point_result(False, p, ex)
@@ -50,7 +50,7 @@ class TestPointResultMethods(TestCase):
     def test_delete_point_result_valid(self):
         p = create_point(2, 4, 1)
         pat = create_patient()
-        ex = create_examination(datetime.date.today(), pat.patID)
+        ex = create_examination(datetime.date.today(), pat)
         pr = create_point_result(True, p, ex)
         delete_point_result(pr.resID)
         with self.assertRaises(ObjectDoesNotExist):
