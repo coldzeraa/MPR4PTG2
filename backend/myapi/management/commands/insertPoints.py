@@ -29,5 +29,5 @@ class Command(BaseCommand):
                 q = self.getQuadrant(x, y)
                 
                 # Store point in database
-                ps.store(x, y, q)
+                ps.store_by_parameters(x, y, q)
             
