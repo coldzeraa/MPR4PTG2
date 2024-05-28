@@ -1,18 +1,28 @@
 from django.db.models import AutoField
 
 from myapi.models import PointResult
+from myapi.model.Point import Point
+from myapi.model.Examination import Examination
 
 
-def create_point_result(seen: bool, pID: int, exID: int):
+def create_point_result(seen: bool, p: Point, ex: Examination):
     """
         Create a new PointResult Object
 
         :param seen: specifies if Point was recognized
-        :param pID: patient ID
-        :param exID: examination ID
+        :param p: patient 
+        :param ex: examination 
         :return: new PointResult
        """
-    return PointResult.objects.create(seen=seen, p=pID, ex=exID)
+       
+    return PointResult.objects.create(seen=seen, p=p, ex=ex)
+
+
+def get_all_point_results():
+    """
+       Get all PointResults
+    """
+    return PointResult.objects.all()
 
 
 def get_point_result_by_id(resID: AutoField):

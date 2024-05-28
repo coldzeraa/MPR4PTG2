@@ -3,12 +3,16 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from myapi.cruds import crud_patient
+from myapi.db.PointResultService import PointResultService
+from myapi.db.PointService import PointService
+from myapi.db.PatientService import PatientService
+from myapi.db.ExaminationService import ExaminationService
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
-@api_view(['GET'])
-def hello_world(request):
-    return Response({'message': 'Hello, world!'})
+from myapi.model.Point import Point
+from myapi.model.Examination import Examination
+from myapi.model.Patient import Patient
+import datetime
 
 @api_view(['POST'])
 def login(request):
@@ -48,3 +52,17 @@ def login(request):
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+@api_view(['POST'])
+def perimetry(request):
+    if request.method == 'POST':
+        
+        x = request.data.get('x')
+        y = request.data.get('y')
+        result = request.data.get('result')
+        print(result, x, y)
+        p = PointService.get(100*x+y)
+        pat = PatientService.store("Alex", "Denk")
+        e = ExaminationService.store(pat.patID, datetime.datetime.today())
+        PointResultService.store(result, p, e)
+        return JsonResponse({'message': 'SUCCESS'}, status=200)
+        

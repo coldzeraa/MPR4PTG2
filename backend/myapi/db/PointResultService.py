@@ -1,5 +1,7 @@
 from django.db.models import AutoField
 from myapi.cruds import crud_point_result
+from myapi.model.Point import Point
+from myapi.model.Examination import Examination
 
 
 class PointResultService:
@@ -8,8 +10,8 @@ class PointResultService:
         return crud_point_result.get_all_point_result()
     
     @staticmethod
-    def store(seen: bool, pID: int, exID: int):
-        return crud_point_result.create_point_result(seen, pID, exID)
+    def store(seen: bool, p: Point, ex: Examination):
+        return crud_point_result.create_point_result(seen, p, ex)
     
     @staticmethod
     def get(id:AutoField):
