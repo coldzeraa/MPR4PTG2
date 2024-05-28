@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import AutoField
 
-from myapi.models import Point
+from myapi.models import Point1
 
 
 def create_point(x: int, y: int, q: int):
@@ -19,14 +19,15 @@ def create_point(x: int, y: int, q: int):
     # Hash primary key
     id = x * 100 + y
 
-    return Point.objects.create(pID=id, x=x, y=y, quadrant=q)
+    return Point1.objects.create(pID=id, x=x, y=y, quadrant=q)
 
 
 def get_all_points():
     """
        Get all Points
     """
-    return Point.objects.all()
+    return Point1.objects.all()
+
 
 
 def get_points_by_quadrant(quadrant: int):
@@ -34,7 +35,8 @@ def get_points_by_quadrant(quadrant: int):
        Get all Points from a specific quadrant
     """
     if valid_quadrant(quadrant):
-        return Point.objects.filter(quadrant=quadrant)
+        return Point1.objects.filter(quadrant=quadrant)
+
     else:
         raise RuntimeError
 
@@ -46,7 +48,8 @@ def get_point_by_id(pID: int):
        :param pID: point ID
        :return: Point Object
     """
-    return Point.objects.get(pID=pID)
+    print(pID)
+    return Point1.objects.get(pID=pID)
 
 
 def update_point(pID: int, x: int, y: int, quadrant: int):
@@ -62,7 +65,7 @@ def update_point(pID: int, x: int, y: int, quadrant: int):
     if not valid_quadrant(quadrant):
         raise ValueError("Invalid quadrant value")
 
-    point = Point.objects.get(pID=pID)
+    point = Point1.objects.get(pID=pID)
     point.x = x
     point.y = y
     point.quadrant = quadrant
@@ -76,7 +79,7 @@ def delete_point(pID: int):
 
     :param pID: id of point
     """
-    (Point.objects.get(pID=pID)).delete()
+    (Point1.objects.get(pID=pID)).delete()
 
 
 def valid_quadrant(q: int):

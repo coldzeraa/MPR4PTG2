@@ -1,3 +1,4 @@
+
 from django.db.models import AutoField
 from myapi.cruds import crud_point
 from myapi.model.Point import Point

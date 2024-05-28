@@ -12,17 +12,16 @@ const Point = ({ x, y }) => {
     );
 };
 
+
 function Perimetry() {
     const [startRecording, stopRecording, volume, max] = useVolumeLevel();
 
-
-
     const navigate = useNavigate();
-    
+
     const navigateToExport = () => {
-        if (document.fullscreenElement || 
-            document.webkitFullscreenElement || 
-            document.mozFullScreenElement || 
+        if (document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
             document.msFullscreenElement) {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
@@ -35,9 +34,9 @@ function Perimetry() {
             }
         }
         // Handle Navigation To Export Page
-        navigate("/export"); 
+        navigate("/export");
     };
-    
+
 
     // States 
     const [points, setPoints] = useState([]);
@@ -50,6 +49,7 @@ function Perimetry() {
         const fetchPoints = async () => {
             // TODO REPLACE WITH ACTUAL BACKEND DATA
             const fetchedPoints = [
+                { x: 0, y: 0 },
                 { x: 10, y: 10 },
                 { x: 20, y: 20 },
                 { x: 30, y: 30 },
@@ -58,7 +58,8 @@ function Perimetry() {
                 { x: 60, y: 60 },
                 { x: 70, y: 70 },
                 { x: 80, y: 80 },
-                { x: 90, y: 90 }, 
+                { x: 90, y: 90 },
+                { x: 97, y: 97 },
             ];
             setPoints(fetchedPoints);
         };
@@ -66,31 +67,57 @@ function Perimetry() {
         fetchPoints();
     }, []);
 
+    // Function to save points to backend
+    const handleResults = async (x, y, result) => {
+        try {
+            const test = {
+                x,
+                y,
+                result
+            };
+
+            const response = await fetch("http://127.0.0.1:8000/api/perimetry/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(test),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to send results");
+            }
+        } catch (error) {
+            console.error("Failed to submit results:", error);
+        }
+    };
 
     useEffect(() => {
         const interval = setInterval(() => {
             setShowPoint(true);
             setTimeout(() => {
                 setShowPoint(false);
-                startRecording()
+                startRecording();
+                const currentPoint = points[currentPointIndex];
+                const currentX = currentPoint.x;
+                const currentY = currentPoint.y;
+
                 setCurrentPointIndex(prevIndex => (prevIndex + 1) % points.length);
                 if (currentPointIndex === points.length - 1 && side === 'left') {
                     setCurrentPointIndex(0);
                     setSide('right');
                 } else if (currentPointIndex === points.length - 1 && side === 'right') {
-                    navigateToExport();                    
+                    navigateToExport();
                 }
+
+                handleResults(currentX, currentY, max >= 15)
+
+                stopRecording();
             }, 300); // 200 
         }, 2000); // 1200
-        console.log(max)
 
-        if(max >= 15) {
-            console.log("seen")
-        }
-        stopRecording()
         return () => clearInterval(interval);
-    }, [points, currentPointIndex, side]);
-
+    }, [points, currentPointIndex, side, max]);
 
     return (
         <div className="split-container">

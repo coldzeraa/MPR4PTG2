@@ -1,7 +1,9 @@
+
 from django.db import models
 
 
-class Point(models.Model):
+class Point1(models.Model):
+
     pID = models.IntegerField(primary_key=True)     # ID
     x = models.IntegerField()                    # x coordinate
     y = models.IntegerField()                    # y coordinate
@@ -33,5 +35,5 @@ class PointResult(models.Model):
     resID = models.AutoField(primary_key=True)   # ID
     seen = models.BooleanField()                    # point seen (t/f)
 
-    p = models.ForeignKey(Point, on_delete=models.CASCADE)              # point
+    p = models.ForeignKey(Point1, on_delete=models.CASCADE)              # point
     ex = models.ForeignKey(Examination, on_delete=models.CASCADE)  # examination
