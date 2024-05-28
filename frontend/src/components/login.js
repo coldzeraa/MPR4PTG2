@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { properties } from "../properties.js";
 
 function Login() {
   // Create navigate
@@ -14,7 +15,7 @@ function Login() {
   function BackButton({ onClick }) {
     return (
       <button className="button back-button" onClick={onClick}>
-        ← Back
+        ← Zurück
       </button>
     );
   }
@@ -92,7 +93,7 @@ function Login() {
 
     try {
       // Fetch data via "POST" to backend
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(`${properties.host}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +136,7 @@ function Login() {
       localStorage.setItem("email", form.email);
 
       // Fetch data via "POST" to backend
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(`${properties.host}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
