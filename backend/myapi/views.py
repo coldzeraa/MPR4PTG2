@@ -17,7 +17,6 @@ import datetime
 @api_view(['POST'])
 def login(request):
     if request.method == 'POST':
-        
         # Get data from request
         first_name = str(request.data.get('firstName'))
         last_name = str(request.data.get('lastName'))
@@ -59,7 +58,6 @@ def perimetry(request):
         x = request.data.get('x')
         y = request.data.get('y')
         result = request.data.get('result')
-        print(result, x, y)
         p = PointService.get(100*x+y)
         pat = PatientService.store("Alex", "Denk")
         e = ExaminationService.store(pat, datetime.datetime.today())
