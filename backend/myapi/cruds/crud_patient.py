@@ -24,6 +24,13 @@ def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
     return Patient.objects.create(firstName=firstName, lastName=lastName, email=email)
 
 
+def get_all_patients():
+    """
+       Get all Patients
+    """
+    return Patient.objects.all()
+
+
 def get_patient_by_id(patID: AutoField):
     """
        Get Patient by given id

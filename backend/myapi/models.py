@@ -3,6 +3,7 @@ from django.db import models
 
 
 class Point1(models.Model):
+
     pID = models.IntegerField(primary_key=True)     # ID
     x = models.IntegerField()                    # x coordinate
     y = models.IntegerField()                    # y coordinate

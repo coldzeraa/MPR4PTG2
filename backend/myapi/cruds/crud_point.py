@@ -29,12 +29,14 @@ def get_all_points():
     return Point1.objects.all()
 
 
+
 def get_points_by_quadrant(quadrant: int):
     """
        Get all Points from a specific quadrant
     """
     if valid_quadrant(quadrant):
         return Point1.objects.filter(quadrant=quadrant)
+
     else:
         raise RuntimeError
 
