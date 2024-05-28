@@ -62,7 +62,7 @@ def perimetry(request):
         print(result, x, y)
         p = PointService.get(100*x+y)
         pat = PatientService.store("Alex", "Denk")
-        e = ExaminationService.store(pat.patID, datetime.datetime.today())
+        e = ExaminationService.store(pat, datetime.datetime.today())
         PointResultService.store(result, p, e)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
-        
+
