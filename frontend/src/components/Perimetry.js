@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import useVolumeLevel from "./useVolumeLevel";
-import { properties } from "../properties";
 
 const Point = ({ x, y }) => {
   const adjustedX = x * 1.32; // 2/3 of the entire screen width
@@ -77,13 +76,16 @@ function Perimetry() {
         result,
       };
 
-      const response = await fetch(`${properties.host}/api/perimetry/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(test),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/perimetry/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(test),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to send results");
