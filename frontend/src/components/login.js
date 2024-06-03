@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { properties } from "../properties.js";
 
 function Login() {
   // Create navigate
@@ -93,13 +92,16 @@ function Login() {
 
     try {
       // Fetch data via "POST" to backend
-      const response = await fetch(`${properties.host}/api/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/login/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       if (!response.ok) {
         throw new Error("Sending failed");
       }
@@ -136,13 +138,16 @@ function Login() {
       localStorage.setItem("email", form.email);
 
       // Fetch data via "POST" to backend
-      const response = await fetch(`${properties.host}/api/login/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/login/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
 
       // Check if response is okay
       if (!response.ok) {
