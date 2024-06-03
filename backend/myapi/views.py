@@ -13,6 +13,7 @@ from myapi.model.Point import Point
 from myapi.model.Examination import Examination
 from myapi.model.Patient import Patient
 import datetime
+from myapi.point_administrator.PointAdministrator import PointAdministrator
 
 @api_view(['POST'])
 def login(request):
@@ -64,3 +65,24 @@ def perimetry(request):
         PointResultService.store(result, p, e)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
+@api_view(['GET'])
+def get_points(request):
+    
+    # Raw list for points
+    points = []
+    
+    # Request method
+    if request.method == "GET":
+        # Every quadrant
+        for quadrant in range(1, 5):
+            
+            # Get all points of quadrant
+            currentPoints = PointAdministrator.loadPoints(quadrant)
+            # Get uniformly distributed indices
+            pointIndices = PointAdministrator.getUniformedList(currentPoints)
+
+            # Add points to point list
+            points.extend([currentPoints[i] for i in pointIndices])
+    
+    # Send point list to frontend as json
+    return JsonResponse({'points': [{'x': p.x, 'y': p.y} for p in points]}, status=200)
