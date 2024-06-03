@@ -16,11 +16,18 @@ class Command(BaseCommand):
 
             point = pRes.p
             seen = pRes.seen
-            pos = (point.x + 2, point.y + 2)
+            pos = ((point.x + 2), (point.y + 2))
+            startpos = (pos[0]-1, pos[1]-1)
+            endpos = (pos[0]+1, pos[1]+1)
 
             if seen:
+                # draw.ellipse([startpos, endpos], None, "green", 2)
                 draw.point(pos, fill="green")
             else:
                 draw.point(pos, fill="red")
+                # draw.rectangle(pos, None, "black", 2)
+
+
+
 
         image.save('result.png')
