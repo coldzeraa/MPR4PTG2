@@ -67,6 +67,11 @@ html, body {
   text-align: center;
 }
 
+.content-left {
+  text-align: left;
+}
+
+
 /*BUTTONS*/
 
 .button {
@@ -114,12 +119,13 @@ html, body {
 /*SCROLLABLE TEXT*/
 .scroll-box {
   width: 80%; 
-  height: 200px; 
+  height: 400px; 
   border: 1px solid #ccc;
   overflow: scroll; 
   padding: 10px; 
   margin: 0 auto;
 }
+
 
 /*PERIMETRY*/
 .split-container {
