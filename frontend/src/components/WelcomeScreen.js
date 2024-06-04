@@ -14,7 +14,7 @@ function WelcomeScreen() {
 
   const handleInfoClick = () => {
     // Handle click event for the info button
-    window.alert("Info Button Clicked!");
+    navigate("/Info")
   };
 
   // Handle Navigation To Login Page
