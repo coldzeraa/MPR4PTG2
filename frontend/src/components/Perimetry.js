@@ -46,21 +46,36 @@ function Perimetry() {
 
   // Get Points from Backend
   useEffect(() => {
+    // Get points from backend
     const fetchPoints = async () => {
-      // TODO REPLACE WITH ACTUAL BACKEND DATA
-      const fetchedPoints = [
-        { x: 0, y: 0 },
-        { x: 10, y: 10 },
-        { x: 20, y: 20 },
-        { x: 30, y: 30 },
-        { x: 40, y: 40 },
-        { x: 50, y: 50 },
-        { x: 60, y: 60 },
-        { x: 70, y: 70 },
-        { x: 80, y: 80 },
-        { x: 90, y: 90 },
-        { x: 97, y: 97 },
-      ];
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/get_points/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Sending failed (Points)");
+      }
+
+      // Convert to JSON
+      const data = await response.json();
+
+      // Get point array
+      const pointArray = data.points;
+
+      // Formatted array
+      const fetchedPoints = [];
+
+      // Insert points into formatted array
+      for (let i = 0; i < pointArray.length; i++) {
+        fetchedPoints.push({ x: pointArray[i].x, y: pointArray[i].y });
+      }
+
+      // Set points state
       setPoints(fetchedPoints);
     };
 
@@ -120,7 +135,7 @@ function Perimetry() {
 
         stopRecording();
       }, 300); // 200
-    }, 2000); // 1200
+    }, 100); // 1200
 
     return () => clearInterval(interval);
   }, [points, currentPointIndex, side, max]);
