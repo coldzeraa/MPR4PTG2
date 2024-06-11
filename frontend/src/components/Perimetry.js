@@ -79,8 +79,6 @@ function Perimetry() {
         result: result
       };
 
-      console.log("EX: " + ex);
-
       const response = await fetch(`http://localhost:8000/api/perimetry/`, {
         method: "POST",
         headers: {

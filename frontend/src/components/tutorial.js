@@ -85,6 +85,7 @@ function Tutorial() {
                 {/*Login Button*/}
                 <br/>
                 <button className="button" onClick={() => { handleExaminationID(); navigateToPerimetry(); }}>➠ Starten</button>
+
             </div>
         </div>
     );

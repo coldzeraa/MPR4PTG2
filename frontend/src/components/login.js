@@ -99,6 +99,7 @@ function Login() {
         },
         body: JSON.stringify(formData),
       });
+
       if (!response.ok) {
         throw new Error("Sending failed");
       }
@@ -144,6 +145,7 @@ function Login() {
         },
         body: JSON.stringify(form),
       });
+
 
       // Check if response is okay
       if (!response.ok) {
