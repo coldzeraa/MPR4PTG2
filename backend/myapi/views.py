@@ -71,6 +71,8 @@ def get_points(request):
     # Raw list for points
     points = []
     
+    print(request.META.get('REMOTE_ADDR'))
+    print("get_points")
     # Request method
     if request.method == "GET":
         # Every quadrant
