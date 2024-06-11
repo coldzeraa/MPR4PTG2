@@ -7,14 +7,15 @@
 }
 
 .App-logo {
-  height: 10vmin;
+  height: 90px;
+  padding-bottom: 25px;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-logo.visible {
+  opacity: 1;
 }
 
 .App-header {
@@ -106,6 +107,7 @@ html, body {
 
 .start-button {
   position: relative;
+  margin-top: 10px;
 }
 
 .info-button {

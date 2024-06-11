@@ -1,8 +1,15 @@
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Logo } from "./../logo.svg";
+import { ReactComponent as Logo } from "./../eye_logo.svg";
 import "./../App.css";
 
 function WelcomeScreen() {
+      const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   // Define Info Button on the right top corner
   function InfoButton({ onClick }) {
     return (
@@ -33,7 +40,7 @@ function WelcomeScreen() {
       ></InfoButton>
       <div className="text-center text-white content">
         {/* Logo and Text on Page */}
-        <Logo className="App-logo" />
+         <Logo className={`App-logo ${isVisible ? 'visible' : ''}`} />
         <h1>OptiMate</h1>
         <h3>Simply VIEWtiful</h3>
 
