@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import useVolumeLevel from "./useVolumeLevel";
-import { properties } from "../properties";
 
 const Point = ({ x, y }) => {
   const adjustedX = x * 1.32; // 2/3 of the entire screen width
@@ -71,13 +70,18 @@ function Perimetry() {
   // Function to save points to backend
   const handleResults = async (x, y, result) => {
     try {
+      console.log(localStorage.getItem('exID'))
+      const ex = localStorage.getItem('exID');
       const test = {
-        x,
-        y,
-        result,
+        x: 1,
+        y: 2,
+        exID: ex,
+        result: result
       };
 
-      const response = await fetch(`${properties.host}/api/perimetry/`, {
+      console.log("EX: " + ex);
+
+      const response = await fetch(`http://localhost:8000/api/perimetry/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,6 +90,7 @@ function Perimetry() {
       });
 
       if (!response.ok) {
+        console.log(response.json())
         throw new Error("Failed to send results");
       }
     } catch (error) {
@@ -113,7 +118,6 @@ function Perimetry() {
         ) {
           navigateToExport();
         }
-
         handleResults(currentX, currentY, max >= 15);
 
         stopRecording();

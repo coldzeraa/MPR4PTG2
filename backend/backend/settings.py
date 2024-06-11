@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     # Allowing Localhost
+    "localhost",
     socket.gethostbyname(socket.gethostname())
 ]
 

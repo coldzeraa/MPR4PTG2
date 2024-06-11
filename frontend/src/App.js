@@ -6,6 +6,7 @@ import Tutorial from "./components/tutorial";
 import ExportPage from "./components/exportPage"
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
+import Info from "./components/Info";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/Perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
+        <Route path="/Info" element={<Info />} />
       </Routes>
     </BrowserRouter>
   );

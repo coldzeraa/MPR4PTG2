@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { properties } from "../properties.js";
 
 function Login() {
   // Create navigate
@@ -93,7 +92,7 @@ function Login() {
 
     try {
       // Fetch data via "POST" to backend
-      const response = await fetch(`${properties.host}/api/login/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -111,6 +110,8 @@ function Login() {
 
       // Parse response as JSON
       const responseData = await response.json();
+      console.log(responseData);
+      localStorage.setItem("patientID", responseData.patientID);
 
       // Check response
       checkResponse(responseData.message);
@@ -136,7 +137,7 @@ function Login() {
       localStorage.setItem("email", form.email);
 
       // Fetch data via "POST" to backend
-      const response = await fetch(`${properties.host}/api/login/`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -151,6 +152,7 @@ function Login() {
 
       // Parse response as JSON
       const responseData = await response.json();
+      localStorage.setItem("patID", responseData.patientID)
 
       // Check response
       checkResponse(responseData.message);
