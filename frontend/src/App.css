@@ -72,6 +72,8 @@ html, body {
 }
 
 
+
+
 /*BUTTONS*/
 
 .button {
@@ -119,7 +121,8 @@ html, body {
 /*SCROLLABLE TEXT*/
 .scroll-box {
   width: 80%; 
-  height: 400px; 
+  height: 400px;
+
   border: 1px solid #ccc;
   overflow: scroll; 
   padding: 10px; 
