@@ -172,7 +172,7 @@ function Login() {
         {/*Input Form*/}
         <h2>Persönliche Daten</h2>
         <form method="POST">
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "10px", marginTop: "20px" }}>
             <label htmlFor="firstName" style={{ display: "block" }} />
             <input
               type="text"
@@ -183,7 +183,7 @@ function Login() {
               onChange={handleChange}
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "10px", marginTop: "10px" }}>
             <label htmlFor="lastName" style={{ display: "block" }} />
             <input
               type="text"
@@ -194,7 +194,7 @@ function Login() {
               onChange={handleChange}
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "20px", marginTop: "10px" }}>
             <label htmlFor="email" style={{ display: "block" }} />
             <input
               type="email"
