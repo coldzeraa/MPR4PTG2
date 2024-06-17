@@ -92,16 +92,14 @@ function Login() {
 
     try {
       // Fetch data via "POST" to backend
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/login/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
       if (!response.ok) {
         throw new Error("Sending failed");
       }
@@ -113,6 +111,8 @@ function Login() {
 
       // Parse response as JSON
       const responseData = await response.json();
+      console.log(responseData);
+      localStorage.setItem("patientID", responseData.patientID);
 
       // Check response
       checkResponse(responseData.message);
@@ -138,16 +138,14 @@ function Login() {
       localStorage.setItem("email", form.email);
 
       // Fetch data via "POST" to backend
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/login/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
 
       // Check if response is okay
       if (!response.ok) {
@@ -156,6 +154,7 @@ function Login() {
 
       // Parse response as JSON
       const responseData = await response.json();
+      localStorage.setItem("patID", responseData.patientID)
 
       // Check response
       checkResponse(responseData.message);
@@ -173,7 +172,7 @@ function Login() {
         {/*Input Form*/}
         <h2>Persönliche Daten</h2>
         <form method="POST">
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "10px", marginTop: "20px" }}>
             <label htmlFor="firstName" style={{ display: "block" }} />
             <input
               type="text"
@@ -184,7 +183,7 @@ function Login() {
               onChange={handleChange}
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "10px", marginTop: "10px" }}>
             <label htmlFor="lastName" style={{ display: "block" }} />
             <input
               type="text"
@@ -195,7 +194,7 @@ function Login() {
               onChange={handleChange}
             />
           </div>
-          <div style={{ marginBottom: "10px" }}>
+          <div style={{ marginBottom: "20px", marginTop: "10px" }}>
             <label htmlFor="email" style={{ display: "block" }} />
             <input
               type="email"

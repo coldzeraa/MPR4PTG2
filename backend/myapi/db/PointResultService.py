@@ -7,7 +7,7 @@ from myapi.model.Examination import Examination
 class PointResultService:
     @staticmethod    
     def get_all():
-        return crud_point_result.get_all_point_result()
+        return crud_point_result.get_all_point_results()
     
     @staticmethod
     def store(seen: bool, p: Point, ex: Examination):

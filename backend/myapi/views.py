@@ -26,8 +26,8 @@ def login(request):
         
         # Check if first_name, last_name and email is empty and save dummy in database
         if (not first_name and not last_name and not email):
-            crud_patient.create_patient()
-            return JsonResponse({'message': 'SUCCESS'}, status=200)
+            pat = PatientService.store()
+            return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
         
         # Check for invalid names
         if (not first_name.isalpha() or not last_name.isalpha()):
@@ -44,10 +44,10 @@ def login(request):
             return JsonResponse({"message": "NOT_AN_EMAIL"})
         
         # Save patient in database
-        crud_patient.create_patient(first_name, last_name, email)
-        
+        pat = PatientService.store(first_name, last_name, email)
+
         # Return a success message
-        return JsonResponse({'message': 'SUCCESS'}, status=200)
+        return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
     else:
         
         # Return a failed message
@@ -77,11 +77,14 @@ def perimetry(request):
         
         x = request.data.get('x')
         y = request.data.get('y')
+        exID = request.data.get('exID')
         result = request.data.get('result')
-        p = PointService.get(100*x+y)
-        pat = PatientService.store("Alex", "Denk")
-        e = ExaminationService.store(pat, datetime.datetime.today())
-        PointResultService.store(result, p, e)
+        id = 100 * x * y
+        p = PointService.get(id)
+
+        ex = ExaminationService.get(exID)
+
+        PointResultService.store(result, p, ex)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])
@@ -90,6 +93,8 @@ def get_points(request):
     # Raw list for points
     points = []
     
+    print(request.META.get('REMOTE_ADDR'))
+    print("get_points")
     # Request method
     if request.method == "GET":
         # Every quadrant
@@ -105,3 +110,11 @@ def get_points(request):
     
     # Send point list to frontend as json
     return JsonResponse({'points': [{'x': p.x, 'y': p.y} for p in points]}, status=200)
+
+@api_view(['POST'])
+def examination(request):
+    if request.method == 'POST':
+        patID = request.data.get("patID")
+        pat = PatientService.get(patID)
+        ex = ExaminationService.store(pat, datetime.datetime.today())
+    return JsonResponse({'exID': ex.exID}, status=200)

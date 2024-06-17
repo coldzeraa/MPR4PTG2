@@ -44,10 +44,8 @@ function Perimetry() {
   const [showPoint, setShowPoint] = useState(false);
   const [side, setSide] = useState("left");
 
-  // Get Points from Backend
-  useEffect(() => {
-    // Get points from backend
-    const fetchPoints = async () => {
+  const fetchPoints = async () => {
+    try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/get_points/`,
         {
@@ -57,52 +55,57 @@ function Perimetry() {
           },
         }
       );
+
       if (!response.ok) {
-        throw new Error("Sending failed (Points)");
+        throw new Error("Fetching points failed");
       }
 
-      // Convert to JSON
+      // Get JSON data from response
       const data = await response.json();
 
-      // Get point array
+      // Convert to array
       const pointArray = data.points;
 
-      // Formatted array
-      const fetchedPoints = [];
+      // Map points to array
+      const fetchedPoints = pointArray.map((point) => ({
+        x: point.x,
+        y: point.y,
+      }));
 
-      // Insert points into formatted array
-      for (let i = 0; i < pointArray.length; i++) {
-        fetchedPoints.push({ x: pointArray[i].x, y: pointArray[i].y });
-      }
-
-      // Set points state
       setPoints(fetchedPoints);
-    };
+    } catch (error) {
+      console.error("Error fetching points:", error);
+    }
+  };
 
+  // Get Points from Backend
+  useEffect(() => {
     fetchPoints();
+    startRecording();
   }, []);
 
   // Function to save points to backend
   const handleResults = async (x, y, result) => {
     try {
+      console.log(localStorage.getItem('exID'))
+      const ex = localStorage.getItem('exID');
       const test = {
-        x,
-        y,
-        result,
+        x: 1,
+        y: 2,
+        exID: ex,
+        result: result
       };
 
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/perimetry/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(test),
-        }
-      );
+      const response = await fetch(`http://localhost:8000/api/perimetry/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(test),
+      });
 
       if (!response.ok) {
+        console.log(response.json())
         throw new Error("Failed to send results");
       }
     } catch (error) {
@@ -115,12 +118,16 @@ function Perimetry() {
       setShowPoint(true);
       setTimeout(() => {
         setShowPoint(false);
-        startRecording();
         const currentPoint = points[currentPointIndex];
         const currentX = currentPoint.x;
         const currentY = currentPoint.y;
 
+        // TODO sometimes currentPoint.x is null
         setCurrentPointIndex((prevIndex) => (prevIndex + 1) % points.length);
+
+        //setCurrentPointIndex((prevIndex) => prevIndex + 1);
+        console.log(currentPointIndex);
+
         if (currentPointIndex === points.length - 1 && side === "left") {
           setCurrentPointIndex(0);
           setSide("right");
@@ -129,11 +136,9 @@ function Perimetry() {
           side === "right"
         ) {
           navigateToExport();
+          stopRecording();
         }
-
         handleResults(currentX, currentY, max >= 15);
-
-        stopRecording();
       }, 300); // 200
     }, 100); // 1200
 
