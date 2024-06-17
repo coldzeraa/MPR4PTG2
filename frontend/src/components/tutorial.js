@@ -14,10 +14,46 @@ function Tutorial() {
     );
   }
 
-  const navigate = useNavigate();
 
-  const navigateToPerimetry = () => {
-    startRecording();
+    const navigate = useNavigate();
+
+    const handleExaminationID = async () => {
+        const patient = {
+            patID: localStorage.getItem("patientID")
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8000/api/examination/`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(patient)
+                }
+            );
+            const responseData = await response.json();
+            localStorage.setItem("exID", responseData.exID);
+        }
+        catch (error) {
+            console.error("Examination ID failed", error);
+        }
+    }
+    
+    const navigateToPerimetry = () => {
+        startRecording()
+
+        // Request fullscreen
+        const element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { /* Firefox */
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { /* IE/Edge */
+            element.msRequestFullscreen();
+        }
 
     // Handle Navigation To Start Page of Test
     // Request fullscreen
@@ -79,6 +115,7 @@ function Tutorial() {
               tatsächlich wahrgenommen haben.
             </li>
           </ol>
+
         </div>
         {/*Login Button*/}
         <br />
