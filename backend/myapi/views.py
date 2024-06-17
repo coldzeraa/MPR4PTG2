@@ -55,14 +55,12 @@ def login(request):
 @api_view(['POST'])
 def perimetry(request):
     if request.method == 'POST':
-        
         x = request.data.get('x')
         y = request.data.get('y')
         exID = request.data.get('exID')
         result = request.data.get('result')
-        id = 100 * x * y
+        id = 100 * x + y
         p = PointService.get(id)
-
         ex = ExaminationService.get(exID)
 
         PointResultService.store(result, p, ex)
@@ -74,7 +72,6 @@ def get_points(request):
     # Raw list for points
     points = []
     
-    print(request.META.get('REMOTE_ADDR'))
     print("get_points")
     # Request method
     if request.method == "GET":
