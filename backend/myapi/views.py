@@ -14,6 +14,7 @@ from myapi.model.Examination import Examination
 from myapi.model.Patient import Patient
 import datetime
 from myapi.point_administrator.PointAdministrator import PointAdministrator
+from myapi.export.email import send_email
 
 @api_view(['POST'])
 def login(request):
@@ -51,6 +52,24 @@ def login(request):
         
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+@api_view(['POST'])
+def emailing(request):
+    print('I am in views.emailing')
+    if request.method == 'POST':
+        # Get data from request
+        first_name = str(request.data.get('firstName'))
+        last_name = str(request.data.get('lastName'))
+        email_in = str(request.data.get('email'))
+        pdf_base64 = str(request.data.get('pdfBase64'))
+
+        email_instance = send_email(first_name, last_name, email_in, pdf_base64)
+        email_instance.send_email()
+
+        return JsonResponse({'message': 'SUCCESS'}, status=200)
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
 
 @api_view(['POST'])
 def perimetry(request):
