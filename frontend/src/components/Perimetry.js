@@ -44,27 +44,44 @@ function Perimetry() {
   const [showPoint, setShowPoint] = useState(false);
   const [side, setSide] = useState("left");
 
+  const fetchPoints = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/get_points/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Fetching points failed");
+      }
+
+      // Get JSON data from response
+      const data = await response.json();
+
+      // Convert to array
+      const pointArray = data.points;
+
+      // Map points to array
+      const fetchedPoints = pointArray.map((point) => ({
+        x: point.x,
+        y: point.y,
+      }));
+
+      setPoints(fetchedPoints);
+    } catch (error) {
+      console.error("Error fetching points:", error);
+    }
+  };
+
   // Get Points from Backend
   useEffect(() => {
-    const fetchPoints = async () => {
-      // TODO REPLACE WITH ACTUAL BACKEND DATA
-      const fetchedPoints = [
-        { x: 0, y: 0 },
-        { x: 10, y: 10 },
-        { x: 20, y: 20 },
-        { x: 30, y: 30 },
-        { x: 40, y: 40 },
-        { x: 50, y: 50 },
-        { x: 60, y: 60 },
-        { x: 70, y: 70 },
-        { x: 80, y: 80 },
-        { x: 90, y: 90 },
-        { x: 97, y: 97 },
-      ];
-      setPoints(fetchedPoints);
-    };
-
     fetchPoints();
+    startRecording();
   }, []);
 
   // Function to save points to backend
@@ -101,12 +118,16 @@ function Perimetry() {
       setShowPoint(true);
       setTimeout(() => {
         setShowPoint(false);
-        startRecording();
         const currentPoint = points[currentPointIndex];
         const currentX = currentPoint.x;
         const currentY = currentPoint.y;
 
+        // TODO sometimes currentPoint.x is null
         setCurrentPointIndex((prevIndex) => (prevIndex + 1) % points.length);
+
+        //setCurrentPointIndex((prevIndex) => prevIndex + 1);
+        console.log(currentPointIndex);
+
         if (currentPointIndex === points.length - 1 && side === "left") {
           setCurrentPointIndex(0);
           setSide("right");
@@ -115,12 +136,11 @@ function Perimetry() {
           side === "right"
         ) {
           navigateToExport();
+          stopRecording();
         }
         handleResults(currentX, currentY, max >= 15);
-
-        stopRecording();
       }, 300); // 200
-    }, 2000); // 1200
+    }, 100); // 1200
 
     return () => clearInterval(interval);
   }, [points, currentPointIndex, side, max]);

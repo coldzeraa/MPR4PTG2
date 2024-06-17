@@ -3,7 +3,7 @@ import Login from "./components/login";
 import HelloWorld from "./components/HelloWorld";
 import WelcomeScreen from "./components/WelcomeScreen";
 import Tutorial from "./components/tutorial";
-import ExportPage from "./components/exportPage"
+import ExportPage from "./components/exportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
@@ -12,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<WelcomeScreen/>}/>
+        <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/hello_world" element={<HelloWorld />} />
         <Route path="/tutorial" element={<Tutorial />} />
