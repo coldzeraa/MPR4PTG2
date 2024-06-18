@@ -14,48 +14,32 @@ function Tutorial() {
     );
   }
 
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const handleExaminationID = async () => {
+    const patient = {
+      patID: localStorage.getItem("patientID"),
+    };
 
-    const handleExaminationID = async () => {
-        const patient = {
-            patID: localStorage.getItem("patientID")
-        };
-
-        try {
-            const response = await fetch(`http://localhost:8000/api/examination/`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(patient)
-                }
-            );
-            const responseData = await response.json();
-            localStorage.setItem("exID", responseData.exID);
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/examination/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(patient),
         }
-        catch (error) {
-            console.error("Examination ID failed", error);
-        }
+      );
+      const responseData = await response.json();
+      localStorage.setItem("exID", responseData.exID);
+    } catch (error) {
+      console.error("Examination ID failed", error);
     }
-    
-    const navigateToPerimetry = () => {
-        startRecording()
+  };
 
-        // Request fullscreen
-        const element = document.documentElement;
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) { /* Firefox */
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) { /* IE/Edge */
-            element.msRequestFullscreen();
-        }
-
-    // Handle Navigation To Start Page of Test
+  const navigateToPerimetry = () => {
     // Request fullscreen
     const element = document.documentElement;
     if (element.requestFullscreen) {
@@ -115,11 +99,16 @@ function Tutorial() {
               tatsächlich wahrgenommen haben.
             </li>
           </ol>
-
         </div>
         {/*Login Button*/}
         <br />
-        <button className="button" onClick={navigateToPerimetry}>
+        <button
+          className="button"
+          onClick={() => {
+            handleExaminationID();
+            navigateToPerimetry();
+          }}
+        >
           ➠ Starten
         </button>
       </div>

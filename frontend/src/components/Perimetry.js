@@ -13,6 +13,11 @@ const Point = ({ x, y }) => {
 };
 
 function Perimetry() {
+  const SIDES = ["left", "right"];
+
+  const VISIBILITY_SPAN = 200;
+  const INTERVAL = 200;
+
   const [startRecording, stopRecording, volume, max] = useVolumeLevel();
 
   const navigate = useNavigate();
@@ -42,7 +47,7 @@ function Perimetry() {
   const [points, setPoints] = useState([]);
   const [currentPointIndex, setCurrentPointIndex] = useState(0);
   const [showPoint, setShowPoint] = useState(false);
-  const [side, setSide] = useState("left");
+  const [side, setSide] = useState();
 
   const fetchPoints = async () => {
     try {
@@ -71,7 +76,6 @@ function Perimetry() {
         x: point.x,
         y: point.y,
       }));
-
       setPoints(fetchedPoints);
     } catch (error) {
       console.error("Error fetching points:", error);
@@ -81,31 +85,31 @@ function Perimetry() {
   // Get Points from Backend
   useEffect(() => {
     fetchPoints();
-    startRecording();
   }, []);
 
   // Function to save points to backend
   const handleResults = async (x, y, result) => {
     try {
-      console.log(localStorage.getItem('exID'))
-      const ex = localStorage.getItem('exID');
-      const test = {
-        x: 1,
-        y: 2,
+      const ex = localStorage.getItem("exID");
+      const data = {
+        x: x,
+        y: y,
         exID: ex,
-        result: result
+        result: result,
       };
 
-      const response = await fetch(`http://localhost:8000/api/perimetry/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(test),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/perimetry/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (!response.ok) {
-        console.log(response.json())
         throw new Error("Failed to send results");
       }
     } catch (error) {
@@ -114,42 +118,40 @@ function Perimetry() {
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowPoint(true);
-      setTimeout(() => {
+    if (points.length != 0) {
+      startRecording();
+      runPerimetryTest();
+    }
+  }, [points]);
+
+  const runPerimetryTest = async () => {
+    for (let sideIndex = 0; sideIndex < SIDES.length; sideIndex++) {
+      setSide(SIDES[sideIndex]);
+      for (let i = 0; i < points.length; i++) {
+        setShowPoint(true);
+        await new Promise((resolve) => setTimeout(resolve, VISIBILITY_SPAN));
         setShowPoint(false);
-        const currentPoint = points[currentPointIndex];
+
+        const currentPoint = points[i];
         const currentX = currentPoint.x;
         const currentY = currentPoint.y;
+        await handleResults(currentX, currentY, max >= 15);
 
-        // TODO sometimes currentPoint.x is null
-        setCurrentPointIndex((prevIndex) => (prevIndex + 1) % points.length);
+        setCurrentPointIndex((prevIndex) => prevIndex + 1);
 
-        //setCurrentPointIndex((prevIndex) => prevIndex + 1);
-        console.log(currentPointIndex);
-
-        if (currentPointIndex === points.length - 1 && side === "left") {
-          setCurrentPointIndex(0);
-          setSide("right");
-        } else if (
-          currentPointIndex === points.length - 1 &&
-          side === "right"
-        ) {
-          navigateToExport();
-          stopRecording();
-        }
-        handleResults(currentX, currentY, max >= 15);
-      }, 300); // 200
-    }, 100); // 1200
-
-    return () => clearInterval(interval);
-  }, [points, currentPointIndex, side, max]);
+        await new Promise((resolve) => setTimeout(resolve, INTERVAL));
+      }
+      setCurrentPointIndex(0);
+    }
+    stopRecording();
+    navigateToExport();
+  };
 
   return (
     <div className="split-container">
       <div className={side === "left" ? "split-focus" : "split-unfocus"}>
         {/* Render the current point */}
-        {points.length > 0 && side === "left" && showPoint && (
+        {side === "left" && showPoint && (
           <Point
             key={currentPointIndex}
             x={points[currentPointIndex].x * 0.5}
@@ -167,7 +169,7 @@ function Perimetry() {
       </div>
       <div className={side === "right" ? "split-focus" : "split-unfocus"}>
         {/* Render the current point */}
-        {points.length > 0 && side === "right" && showPoint && (
+        {side === "right" && showPoint && (
           <Point
             key={currentPointIndex}
             x={25 + points[currentPointIndex].x * 0.5}
