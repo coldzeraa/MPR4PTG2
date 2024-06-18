@@ -4,7 +4,7 @@ import "./../App.css";
 import useVolumeLevel from "./useVolumeLevel";
 
 const Point = ({ x, y }) => {
-  const adjustedX = x * 1.32; // 2/3 of the entire screen width
+  const adjustedX = x * 1; 
   return (
     <div style={{ position: "absolute", left: `${adjustedX}%`, top: `${y}%` }}>
       <p style={{ margin: 0, fontSize: "10px" }}>⚫</p>
@@ -15,8 +15,8 @@ const Point = ({ x, y }) => {
 function Perimetry() {
   const SIDES = ["left", "right"];
 
-  const VISIBILITY_SPAN = 200;
-  const INTERVAL = 200;
+  const VISIBILITY_SPAN = 100;
+  const INTERVAL = 100;
 
   const [startRecording, stopRecording, volume, max] = useVolumeLevel();
 
@@ -161,7 +161,7 @@ function Perimetry() {
       </div>
       <div
         className="split-midpoint"
-        style={{ left: side === "left" ? "calc(33%)" : "calc(66%)" }}
+        style={{ left: side === "left" ? "calc(25%)" : "calc(75%)" }}
       >
         <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
           +
@@ -172,7 +172,7 @@ function Perimetry() {
         {side === "right" && showPoint && (
           <Point
             key={currentPointIndex}
-            x={25 + points[currentPointIndex].x * 0.5}
+            x={50 + points[currentPointIndex].x * 0.5}
             y={points[currentPointIndex].y}
           />
         )}

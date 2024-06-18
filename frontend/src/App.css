@@ -137,8 +137,9 @@ html, body {
   display: flex;
   height: 100vh;
 }
+
 .split-focus {
-  flex: 2;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,7 +151,6 @@ html, body {
   align-items: center;
   justify-content: center;
   background-color: black;
-  width: calc(25%)
 }
 
 .split-midpoint {
@@ -159,10 +159,12 @@ html, body {
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  left: 33%; /*Horizontally at 33% is the middle of 66% -> the entire split */
-  top: 48.5%; /*Otherwise not centered vertically*/
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 999;
 }
+
 
 
 
