@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.http import HttpResponse
 from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view
 from myapi.db.PointResultService import PointResultService
@@ -118,3 +119,4 @@ def get_pdf(request):
         
         # Call PDF creator with current exID
         return PdfCreator.createPDF(request.GET.get('id', ''))
+

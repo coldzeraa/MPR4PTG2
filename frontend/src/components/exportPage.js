@@ -7,6 +7,17 @@ function ExportPage() {
   // Boolean if data has been submitted
   const IS_DATA_AVAILABLE = FIRST_NAME && LAST_NAME && EMAIL;
 
+  const handlePdfDownload = async () => {
+    const blob = await generatePdfContent();
+    const url = window.URL.createObjectURL(new Blob([blob]));
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Testergebnis.pdf");
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  };
+
   // Function to download PDF
   const generatePdfContent = async () => {
     const exID = localStorage.getItem("exID");
@@ -24,13 +35,7 @@ function ExportPage() {
     );
     if (response.ok) {
       const blob = await response.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", "Testergebnis.pdf");
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
+      return blob;
     } else {
       console.log("not okay");
     }
@@ -48,7 +53,7 @@ function ExportPage() {
     );
 
     // Generate PDF content
-    const pdfContent = generatePdfContent();
+    const pdfContent = await generatePdfContent();
 
     // Create blob with pdfContent inside it
     const blob = new Blob([pdfContent], { type: "application/pdf" });
@@ -63,6 +68,7 @@ function ExportPage() {
         firstName: FIRST_NAME,
         lastName: LAST_NAME,
         email: EMAIL,
+        pdfBase64: base64data,
         pdfBase64: base64data,
       };
 
@@ -95,7 +101,7 @@ function ExportPage() {
       <div className="content">
         <h2>Auswertung abgeschlossen</h2>
         <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
-        <button className="button" onClick={generatePdfContent}>
+        <button className="button" onClick={handlePdfDownload}>
           PDF Download
         </button>
         <button
