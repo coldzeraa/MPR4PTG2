@@ -101,7 +101,7 @@ function ExportPage() {
       <div className="content">
         <h2>Auswertung abgeschlossen</h2>
         <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
-        <button className="button" onClick={handlePdfDownload}>
+        <button className="button" onClick={generatePdfContent}>
           PDF Download
         </button>
         <button
