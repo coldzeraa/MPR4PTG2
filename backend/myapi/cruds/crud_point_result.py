@@ -25,14 +25,6 @@ def get_all_point_results():
     return PointResult.objects.all()
 
 
-
-def get_all_point_results():
-    """
-       Get all PointResults
-    """
-    return PointResult.objects.all()
-
-
 def get_point_result_by_id(resID: AutoField):
     """
        Get PointResult by given ID
@@ -67,3 +59,16 @@ def delete_point_result(resID: AutoField):
        """
     point_result = PointResult.objects.get(resID=resID)
     point_result.delete()
+    
+    
+def get_point_result_by_exID(exID: AutoField):
+    """
+        Returns PointResults of given exID
+
+        :param exID: id of examination
+    """
+    
+    return PointResult.objects.filter(ex = exID)
+    
+    
+    

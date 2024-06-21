@@ -1,20 +1,17 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from myapi.cruds import crud_patient
 from myapi.db.PointResultService import PointResultService
 from myapi.db.PointService import PointService
 from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from myapi.model.Point import Point
-from myapi.model.Examination import Examination
-from myapi.model.Patient import Patient
 import datetime
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.email import send_email
+from myapi.export.pdfCreator import PdfCreator
+
 
 @api_view(['POST'])
 def login(request):
@@ -70,7 +67,6 @@ def emailing(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
 @api_view(['POST'])
 def perimetry(request):
     if request.method == 'POST':
@@ -115,3 +111,10 @@ def examination(request):
         pat = PatientService.get(patID)
         ex = ExaminationService.store(pat, datetime.datetime.today())
     return JsonResponse({'exID': ex.exID}, status=200)
+
+@api_view(['GET'])
+def get_pdf(request):
+    if request.method == 'GET':
+        
+        # Call PDF creator with current exID
+        return PdfCreator.createPDF(request.GET.get('id', ''))
