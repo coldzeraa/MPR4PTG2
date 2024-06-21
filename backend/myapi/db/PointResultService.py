@@ -24,5 +24,8 @@ class PointResultService:
     @staticmethod
     def delete(pID: AutoField):
         return crud_point_result.delete_point_result(pID)
-
+    
+    @staticmethod
+    def getByExID(exID: AutoField):
+        return crud_point_result.get_point_result_by_exID(exID)
     
