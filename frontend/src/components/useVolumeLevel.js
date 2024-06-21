@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react';
-import { SoundMeter } from './Soundmeter';
-
+import { useState, useEffect, useRef } from "react";
+import { SoundMeter } from "./Soundmeter";
 
 function handleSuccess(stream) {
   window.stream = stream;
-  const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
-  soundMeter.connectToSource(stream, function(e) {
+  const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
+  soundMeter.connectToSource(stream, function (e) {
     if (e) {
       alert(e);
       return;
@@ -14,67 +13,65 @@ function handleSuccess(stream) {
 }
 
 function handleError(error) {
-  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+  console.log(
+    "navigator.MediaDevices.getUserMedia error: ",
+    error.message,
+    error.name
+  );
 }
 
-
 function useVolumeLevel() {
-
   const [level, setLevel] = useState(0);
-  const [isRecording, setIsRecording] = useState(false)
-  const [max, setMax] = useState(0)
+  const [isRecording, setIsRecording] = useState(false);
+  const volumeRef = useRef(0); // useRef verwenden, um volume zu halten
 
   const stopRecording = () => {
-    setLevel(0)
-    setMax(0)
-    //window.soundMeter.stop()
-    //setIsRecording(false)
-    console.log("reset")
-  }
+    setLevel(0);
+    window.soundMeter.stop();
+    setIsRecording(false);
+    console.log("reset");
+  };
 
   const startRecording = () => {
-  const constraints = window.constraints = {
-    audio: true,
-    video: false
-  };
-  try {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    window.audioContext = new AudioContext();
-  } catch (e) {
-    alert('Web Audio API not supported.');
-  }
+    const constraints = (window.constraints = {
+      audio: true,
+      video: false,
+    });
+    try {
+      window.AudioContext = window.AudioContext || window.webkitAudioContext;
+      window.audioContext = new AudioContext();
+    } catch (e) {
+      alert("Web Audio API not supported.");
+    }
 
-  navigator.mediaDevices
+    navigator.mediaDevices
       .getUserMedia(constraints)
       .then(handleSuccess)
       .catch(handleError);
 
-  setIsRecording(true)
-}
-
+    setIsRecording(true);
+  };
 
   const updateVolume = () => {
-    if(window.soundMeter && isRecording){
-      let v = window.soundMeter.instant * 200
-      setLevel(Math.min(v, 100))
-      setMax(Math.max(max, level))
-      console.log(level, max)
+    if (window.soundMeter && isRecording) {
+      // let v = window.soundMeter.instant * 200;
+      // setLevel(Math.min(v, 100));
+      // console.log(level);
+      let v = window.soundMeter.instant * 200;
+      setLevel(Math.min(v, 100));
+      volumeRef.current = v; // volumeRef aktualisieren
+      console.log(volumeRef.current); // Aktuellen Wert von `volume` überprüfen
     }
-  } 
-
+  };
 
   useEffect(() => {
-    let intervalId
-      intervalId = setInterval(updateVolume, 50)
+    let intervalId;
+    intervalId = setInterval(updateVolume, 50);
 
-
-   return () => clearInterval(intervalId);
+    return () => clearInterval(intervalId);
   });
 
-  return [startRecording, stopRecording, level, max];
+  return [startRecording, stopRecording, volumeRef];
 }
 
 export default useVolumeLevel;
-
-// useVolumeLevel.js
-
