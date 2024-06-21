@@ -13,7 +13,6 @@ class Point(models.Model):
         return f"({self.x}|{self.y})"  # string representation as (x|y)
 
 
-
 class Patient(models.Model):
     patID = models.AutoField(primary_key=True)
     lastName = models.CharField(max_length=50)       # last name

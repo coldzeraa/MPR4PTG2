@@ -27,7 +27,3 @@ class Command(BaseCommand):
                 draw.point(pos, fill="red")
                 # draw.rectangle(pos, None, "black", 2)
 
-
-
-
-        image.save('result.png')
