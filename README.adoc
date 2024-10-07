@@ -1,36 +1,71 @@
-= Informationen
+= ReadMe für OptiMate
+
+== Docker
+
+Anleitung anhand von: https://www.baeldung.com/ops/docker-databases 
+
+Schritt 1: Docker Desktop installieren https://www.docker.com/products/docker-desktop/
+
+Schritt 2: DB Image pullen mit `docker pull postgres`
+
+Schritt 3: Einen laufenden Container erstellen, wo ein Containerport zum Localhost gemappt werden muss: `docker run -p 5432:5432 -e POSTGRES_PASSWORD=password postgres`
+
+Schritt 4: Super, laufende DB. Zum Test `Docker ps` aufrufen
+
+Schritt 5: In `/backend/backend/settings.py` folgendes eingeben: 
+
+        DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        }
+        }
+
+Schritt 6: Folgende Commands in `/backend` eingeben: 
+
+* `python manage.py makemigrations`
+* `python manage.py migrate`
+
+
+== Dependencies
+
+1. `/backend`: Ausführen von `pip install djangorestframework django-cors-headers`
+
+2. `/frontend`: Ausführen von `npm install axios`
+
+3. `/frontend`: Ausführen von `npm install reportlab`
 
 == Wie benutze ich das Projekt?
 
-Schritt 1: Öffnen von einem Terminal in /backend
+Schritt 1: Docker Container erstellen 
 
-Schritt 2: Ausführen von `pip install djangorestframework django-cors-headers`
+Schritt 2: Öffnen von einem Terminal in /backend
 
-Schritt 3: Ausführen von `python manage.py runserver`
+Schritt 3: Ausführen von `python manage.py runserver localhost:8000` (oder statt localhost eigene IP-Adresse)
 
 Schritt 4: Öffnen eines weiteren Terminals in /frontend
 
-Schritt 5: Ausführen von `npm install axios`
-
-Schritt 6: Ausführen von `npm start`
+Schritt 5: Ausführen von `npm start`
 
 
 == Wie wurde das Projekt erstellt?
 
-Projekt erstellt nach Anweisung von: 
-
-https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
+Projekt erstellt nach Anleitung von: https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
 
 Achtung: 
 
 Bei Punkt 2 Umänderung in: 
 
-* Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass (für Bypassing von Ausführungsrechten)
-* npm install -g create-react-app
-* create-react-app myapp
+* `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` (für Bypassing von Ausführungsrechten)
+* `npm install -g create-react-app`
+* `create-react-app myapp`
 
-Weiters nicht vergessen, bevor der Server gestartet wird: 
+Weiters nicht vergessen bei Änderungen, bevor der Server gestartet wird: 
 
-* python manage.py makemigrations
-* python manage.py migrate
+* `python manage.py makemigrations`
+* `python manage.py migrate`
 

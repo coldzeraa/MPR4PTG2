@@ -9,8 +9,6 @@ class ImageCreator:
         
         leftImage = ImageCreator.drawPoints(ImageCreator.splitArrayInHalf(pointResults)[0])
         rightImage = ImageCreator.drawPoints(ImageCreator.splitArrayInHalf(pointResults)[1])
-        leftImage.save('left.png')
-        rightImage.save('right.png')
         
         combined_width = leftImage.width + rightImage.width
         combined_height = max(leftImage.height, rightImage.height)
@@ -18,9 +16,6 @@ class ImageCreator:
         combined_image.paste(leftImage, (0, 0))
         combined_image.paste(rightImage, (leftImage.width, 0))
         
-        combined_image.save('combined.png')
-        
-        print(leftImage, rightImage, combined_image)
         return combined_image
         
            
