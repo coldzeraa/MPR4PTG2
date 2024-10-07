@@ -68,8 +68,7 @@ function ExportPage() {
         firstName: FIRST_NAME,
         lastName: LAST_NAME,
         email: EMAIL,
-        pdfBase64: base64data,
-        pdfBase64: base64data,
+        pdfBase64: base64data
       };
 
       try {

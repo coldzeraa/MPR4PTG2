@@ -1,9 +1,9 @@
 import React from "react";
-import Login from "./components/login";
+import Login from "./components/Login";
 import HelloWorld from "./components/HelloWorld";
 import WelcomeScreen from "./components/WelcomeScreen";
-import Tutorial from "./components/tutorial";
-import ExportPage from "./components/exportPage";
+import Tutorial from "./components/Tutorial";
+import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";

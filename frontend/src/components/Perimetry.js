@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
-import useVolumeLevel from "./useVolumeLevel";
+import useVolumeLevel from "./UseVolumeLevel";
 
 const Point = ({ x, y }) => {
   const adjustedX = x * 1; 
