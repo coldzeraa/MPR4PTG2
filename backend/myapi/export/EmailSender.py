@@ -4,19 +4,29 @@ import base64
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-class send_email:
+class EmailSender:
 
-    # Einstellungen für den E-Mail-Server
+    # Properties of email server
     email_host = 'smtp.gmail.com'
-    email_port = 587  # Der Port kann je nach Anbieter variieren
+    email_port = 587
     email_username = 'optimate.development@gmail.com'
     email_password = 'gwxn lebw fhmy relb'
 
-    # E-Mail-Einstellungen
+    # E-Mail-Properties
     from_email = 'optimate.development@gmail.com'
     subject = 'Ihre OptiMate-Untersuchung'
 
     def __init__(self, first_name, last_name, email, pdf_base64):
+        """
+            Initializes an object with the given user information and a message.
+
+            :param first_name: First name of the recipient
+            :param last_name: Last name of the recipient
+            :param email: Email address of the recipient
+            :param pdf_base64: Base64-encoded PDF file to be sent as an attachment
+            :return: None
+        """
+        
         self.first_name = first_name
         self.last_name = last_name
         self.to_email = email
@@ -28,13 +38,20 @@ class send_email:
         Ihr OptiMate-Team."""
 
     def send_email(self): 
-        # Erstelle eine MIME-Nachricht
+        """
+            Sends an email with a text message and a PDF attachment.
+
+            :return: None
+            :raises Exception: If there is an error while sending the email
+        """
+        
+        # Create a MIME-Message
         msg = MIMEMultipart()
         msg['From'] = self.from_email
         msg['To'] = self.to_email
         msg['Subject'] = self.subject
 
-        # Füge den Nachrichtentext hinzu
+        # Attach the message text
         msg.attach(MIMEText(self.message, 'plain'))
 
         # Decode the base64 PDF and attach it
@@ -44,18 +61,18 @@ class send_email:
         msg.attach(pdf_attachment)
 
         try:
-            # Verbinde dich mit dem SMTP-Server
+            # Connect to the SMTP server
             server = smtplib.SMTP(self.email_host, self.email_port)
             server.starttls()
             server.login(self.email_username, self.email_password)
             
-            # Sende die E-Mail
+            # Send the email
             server.sendmail(self.from_email, self.to_email, msg.as_string())
-            print('E-Mail erfolgreich gesendet!')
             
         except Exception as e:
+            # Print the error if sending the email fails
             print(f'Fehler beim Senden der E-Mail: {str(e)}')
             
         finally:
-            # Schließe die Verbindung zum Server
+            # Close the connection to the server
             server.quit()

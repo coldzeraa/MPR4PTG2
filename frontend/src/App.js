@@ -1,7 +1,8 @@
 import React from "react";
 import Login from "./components/Login";
-import HelloWorld from "./components/HelloWorld";
 import WelcomeScreen from "./components/WelcomeScreen";
+import Tutorial from "./components/Tutorial";
+import ExportPage from "./components/ExportPage";
 import Tutorial from "./components/Tutorial";
 import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -14,11 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/hello_world" element={<HelloWorld />} />
         <Route path="/tutorial" element={<Tutorial />} />
-        <Route path="/Perimetry" element={<Perimetry />} />
+        <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
-        <Route path="/Info" element={<Info />} />
+        <Route path="/info" element={<Info />} />
       </Routes>
     </BrowserRouter>
   );

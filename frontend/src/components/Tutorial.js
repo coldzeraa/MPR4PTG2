@@ -1,10 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
-import useVolumeLevel from "./UseVolumeLevel";
 
 function Tutorial() {
-  const [startRecording] = useVolumeLevel();
-
   // Define Back Button
   function BackButton({ onClick }) {
     return (
