@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
-import useVolumeLevel from "./useVolumeLevel";
 
 function Info() {
   // Define Back Button
@@ -42,6 +41,7 @@ function Info() {
           Campus Hagenberg entwickelt.
           <h6>
             <i>
+              <br />
               <b>Wichtiger Hinweis</b>
             </i>
           </h6>
