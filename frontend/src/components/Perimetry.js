@@ -18,6 +18,8 @@ function Perimetry() {
   const VISIBILITY_SPAN = 100;
   const INTERVAL = 50;
 
+  const VOLUME_THRESHOLD = 15;
+
   const [startRecording, stopRecording, volume] = useVolumeLevel();
 
   const navigate = useNavigate();
@@ -135,7 +137,11 @@ function Perimetry() {
         const currentPoint = points[i];
         const currentX = currentPoint.x;
         const currentY = currentPoint.y;
-        await handleResults(currentX, currentY, volume.current >= 15);
+        await handleResults(
+          currentX,
+          currentY,
+          volume.current >= VOLUME_THRESHOLD
+        );
 
         setCurrentPointIndex((prevIndex) => prevIndex + 1);
 
