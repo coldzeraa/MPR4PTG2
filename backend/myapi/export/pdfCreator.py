@@ -35,7 +35,7 @@ class PdfCreator:
         p.setTitle("Optimate Testergebnis")
         
         # Headline
-        text = "OptiMate- Testergebnis"
+        text = "OptiMate Testergebnis"
         text_width = p.stringWidth(text, "Helvetica-Bold", 16)
         x = (letter[0] - text_width) / 2
         p.setFont("Helvetica-Bold", 16)
@@ -51,8 +51,9 @@ class PdfCreator:
         p.drawString(500, 740, str(examination.date))
         
         # Patient information
-        p.setFont("Helvetica", 12)
-        p.drawString(70, 620, f"Patient: {patient.firstName} {patient.lastName}")
+        if (patient.firstName is not None and patient.lastName is not None):
+            p.setFont("Helvetica", 12)
+            p.drawString(70, 620, f"Patient: {patient.firstName} {patient.lastName}")
         
         # Results
         p.setFont("Helvetica", 11)
