@@ -4,11 +4,19 @@ import myapi.db.PointResultService as PRS
 class ImageCreator:
     
     @staticmethod
-    def createImage(exID):
+    def create_image(exID):
+        """
+            Creates image with all points for given examination
+            Args:
+                exID: ID of affected examination
+
+            Returns:
+                Image: created image
+        """
         pointResults = PRS.PointResultService.getByExID(exID)
         
-        leftImage = ImageCreator.drawPoints(ImageCreator.splitArrayInHalf(pointResults)[0])
-        rightImage = ImageCreator.drawPoints(ImageCreator.splitArrayInHalf(pointResults)[1])
+        leftImage = ImageCreator.draw_points(ImageCreator.split_array_in_half(pointResults)[0])
+        rightImage = ImageCreator.draw_points(ImageCreator.split_array_in_half(pointResults)[1])
         
         combined_width = leftImage.width + rightImage.width
         combined_height = max(leftImage.height, rightImage.height)
@@ -17,11 +25,18 @@ class ImageCreator:
         combined_image.paste(rightImage, (leftImage.width, 0))
         
         return combined_image
-        
-           
-            
+
+
     @staticmethod
-    def drawPoints(currentPointResult):
+    def draw_points(currentPointResult):
+        """Draws points from array to Image
+
+            Args:
+                currentPointResult array: array with point results
+
+            Returns:
+                Image: Image with drawn points
+        """
         
         width, height = 102, 102
         
@@ -45,7 +60,16 @@ class ImageCreator:
         
         
     @staticmethod
-    def splitArrayInHalf(array):
+    def split_array_in_half(array):
+        """
+            Splits the given array in two
+
+        Args:
+            array: array to split
+
+        Returns:
+            two arrays first half and second half
+        """
         mid = len(array) // 2
         first_half = array[:mid]
         second_half = array[mid:]

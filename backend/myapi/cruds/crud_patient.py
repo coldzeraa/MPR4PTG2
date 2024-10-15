@@ -43,12 +43,12 @@ def get_patient_by_id(patID: AutoField):
 
 def update_patient(patID: AutoField, firstName: str, lastName: str):
     """
-    Update Patient
+        Update Patient
 
-    :param patID: id of patient
-    :param firstName: first name of patient
-    :param lastName: last name of patient
-    :return: Patient Object
+        :param patID: id of patient
+        :param firstName: first name of patient
+        :param lastName: last name of patient
+        :return: Patient Object
     """
     patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID)
     patient.lastName = lastName
@@ -59,9 +59,9 @@ def update_patient(patID: AutoField, firstName: str, lastName: str):
 
 def delete_patient(patID: AutoField):
     """
-    Delete Patient
+        Delete Patient
 
-    :param patID: id of patient
+        :param patID: id of patient
     """
     patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID=patID)
     patient.delete()

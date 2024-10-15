@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
-import useVolumeLevel from "./useVolumeLevel";
+import useVolumeLevel from "./UseVolumeLevel";
 
 const Point = ({ x, y }) => {
-  const adjustedX = x * 1; 
+  const adjustedX = x * 1;
   return (
     <div style={{ position: "absolute", left: `${adjustedX}%`, top: `${y}%` }}>
       <p style={{ margin: 0, fontSize: "10px" }}>⚫</p>
@@ -16,7 +16,7 @@ function Perimetry() {
   const SIDES = ["left", "right"];
 
   const VISIBILITY_SPAN = 100;
-  const INTERVAL = 100;
+  const INTERVAL = 50;
 
   const [startRecording, stopRecording, volume] = useVolumeLevel();
 
@@ -118,7 +118,7 @@ function Perimetry() {
   };
 
   useEffect(() => {
-    if (points.length != 0) {
+    if (points.length !== 0) {
       startRecording();
       runPerimetryTest();
     }

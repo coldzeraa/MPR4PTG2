@@ -7,12 +7,18 @@ import io
 from reportlab.lib.utils import ImageReader
 import os
 from backend.settings import BASE_DIR
-from myapi.export.imageCreator import ImageCreator
+from myapi.export.ImageCreator import ImageCreator
 
 class PdfCreator:
     
     @staticmethod
     def createPDF(exID):
+        """
+            Generates a PDF report for an examination with patient information, test results, and a disclaimer.
+
+            :param exID: The ID of the examination
+            :return: An HTTP response with the generated PDF as an attachment
+        """
         
         # Get examination
         examination = ExaminationService.get(exID)
@@ -54,7 +60,7 @@ class PdfCreator:
         p.drawString(70, 550, "Testergebnis: ")
         
         # Testresult
-        img = ImageReader(ImageCreator.createImage(exID))
+        img = ImageReader(ImageCreator.create_image(exID))
         p.drawImage(img, 105, 250, width=408, height=204)
         
         # Left eye, right eye
