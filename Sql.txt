@@ -1,0 +1,13 @@
+-- SQL Statements to make the patient database Nullable
+
+SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE 
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_NAME = 'myapi_patient';
+
+ALTER TABLE "myapi_patient" 
+ALTER COLUMN "firstName" DROP NOT NULL;
+ALTER TABLE "myapi_patient" 
+ALTER COLUMN "lastName" DROP NOT NULL;
+ALTER TABLE "myapi_patient" 
+ALTER COLUMN "email" DROP NOT NULL;
+
