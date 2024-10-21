@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./components/Login";
 import WelcomeScreen from "./components/WelcomeScreen";
+import Dashboard from "./components/Dashboard";
 import Tutorial from "./components/Tutorial";
 import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
