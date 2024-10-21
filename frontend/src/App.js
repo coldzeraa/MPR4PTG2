@@ -6,6 +6,7 @@ import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
+import ExaminationInfo from "./components/ExaminationInfo";
 
 function App() {
   return (
@@ -16,10 +17,12 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
-        <Route path="/info" element={<Info />} />
+        <Route path="/info" element={<ExaminationInfo />} />
       </Routes>
     </BrowserRouter>
   );
 }
+// TODO:
+// <Route path="/info" element={<Info />} />
 
 export default App;
