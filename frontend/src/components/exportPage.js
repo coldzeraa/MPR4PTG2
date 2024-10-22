@@ -1,6 +1,8 @@
+import React, { useState, useEffect, useRef } from "react";
+import { jsPDF } from "jspdf";
+import "./../App.css";
 
 function ExportPage() {
-
   // Extract data from localStorage
   const FIRST_NAME = localStorage.getItem('firstName');
   const LAST_NAME = localStorage.getItem('lastName');
@@ -9,96 +11,127 @@ function ExportPage() {
   // Boolean if data has been submitted
   const IS_DATA_AVAILABLE = FIRST_NAME && LAST_NAME && EMAIL;
 
-// Function to download PDF
-const generatePdfContent = () => {
-      // Fetch data
-      const userData = `Name: ${FIRST_NAME} ${LAST_NAME}\n Email: ${EMAIL}`;
+  // State to store points
+  const [points, setPoints] = useState([]);
 
-      // Generate PDF content
-      return `%PDF-1.5\n1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n3 0 obj\n<< /Type /Page /Parent 2 0 R /Resources << /Font << /F1 4 0 R >> >> /MediaBox [0 0 612 792] /Contents 5 0 R >>\nendobj\n4 0 obj\n<< /Type /Font /Subtype /Type1 /BaseFont /Times-Roman >>\nendobj\n5 0 obj\n<< /Length 60 >>\nstream\nBT /F1 18 Tf 50 700 Td (${userData}) Tj\nendstream\nendobj\nxref\n0 6\n0000000000 65535 f \n0000000009 00000 n \n0000000074 00000 n \n0000000127 00000 n \n0000000177 00000 n \n0000000231 00000 n \ntrailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n321\n%%EOF`;
-    }
+  // Reference to canvas
+  const canvasRef = useRef(null);
 
-  // Function to download pdf
-  const handlePdfDownload = () => {
+  // Fetch points from API
+  const fetchPoints = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get_points/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    console.log("downloading pdf...\nName: " + FIRST_NAME + ", " + LAST_NAME + "\nemail: " + EMAIL);
+      if (!response.ok) {
+        throw new Error("Fetching points failed");
+      }
 
-    if (IS_DATA_AVAILABLE) {
-      
-      // Generate Pdf Content
-      const pdfContent = generatePdfContent();
-
-      // Create blob with pdfContent inside it
-      const blob = new Blob([pdfContent], { type: 'application/pdf' });
-      
-      // Create URL
-      const url = window.URL.createObjectURL(blob);
-      
-      // Create invisible "a" element
-      const a = document.createElement('a');
-
-      // Create href for pdf- document
-      a.href = url;
-
-      // Download
-      a.download = 'testPDF.pdf';
-
-      // Append invisible "a" element
-      document.body.appendChild(a);
-      
-      // Click download
-      a.click();
-
-      // Remove "a" element
-      window.URL.revokeObjectURL(url);
+      const data = await response.json();
+      const pointArray = data.points.map(point => ({
+        x: point.x,
+        y: point.y,
+      }));
+      setPoints(pointArray);
+    } catch (error) {
+      console.error("Error fetching points:", error);
     }
   };
 
-  // Function to send email
+  // Draw points on canvas
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext("2d");
+
+    // Clear the canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw points
+    points.forEach((point) => {
+      context.beginPath();
+      context.arc(point.x, point.y, 5, 0, 2 * Math.PI);
+      context.fillStyle = "red";
+      context.fill();
+      context.closePath();
+    });
+  }, [points]);
+
+  useEffect(() => {
+    fetchPoints();
+  }, []);
+
+  // Function to download PDF with canvas image
+  const handlePdfDownload = () => {
+    console.log("downloading pdf...\nName: " + FIRST_NAME + ", " + LAST_NAME + "\nemail: " + EMAIL);
+
+    if (IS_DATA_AVAILABLE) {
+      const canvas = canvasRef.current;
+      const imageData = canvas.toDataURL("image/jpeg");
+
+      const doc = new jsPDF();
+
+      // Add user data
+      doc.text(`Name: ${FIRST_NAME} ${LAST_NAME}`, 10, 10);
+      doc.text(`Email: ${EMAIL}`, 10, 20);
+
+      // Add canvas image
+      doc.addImage(imageData, 'JPEG', 10, 30, 180, 160); // Adjust dimensions as needed
+
+      // Save the PDF
+      doc.save("testPDF.pdf");
+    }
+  };
+
+  // Function to send email with pdf
   const handleEmailRequest = async () => {
-    
     console.log("sending email...\nName: " + FIRST_NAME + ", " + LAST_NAME + "\nemail: " + EMAIL);
 
-    // Generate PDF content
-    const pdfContent = generatePdfContent();
+    if (IS_DATA_AVAILABLE) {
+      const canvas = canvasRef.current;
+      const imageData = canvas.toDataURL("image/jpeg");
 
-    // Create blob with pdfContent inside it
-    const blob = new Blob([pdfContent], { type: 'application/pdf' });
+      const doc = new jsPDF();
 
-    // Convert blob to base64
-    const reader = new FileReader();
-    reader.readAsDataURL(blob);
-    reader.onloadend = async () => {
-      const base64data = reader.result.split(',')[1]; // Strip out the base64 header
+      // Add user data
+      doc.text(`Name: ${FIRST_NAME} ${LAST_NAME}`, 10, 10);
+      doc.text(`Email: ${EMAIL}`, 10, 20);
+
+      // Add canvas image
+      doc.addImage(imageData, 'JPEG', 10, 30, 180, 160); // Adjust dimensions as needed
+
+      // Convert PDF to Base64
+      const pdfData = doc.output('datauristring').split(',')[1]; // Strip out the base64 header
 
       const requestBody = {
         firstName: FIRST_NAME,
         lastName: LAST_NAME,
         email: EMAIL,
-        pdfBase64: base64data
+        pdfBase64: pdfData
       };
 
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/emailing/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody),
-      });
+      try {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/emailing/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Email sent successfully:', data);
-      } else {
-        console.error('Failed to send email:', response.statusText);
+        if (response.ok) {
+          const data = await response.json();
+          console.log('Email sent successfully:', data);
+        } else {
+          console.error('Failed to send email:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error:', error);
       }
-    } catch (error) {
-      console.error('Error:', error);
     }
-  };
-
   };
 
   return (
@@ -107,7 +140,13 @@ const generatePdfContent = () => {
         <h2>Auswertung abgeschlossen</h2>
         <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
         <button className="button" onClick={handlePdfDownload}>PDF Download</button>
-        <button className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")} type="submit"  onClick={handleEmailRequest} disabled={!IS_DATA_AVAILABLE}>Als E-Mail erhalten</button>
+        <button className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")} type="submit" onClick={handleEmailRequest} disabled={!IS_DATA_AVAILABLE}>Als E-Mail erhalten</button>
+        <canvas
+          ref={canvasRef}
+          width={800}
+          height={600}
+          style={{ border: "1px solid black", marginTop: "20px" }}
+        />
       </div>
     </div>
   );
