@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import '../App.css';
 
 const menuItems = [
-    { icon: 'fas fa-tachometer-alt', label: 'Dashboard' },
-    { icon: 'fas fa-eye', label: 'Perimetrie' },
-    { icon: 'fas fa-eye-dropper', label: 'Ishihara-Test' },
-    { icon: 'fas fa-archive', label: 'Archiv' },
+    { icon: 'fas fa-tachometer-alt', label: 'Dashboard'},
+    { icon: 'fas fa-eye', label: 'Perimetrie'},
+    { icon: 'fas fa-eye-dropper', label: 'Ishihara-Test'},
+    { icon: 'fas fa-archive', label: 'Archiv'},
 ];
 
 const MenuItem = ({ icon, label, expanded }) => (
@@ -38,7 +38,7 @@ export default function Sidebar() {
                             ))}
                         </div>
                         <div className="small-links">
-                            <a href="#" className="small-link">Über Optimate</a>
+                            <a href="\Info" className="small-link">Über Optimate</a>
                             <a href="#" className="small-link">Kontakt</a>
                             <a href="#" className="small-link">Ausloggen</a>
                         </div>

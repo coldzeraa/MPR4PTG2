@@ -19,12 +19,10 @@ function App() {
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
-        <Route path="/info" element={<ExaminationInfo />} />
+        <Route path="/info" element={<Info />} />
       </Routes>
     </BrowserRouter>
   );
 }
-// TODO:
-// <Route path="/info" element={<Info />} />
 
 export default App;
