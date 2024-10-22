@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as Logo } from "./../eye_logo.svg";
+import { ReactComponent as Logo } from "../icons/eye_logo.svg";
 import "./../App.css";
 
 function WelcomeScreen() {
