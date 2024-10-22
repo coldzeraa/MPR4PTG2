@@ -206,6 +206,7 @@ html, body {
 .collapsed {
     width: 60px;
     overflow: hidden;
+    background-color: transparent;
 }
 
 .menu-item {
@@ -270,6 +271,45 @@ html, body {
     align-items: center;
     margin-top: 10px;
     padding: 10px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-item:hover {
+    background-color: #f0f0f0;
+    color: #007bff;
+}
+
+.menu-icon {
+    margin-right: 10px;
+}
+
+.menu-item i, .menu-item span {
+    transition: color 0.3s ease;
+}
+
+.menu-item:hover i, .menu-item:hover span {
+    color: #007bff;
+}
+
+/*Examination Info*/
+
+.title-item-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title-icon {
+    margin-right: 20px;
+    font-size: 25px;
 }
 
 
