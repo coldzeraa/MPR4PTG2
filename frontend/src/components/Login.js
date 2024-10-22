@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import LogoTop from "./LogoTop";
 
 function Login() {
   // Create navigate
   const navigate = useNavigate();
 
-  // Navigate to tutorial
-  const navigateToTutorial = () => {
-    navigate("/tutorial");
+  // Navigate to Dashboard
+  const navigateToDashboard = () => {
+    navigate("/dashboard");
   };
+
+
 
   // Define Back Button
   function BackButton({ onClick }) {
@@ -76,7 +79,7 @@ function Login() {
         break;
       // Default case just navigate to next page
       default:
-        navigateToTutorial();
+        navigateToDashboard();
         break;
     }
   };
@@ -169,54 +172,57 @@ function Login() {
 
   return (
     // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
+    <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
+      <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={navigateToWelcomeScreen} />
-      <div className="content">
-        {/*Input Form*/}
-        <h2>Persönliche Daten</h2>
-        <form method="POST">
-          <div style={{ marginBottom: "10px", marginTop: "20px" }}>
-            <label htmlFor="firstName" style={{ display: "block" }} />
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="Vorname"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
-          </div>
-          <div style={{ marginBottom: "10px", marginTop: "10px" }}>
-            <label htmlFor="lastName" style={{ display: "block" }} />
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Nachname"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </div>
-          <div style={{ marginBottom: "20px", marginTop: "10px" }}>
-            <label htmlFor="email" style={{ display: "block" }} />
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
+      <div className="container-fluid row d-flex justify-content-center">
+        <div className="content">
+          {/*Input Form*/}
+          <h2>Persönliche Daten</h2>
+          <form method="POST">
+            <div style={{ marginBottom: "10px", marginTop: "20px" }}>
+              <label htmlFor="firstName" style={{ display: "block" }} />
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Vorname"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+              <label htmlFor="lastName" style={{ display: "block" }} />
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Nachname"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ marginBottom: "20px", marginTop: "10px" }}>
+              <label htmlFor="email" style={{ display: "block" }} />
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
 
-          <button className="button" type="submit" onClick={handleSubmit}>
-            Weiter
-          </button>
-          <button className="button" type="submit" onClick={handleSkip}>
-            Überspringen
-          </button>
-        </form>
+            <button className="button" type="submit" onClick={handleSubmit}>
+              Weiter
+            </button>
+            <button className="button" type="submit" onClick={handleSkip}>
+              Überspringen
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
