@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../App.css';
+import {IconMap} from '../data/IconMap';
 
 const menuItems = [
     { icon: 'fas fa-tachometer-alt', label: 'Dashboard'},
@@ -33,7 +34,7 @@ export default function Sidebar() {
                     <>
                         <h3 className="menu-title">Menü</h3>
                         <div className="menu-items">
-                            <div className="menu-items">
+
                                 {Object.entries(IconMap).map(([key, item], index) => (
                                     <MenuItem
                                         key={index}
@@ -43,7 +44,7 @@ export default function Sidebar() {
                                         link={item.link}
                                     />
                                 ))}
-                            </div>
+                          
                         </div>
                         <div className="small-links">
                             <a href="#" className="small-link">Über Optimate</a>
