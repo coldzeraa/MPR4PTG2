@@ -312,6 +312,26 @@ html, body {
     font-size: 25px;
 }
 
+.centered-component {
+    width: 85%;
+    margin: 0 auto;
+    text-align: justify;
+    padding: 20px;
+    align-items: center;
+}
+
+.title-item-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkbox {
+    margin: 20px;
+    margin-right: 5px;
+}
+
+
 
 @media (min-width: 576px) {
   .position-sm-static {

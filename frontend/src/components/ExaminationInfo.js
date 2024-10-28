@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"; // Import useEffect
+import React, {useState, useEffect} from "react";
 import Sidebar from "./Sidebar";
 import LogoTop from "./LogoTop";
 import {IconMap} from "../data/IconMap";
@@ -15,9 +15,13 @@ const ExaminationTitle = ({icon, label}) => (
 function ExaminationInfo() {
     const [setIsSidebarExpanded] = useState(false);
     const [infoText, setInfoText] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
 
     const handleSidebarToggle = (isExpanded) => {
         setIsSidebarExpanded(isExpanded);
+    };
+    const handleCheckboxChange = () => {
+        setIsChecked(prevChecked => !prevChecked);
     };
 
     const currentUrl = window.location.href;
@@ -44,43 +48,43 @@ function ExaminationInfo() {
 
     const navigate = useNavigate();
 
-const handleExaminationID = async () => {
-    const patient = {
-        patID: localStorage.getItem("patientID"),
+    const handleExaminationID = async () => {
+        const patient = {
+            patID: localStorage.getItem("patientID"),
+        };
+
+        try {
+            const response = await fetch(
+                `${process.env.REACT_APP_API_URL}/api/examination/`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(patient),
+                }
+            );
+            const responseData = await response.json();
+            localStorage.setItem("exID", responseData.exID);
+        } catch (error) {
+            console.error("Examination ID failed", error);
+        }
     };
 
-    try {
-        const response = await fetch(
-            `${process.env.REACT_APP_API_URL}/api/examination/`,
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(patient),
-            }
-        );
-        const responseData = await response.json();
-        localStorage.setItem("exID", responseData.exID);
-    } catch (error) {
-        console.error("Examination ID failed", error);
-    }
-};
+    const navigateToPerimetry = () => {
+        const element = document.documentElement;
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
 
-const navigateToPerimetry = () => {
-    const element = document.documentElement;
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) {
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) {
-        element.msRequestFullscreen();
-    }
-
-    navigate("/Perimetry");
-};
+        navigate("/Perimetry");
+    };
 
     return (
         <div className="container-fluid p-3 background-all">
@@ -93,19 +97,32 @@ const navigateToPerimetry = () => {
                     padding: '20px',
                 }}
             >
-                <div>
+                <div className="centered-component">
                     <ExaminationTitle icon={icon} label={label}/>
                     <h6>Information</h6>
-                    <span>{infoText || "TODO load text from file here..."}</span>
-                    <button
-                        className="button"
-                        onClick={() => {
-                            handleExaminationID();
-                            navigateToPerimetry();
-                        }}
-                    >
-                        ➠ Starten
-                    </button>
+                    <span>{"TODO load text from file here..."}</span>
+                    <div className="d-flex flex-column align-items-center">
+                        <label>
+                            <input className="checkbox"
+                                   type="checkbox"
+                                   checked={isChecked}
+                                   onChange={handleCheckboxChange}
+                            />
+                            akzeptieren
+                        </label>
+                        <button
+                            className="btn btn-primary mt-2"
+                            disabled={!isChecked}
+                            onClick={() => {
+                                handleExaminationID();
+                                navigateToPerimetry();
+                            }}
+                        >
+                            ➠ Starten
+                        </button>
+                    </div>
+                    <div>
+                    </div>
                 </div>
             </div>
         </div>
