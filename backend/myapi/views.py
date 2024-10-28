@@ -10,7 +10,7 @@ from django.core.exceptions import ValidationError
 import datetime
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.EmailSender import EmailSender
-from myapi.export.PDFCreator import PdfCreator
+from myapi.export.PdfCreator import PdfCreator
 
 
 @api_view(['POST'])

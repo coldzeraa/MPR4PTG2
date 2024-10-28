@@ -7,6 +7,7 @@ import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
+import ExaminationInfo from "./components/ExaminationInfo";
 
 function App() {
   return (
