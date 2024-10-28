@@ -16,10 +16,11 @@ function App() {
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tutorial" element={<Tutorial />} />
+        <Route path="/tutorial" element={<ExaminationInfo />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/ishihara" element={<ExaminationInfo />} />
       </Routes>
     </BrowserRouter>
   );

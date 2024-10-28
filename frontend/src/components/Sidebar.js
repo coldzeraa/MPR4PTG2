@@ -33,12 +33,20 @@ export default function Sidebar() {
                     <>
                         <h3 className="menu-title">Menü</h3>
                         <div className="menu-items">
-                            {menuItems.map((item, index) => (
-                                <MenuItem key={index} icon={item.icon} label={item.label} expanded={expanded} />
-                            ))}
+                            <div className="menu-items">
+                                {Object.entries(IconMap).map(([key, item], index) => (
+                                    <MenuItem
+                                        key={index}
+                                        icon={item.icon}
+                                        label={item.label}
+                                        expanded={expanded}
+                                        link={item.link}
+                                    />
+                                ))}
+                            </div>
                         </div>
                         <div className="small-links">
-                            <a href="\Info" className="small-link">Über Optimate</a>
+                            <a href="#" className="small-link">Über Optimate</a>
                             <a href="#" className="small-link">Kontakt</a>
                             <a href="#" className="small-link">Ausloggen</a>
                         </div>
