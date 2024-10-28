@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
+import Sidebar from "./Sidebar";
 
 function Dashboard() {
 
@@ -37,9 +38,8 @@ function Dashboard() {
 
   return (
     <div className="container-fluid p-3 background-all" >
+      <Sidebar />
       <LogoTop />
-      {/*Back Button, Logo and Text on Page*/}
-      <BackButton onClick={handleBackClick} />
       {/* Dashboard content */}
       <div className="row d-flex justify-content-center">
         {/* Section 1: Perimetry */}

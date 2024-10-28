@@ -1,3 +1,6 @@
+import LogoTop from "./LogoTop";
+import Sidebar from "./Sidebar";
+
 function ExportPage() {
   // Extract data from localStorage
   const FIRST_NAME = localStorage.getItem("firstName");
@@ -45,11 +48,11 @@ function ExportPage() {
   const handleEmailRequest = async () => {
     console.log(
       "sending email...\nName: " +
-        FIRST_NAME +
-        ", " +
-        LAST_NAME +
-        "\nemail: " +
-        EMAIL
+      FIRST_NAME +
+      ", " +
+      LAST_NAME +
+      "\nemail: " +
+      EMAIL
     );
 
     // Generate PDF content
@@ -96,21 +99,26 @@ function ExportPage() {
   };
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center">
-      <div className="content">
-        <h2>Auswertung abgeschlossen</h2>
-        <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
-        <button className="button" onClick={handlePdfDownload}>
-          PDF Download
-        </button>
-        <button
-          className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")}
-          type="submit"
-          onClick={handleEmailRequest}
-          disabled={!IS_DATA_AVAILABLE}
-        >
-          Als E-Mail erhalten
-        </button>
+    <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
+      <LogoTop />
+      <Sidebar />
+      <div className="d-flex align-items-center justify-content-center">
+        
+        <div className="content">
+          <h2>Auswertung abgeschlossen</h2>
+          <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
+          <button className="button" onClick={handlePdfDownload}>
+            PDF Download
+          </button>
+          <button
+            className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")}
+            type="submit"
+            onClick={handleEmailRequest}
+            disabled={!IS_DATA_AVAILABLE}
+          >
+            Als E-Mail erhalten
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,12 +1,18 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import '../App.css';
-import {IconMap} from '../data/IconMap';
 
-const MenuItem = ({ icon, label, expanded, link }) => (
-    <a href={link} className="menu-item">
+const menuItems = [
+    { icon: 'fas fa-tachometer-alt', label: 'Dashboard'},
+    { icon: 'fas fa-eye', label: 'Perimetrie'},
+    { icon: 'fas fa-eye-dropper', label: 'Ishihara-Test'},
+    { icon: 'fas fa-archive', label: 'Archiv'},
+];
+
+const MenuItem = ({ icon, label, expanded }) => (
+    <div className="menu-item">
         <i className={`${icon} menu-icon`}></i>
         {expanded && <span>{label}</span>}
-    </a>
+    </div>
 );
 
 export default function Sidebar() {
@@ -19,7 +25,7 @@ export default function Sidebar() {
     return (
         <div>
             <button onClick={toggleSidebar} className="toggle-button">
-                <i className={`fas ${expanded ? 'fa-chevron-right' : 'fa-bars'}`} style={{fontSize: '24px'}}></i>
+                <i className={`fas ${expanded ? 'fa-chevron-right' : 'fa-bars'}`} style={{ fontSize: '24px' }}></i>
             </button>
 
             <div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`}>
