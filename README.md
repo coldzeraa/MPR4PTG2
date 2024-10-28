@@ -1,6 +1,6 @@
 # OptiMate
 
-Project in Medical Informatics Bachelor at the University of Applied Sciences Upper Austria, Hagenberg.
+Project in Medical Informatics bachelor's degree course at the University of Applied Sciences Upper Austria, Hagenberg.
 
 ## Description
 
