@@ -17,6 +17,7 @@ class Patient(models.Model):
     patID = models.AutoField(primary_key=True)
     lastName = models.CharField(max_length=50)       # last name
     firstName = models.CharField(max_length=50)      # first name
+    password = models.CharField(max_length=50, default=None)       # password
     email = models.EmailField(max_length=50, default=None)      # email
 
     def __str__(self):
@@ -24,7 +25,7 @@ class Patient(models.Model):
 
 
 class Examination(models.Model):
-    exID = models.AutoField(primary_key=True)    # ID
+    exID = models.AutoField(primary_key=True)       # ID
     date = models.DateField()                       # date of examination
 
     pat = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient

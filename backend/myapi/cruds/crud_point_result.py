@@ -10,7 +10,7 @@ def create_point_result(seen: bool, p: Point, ex: Examination):
         Create a new PointResult Object
 
         :param seen: specifies if Point was recognized
-        :param p: patient 
+        :param p: point 
         :param ex: examination 
         :return: new PointResult
        """
@@ -41,7 +41,7 @@ def update_point_result(resID: AutoField, seen: bool, pID: AutoField,  exID: Aut
 
           :param resID: id of point result
           :param seen: point seen by patient (true|false)
-          :return: PatientResult Object
+          :return: PointResult Object
        """
     point_result = PointResult.objects.get(resID=resID)
     point_result.seen = seen

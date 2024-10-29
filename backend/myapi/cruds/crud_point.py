@@ -60,7 +60,7 @@ def update_point(pID: int, x: int, y: int, quadrant: int):
        :param x: x coordinate
        :param y: y coordinate
        :param quadrant: quadrant of the point
-       :return: Patient Object
+       :return: Point Object
     """
     if not valid_quadrant(quadrant):
         raise ValueError("Invalid quadrant value")

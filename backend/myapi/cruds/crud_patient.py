@@ -5,14 +5,15 @@ from myapi.models import Patient
 DEFAULT_FIRSTNAME = None
 DEFAULT_LASTNAME = None
 DEFAULT_EMAIL = None
+DEFAULT_PASSWORD = None
 
-
-def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
+def create_patient(firstName: str = "", lastName: str = "", password: str= "", email: str = ""):
     """
         Create a new Patient object
 
         :param lastName: last name of patient
         :param firstName: first name of patient
+        :param passord: hashed password of patient
         :param email: email of the patient
         :return: new patient
     """
@@ -21,7 +22,9 @@ def create_patient(firstName: str = "", lastName: str = "", email: str = ""):
         lastName = DEFAULT_LASTNAME
     if email == "":
         email = DEFAULT_EMAIL
-    return Patient.objects.create(firstName=firstName, lastName=lastName, email=email)
+    if password == "":
+        password = DEFAULT_PASSWORD
+    return Patient.objects.create(firstName=firstName, lastName=lastName, password=password, email=email)
 
 
 def get_all_patients():
@@ -41,18 +44,20 @@ def get_patient_by_id(patID: AutoField):
     return Patient.objects.get(patID=patID)
 
 
-def update_patient(patID: AutoField, firstName: str, lastName: str):
+def update_patient(patID: AutoField, firstName: str, lastName: str, password: str):
     """
         Update Patient
 
         :param patID: id of patient
         :param firstName: first name of patient
         :param lastName: last name of patient
+        :param password: hashed password of the patient
         :return: Patient Object
     """
     patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID)
     patient.lastName = lastName
     patient.firstName = firstName
+    patient.password = password
     patient.save()
     return patient
 

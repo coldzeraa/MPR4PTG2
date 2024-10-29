@@ -39,7 +39,7 @@ class PointResultService:
     @staticmethod
     def update(resID: AutoField, seen: bool, pID: AutoField,  exID: AutoField):
         """
-            Update patient
+            Update point
 
             :param resID: ID of point result
             :param seen: boolean if point was seen

@@ -1,16 +1,18 @@
 class Patient:
-    def __init__(self, patID, lastName, firstName, email=None):
+    def __init__(self, patID, lastName, firstName, password, email=None):
         """
         Initializes a Patient object with the given patient ID, last name, first name, and optional email address.
 
         :param patID: The ID of the patient
         :param lastName: The last name of the patient
         :param firstName: The first name of the patient
+        :param password: Hashed password of the patient
         :param email: (Optional) The email address of the patient
         """
         self.patID = patID
         self.lastName = lastName
         self.firstName = firstName
+        self.password = password
         self.email = email
 
     # Getter method for patID
@@ -69,6 +71,25 @@ class Patient:
         :return: None
         """
         self.firstName = firstName
+
+    # Getter method for password
+    def get_password(self):
+        """
+        Returns the hashed password of the patient.
+
+        :return: The hashed password of the patient
+        """
+        return self.password
+
+    # Setter method for password
+    def set_password(self, password):
+        """
+        Sets the hasehed password of the patient.
+
+        :param password: The new password of the patient
+        :return: None
+        """
+        self.password = password
 
     # Getter method for email
     def get_email(self):
