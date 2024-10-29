@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
+import LogoTop from "./LogoTop";
+import Sidebar from "./Sidebar";
 
 function Tutorial() {
   // Define Back Button
@@ -58,14 +60,18 @@ function Tutorial() {
 
   const handleBackClick = () => {
     // Handle click event for the back button
-    navigate("/login");
+    navigate("/Dashboard");
   };
 
   return (
-    // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
-      {/*Back Button, Logo and Text on Page*/}
+    <div className="container-fluid p-3 background-all">
+    <LogoTop/>
+    <Sidebar />
+    <div className="d-flex align-items-center justify-content-center">
+      
+      {/*TODO remove BackButton*/}
       <BackButton onClick={handleBackClick} />
+      
       <div className="content">
         <h1>Information</h1>
         <div className="scroll-box border rounded p-3 content-left">
@@ -109,6 +115,7 @@ function Tutorial() {
           ➠ Starten
         </button>
       </div>
+    </div>
     </div>
   );
 }

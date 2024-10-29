@@ -3,15 +3,18 @@ import { useState } from "react";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import bcrypt from "bcryptjs";
+import LogoTop from "./LogoTop";
 
 function Login() {
   // Create navigate
   const navigate = useNavigate();
 
-  // Navigate to tutorial
-  const navigateToTutorial = () => {
-    navigate("/tutorial");
+  // Navigate to Dashboard
+  const navigateToDashboard = () => {
+    navigate("/dashboard");
   };
+
+
 
   // Define Back Button
   function BackButton({ onClick }) {
@@ -78,7 +81,7 @@ function Login() {
         break;
       // Default case just navigate to next page
       default:
-        navigateToTutorial();
+        navigateToDashboard();
         break;
     }
   };
@@ -139,7 +142,8 @@ function Login() {
 
   return (
     // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
+    <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
+      <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={navigateToWelcomeScreen} />
       <div className="content">
@@ -186,6 +190,7 @@ function Login() {
             Weiter
           </button>
         </form>
+
       </div>
     </div>
   );

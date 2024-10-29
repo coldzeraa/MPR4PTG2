@@ -2,9 +2,9 @@ from django.db.models import AutoField
 
 from myapi.models import Patient
 
-DEFAULT_FIRSTNAME = "John"
-DEFAULT_LASTNAME = "Doe"
-DEFAULT_EMAIL = "unknown"
+DEFAULT_FIRSTNAME = None
+DEFAULT_LASTNAME = None
+DEFAULT_EMAIL = None
 
 
 def create_patient(firstName: str = "", lastName: str = "", email: str = ""):

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
+import LogoTop from "./LogoTop";
 
 function Info() {
   // Define Back Button
@@ -20,7 +21,8 @@ function Info() {
 
   return (
     // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
+    <div className="container-fluid p-3 background-all">
+      <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={handleBackClick} />
       <div className="content">
