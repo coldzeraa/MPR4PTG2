@@ -3,6 +3,7 @@ import { useState } from "react";
 import nameIcon from "./../images/nameIcon.png";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
+import LogoTop from "./LogoTop";
 
 function Registry() {
   // Create navigate
@@ -45,80 +46,109 @@ function Registry() {
 
   return (
     // Formatting
-    <div className="container-fluid d-flex align-items-center justify-content-center">
+    <div className="container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light background-all">
+      {/* Logo */}
+      <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={navigateToWelcomeScreen} />
-      <div className="content">
+
+      {/*Registry Card*/}
+      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%' }}>
         {/*Input Form*/}
-        <h2>Registrieren</h2>
+        <h2 className="text-center mb-4">Registrieren</h2>
         <form method="POST">
-          <div className="input-container">
-            <div className="icon">
-              <img src={nameIcon} alt="Name Icon" />
+
+          {/* Vorname Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={nameIcon} alt="Name Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Vorname"
+                required
+              />
             </div>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              placeholder="Vorname"
-              value={formData.firstName}
-              onChange={handleChange}
-            />
           </div>
 
-          <div className="input-container">
-            <div className="icon">
-              <img src={nameIcon} alt="Name Icon" />
+          {/* Nachname Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={nameIcon} alt="Surname Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Nachname"
+                required
+              />
             </div>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              placeholder="Nachname"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
           </div>
 
-          <div className="input-container">
-            <div className="icon">
-              <img src={emailIcon} alt="Email Icon" />
+          {/* Email Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={emailIcon} alt="Email Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Email"
+                required
+              />
             </div>
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
           </div>
 
-          <div className="input-container">
-            <div className="icon">
-              <img src={passwordIcon} alt="Email Icon" />
+          {/* Passwort Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={passwordIcon} alt="Password Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Passwort"
+                required
+              />
             </div>
-            <input
-              type="text"
-              id="password"
-              name="password"
-              placeholder="Passwort"
-              value={formData.password}
-              onChange={handleChange}
-            />
           </div>
           <div>
-            Du hast schon einen Account? <br /> Melde dich{" "}
-            <a href="/login"> hier</a> an!
+            <small>
+              Du hast schon einen Account? <br /> Melde dich{" "}
+              <a href="/login"> hier</a> an!
+            </small>
           </div>
-          <button
-            className="button"
-            type="submit"
-            style={{ margin: "20px" }}
-            onClick={handleSubmit}
-          >
-            Weiter
-          </button>
+          <div className="d-grid">
+            <button
+              className="button"
+              type="submit"
+              style={{ margin: "20px" }}
+              onClick={handleSubmit}
+            >
+              Weiter
+            </button>
+          </div>
         </form>
       </div>
     </div>

@@ -139,48 +139,63 @@ function Login() {
       console.error("Failed to submit form:", error);
     }
   };
-
   return (
-    // Formatting
-    <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
+    <div className="container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light background-all">
+      {/* Logo */}
       <LogoTop />
-      {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={navigateToWelcomeScreen} />
-      <div className="content">
-        {/*Input Form*/}
-        <h2>Einloggen</h2>
-        <form method="POST">
-          <div className="input-container">
-            <div className="icon">
-              <img src={emailIcon} alt="Email Icon" />
+      {/* Login Card */}
+      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Einloggen</h2>
+        
+        <form method="POST" onSubmit={handleSubmit}>
+          {/* Email Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={emailIcon} alt="Email Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Email"
+                required
+              />
             </div>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-            />
           </div>
 
-          <div class="input-container">
-            <div class="icon">
-              <img src={passwordIcon} alt="Password Icon" />
+          {/* Password Field */}
+          <div className="mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <img src={passwordIcon} alt="Password Icon" style={{ width: '20px' }} />
+              </span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Passwort"
+                required
+              />
             </div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Passwort"
-              value={formData.password}
-              onChange={handleChange}
-            />
           </div>
-          <div>
-            Du hast noch keinen Account? <br /> Registriere dich{" "}
-            <a href="/registry"> hier</a>!
+
+          {/* Register Link */}
+          <div className="text-center mb-3">
+            <small>
+              Du hast noch keinen Account? <a href="/registry">Registriere dich hier!</a>
+            </small>
           </div>
+
+          {/* Submit Button */}
+          <div className="d-grid">
           <button
             className="button"
             type="submit"
@@ -189,11 +204,13 @@ function Login() {
           >
             Weiter
           </button>
+          </div>
         </form>
-
       </div>
     </div>
   );
-}
+};
+  
+
 
 export default Login;
