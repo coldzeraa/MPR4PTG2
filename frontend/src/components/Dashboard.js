@@ -18,21 +18,20 @@ function Dashboard() {
 
   // Handle click events
   const handleBackClick = () => {
-    navigate("/Login");
+    navigate("/login");
   };
 
   const handlePerimetryClick = () => {
-    navigate("/Tutorial");
+    navigate("/tutorial");
   }
 
   const handleRedGreenClick = () => {
-    // TODO Change to Real Red Green Blindess Test
-    navigate("/Tutorial")
+    navigate("/ishihara")
   }
 
   const handleArchiveClick = () => {
     // TODO Change to Real Archive
-    navigate("/Tutorial")
+    navigate("/archive")
   }
 
 

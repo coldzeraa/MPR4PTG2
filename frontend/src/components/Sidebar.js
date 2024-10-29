@@ -9,8 +9,13 @@ const menuItems = [
     { icon: 'fas fa-archive', label: 'Archiv'},
 ];
 
-const MenuItem = ({ icon, label, expanded }) => (
-    <div className="menu-item">
+const MenuItem = ({ icon, label, expanded, link }) => (
+    <div
+        className="menu-item"
+        onClick={() => window.location.href = link}
+        role="button"
+        tabIndex={0}
+    >
         <i className={`${icon} menu-icon`}></i>
         {expanded && <span>{label}</span>}
     </div>
