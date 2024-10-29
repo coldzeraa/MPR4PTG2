@@ -62,11 +62,11 @@ function WelcomeScreen() {
     switch (selectedOption) {
       case "perimetry":
         closePopup();
-        navigate("/tutorial");
+        navigate("/perimetry_info");
         break;
       case "redGreen":
         closePopup();
-        navigate("/ishihara");
+        navigate("/ishihara_info");
         break;
       default:
         setError("Bitte wählen Sie eine Untersuchung aus.");
