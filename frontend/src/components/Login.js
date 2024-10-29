@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import emailIcon from "./../images/emailIcon.png";
+import passwordIcon from "./../images/passwordIcon.png";
+import bcrypt from "bcryptjs";
 import LogoTop from "./LogoTop";
 
 function Login() {
@@ -51,9 +54,8 @@ function Login() {
 
   // React hook state to define state "formData"
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
     email: "",
+    password: "",
   });
 
   // Function to handle change in fomular
@@ -61,7 +63,7 @@ function Login() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Funktion to check the response
+  // Function to check the response
   const checkResponse = (e) => {
     // Check response of backend
     switch (e) {
@@ -84,6 +86,18 @@ function Login() {
     }
   };
 
+  // Function to hash password
+  const hashPassword = async () => {
+    // Use bcrypt to hash password
+    const saltRounds = 10;
+
+    try {
+      formData.password = await bcrypt.hash(formData.password, saltRounds);
+    } catch (error) {
+      console.log("Could not hash password!");
+    }
+  };
+
   // Function to handle sumbission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -92,6 +106,9 @@ function Login() {
       showNoDataError();
       return;
     }
+
+    // Hash password
+    await hashPassword();
 
     try {
       // Fetch data via "POST" to backend
@@ -110,58 +127,11 @@ function Login() {
         throw new Error("Sending failed");
       }
 
-      // Store name and email in localStorage
-      localStorage.setItem("firstName", formData.firstName);
-      localStorage.setItem("lastName", formData.lastName);
-      localStorage.setItem("email", formData.email);
-
       // Parse response as JSON
       const responseData = await response.json();
       localStorage.setItem("patientID", responseData.patientID);
 
-      // Check response
-      checkResponse(responseData.message);
-    } catch (error) {
-      console.error("Failed to submit form:", error);
-    }
-  };
-
-  // Function to handle skip
-  const handleSkip = async (e) => {
-    e.preventDefault();
-    try {
-      // Empty formular to send to backend
-      const form = {
-        firstName: "",
-        lastName: "",
-        email: "",
-      };
-
-      // Store empty name and empty email in localStorage
-      localStorage.setItem("firstName", form.firstName);
-      localStorage.setItem("lastName", form.lastName);
-      localStorage.setItem("email", form.email);
-
-      // Fetch data via "POST" to backend
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/login/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(form),
-        }
-      );
-
-      // Check if response is okay
-      if (!response.ok) {
-        throw new Error("Sending failed");
-      }
-
-      // Parse response as JSON
-      const responseData = await response.json();
-      localStorage.setItem("patientID", responseData.patientID);
+      // TODO SESSION
 
       // Check response
       checkResponse(responseData.message);
@@ -176,53 +146,51 @@ function Login() {
       <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton onClick={navigateToWelcomeScreen} />
-      <div className="container-fluid row d-flex justify-content-center">
-        <div className="content">
-          {/*Input Form*/}
-          <h2>Persönliche Daten</h2>
-          <form method="POST">
-            <div style={{ marginBottom: "10px", marginTop: "20px" }}>
-              <label htmlFor="firstName" style={{ display: "block" }} />
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                placeholder="Vorname"
-                value={formData.firstName}
-                onChange={handleChange}
-              />
+      <div className="content">
+        {/*Input Form*/}
+        <h2>Einloggen</h2>
+        <form method="POST">
+          <div className="input-container">
+            <div className="icon">
+              <img src={emailIcon} alt="Email Icon" />
             </div>
-            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
-              <label htmlFor="lastName" style={{ display: "block" }} />
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                placeholder="Nachname"
-                value={formData.lastName}
-                onChange={handleChange}
-              />
-            </div>
-            <div style={{ marginBottom: "20px", marginTop: "10px" }}>
-              <label htmlFor="email" style={{ display: "block" }} />
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Email"
+            />
+          </div>
 
-            <button className="button" type="submit" onClick={handleSubmit}>
-              Weiter
-            </button>
-            <button className="button" type="submit" onClick={handleSkip}>
-              Überspringen
-            </button>
-          </form>
-        </div>
+          <div class="input-container">
+            <div class="icon">
+              <img src={passwordIcon} alt="Password Icon" />
+            </div>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Passwort"
+              value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            Du hast noch keinen Account? <br /> Registriere dich{" "}
+            <a href="/registry"> hier</a>!
+          </div>
+          <button
+            className="button"
+            type="submit"
+            style={{ margin: "20px" }}
+            onClick={handleSubmit}
+          >
+            Weiter
+          </button>
+        </form>
+
       </div>
     </div>
   );
