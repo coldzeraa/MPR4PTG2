@@ -17,12 +17,12 @@ function App() {
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tutorial" element={<ExaminationInfo />} />
+        <Route path="/perimetry_info" element={<ExaminationInfo />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
         <Route path="/registry" element={<Registry />} />
-        <Route path="/ishihara" element={<ExaminationInfo />} />
+        <Route path="/ishihara_info" element={<ExaminationInfo />} />
       </Routes>
     </BrowserRouter>
   );
