@@ -65,57 +65,57 @@ function Tutorial() {
 
   return (
     <div className="container-fluid p-3 background-all">
-    <LogoTop/>
-    <Sidebar />
-    <div className="d-flex align-items-center justify-content-center">
-      
-      {/*TODO remove BackButton*/}
-      <BackButton onClick={handleBackClick} />
-      
-      <div className="content">
-        <h1>Information</h1>
-        <div className="scroll-box border rounded p-3 content-left">
-          Beachten Sie bitte folgende Hinweise, um OptiMate optimal nutzen zu
-          können:
-          <br />
-          <br />
-          <ol>
-            <li>
-              <b>Wählen Sie eine ruhige Umgebung für die Untersuchung.</b>
-              <br />
-              Vermeiden Sie Störgeräusche, um das Ergebnis nicht zu verfälschen.
-            </li>
+      <LogoTop />
+      <Sidebar />
+      <div className="d-flex align-items-center justify-content-center">
+        {/*TODO remove BackButton*/}
+        <BackButton onClick={handleBackClick} />
+
+        <div className="content">
+          <h1>Information</h1>
+          <div className="scroll-box border rounded p-3 content-left">
+            Beachten Sie bitte folgende Hinweise, um OptiMate optimal nutzen zu
+            können:
             <br />
-            <li>
-              <b>Starten Sie erst, wenn Sie bereit sind.</b>
-              <br />
-              Durch den Druck auf "Start" wird ein Countdown gestartet, der
-              Ihnen 15 Sekunden Zeit gibt, um Ihr Mobiltelefon in die
-              VR-Vorrichtung einzusetzen.
-            </li>
             <br />
-            <li>
-              <b>Handeln Sie in Ihrem eigenen Interesse.</b>
+            <ol>
+              <li>
+                <b>Wählen Sie eine ruhige Umgebung für die Untersuchung.</b>
+                <br />
+                Vermeiden Sie Störgeräusche, um das Ergebnis nicht zu
+                verfälschen.
+              </li>
               <br />
-              Um ein möglichst aussagekräftiges Ergebnis zu erhalten, sollten
-              Sie nur dann angeben, einen Punkt gesehen zu haben, wenn Sie ihn
-              tatsächlich wahrgenommen haben.
-            </li>
-          </ol>
+              <li>
+                <b>Starten Sie erst, wenn Sie bereit sind.</b>
+                <br />
+                Durch den Druck auf "Start" wird ein Countdown gestartet, der
+                Ihnen 15 Sekunden Zeit gibt, um Ihr Mobiltelefon in die
+                VR-Vorrichtung einzusetzen.
+              </li>
+              <br />
+              <li>
+                <b>Handeln Sie in Ihrem eigenen Interesse.</b>
+                <br />
+                Um ein möglichst aussagekräftiges Ergebnis zu erhalten, sollten
+                Sie nur dann angeben, einen Punkt gesehen zu haben, wenn Sie ihn
+                tatsächlich wahrgenommen haben.
+              </li>
+            </ol>
+          </div>
+          {/*Login Button*/}
+          <br />
+          <button
+            className="button"
+            onClick={() => {
+              handleExaminationID();
+              navigateToPerimetry();
+            }}
+          >
+            ➠ Starten
+          </button>
         </div>
-        {/*Login Button*/}
-        <br />
-        <button
-          className="button"
-          onClick={() => {
-            handleExaminationID();
-            navigateToPerimetry();
-          }}
-        >
-          ➠ Starten
-        </button>
       </div>
-    </div>
     </div>
   );
 }
