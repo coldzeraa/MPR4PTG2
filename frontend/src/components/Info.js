@@ -1,11 +1,11 @@
 import {useNavigate} from "react-router-dom";
 import "./../App.css";
-import { IconMap } from "../data/IconMap";
+import {IconMap} from "../data/IconMap";
 import LogoTop from "./LogoTop";
 import React, {useEffect, useState} from "react";
 import ReactMarkdown from "react-markdown";
 
-const InfoTitle = ({ icon, label }) => (
+const InfoTitle = ({icon, label}) => (
     <span className="title-item-content">
         <i className={`${icon} title-icon`}></i>
         <h3>{label}</h3>
@@ -15,22 +15,17 @@ const InfoTitle = ({ icon, label }) => (
 
 function Info() {
     const [infoHtml, setInfoHtml] = useState('');
-    const { icon, label } = IconMap['info'];
+    const {icon, label} = IconMap['info'];
     const infoItem = 'optimate'
-
-    function BackButton({onClick}) {
-        return (
-            <button className="button back-button" onClick={onClick}>
-                ← Zurück
-            </button>
-        );
-    }
 
     const navigate = useNavigate();
 
-    const handleBackClick = () => {
-        navigate("/");
-    };
+    function BackButton() {
+        const navigate = useNavigate();
+        return (
+            <button className="button back-button" onClick={() => navigate(-1)}>← Zurück</button>
+        );
+    }
 
     useEffect(() => {
         const loadText = async () => {
@@ -53,7 +48,7 @@ function Info() {
     return (
         <div className="container-fluid p-3 background-all">
             <LogoTop/>
-            <BackButton onClick={handleBackClick}/>
+            <BackButton/>
             <div
                 style={{
                     transition: 'margin-left 0.3s ease',

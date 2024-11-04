@@ -6,6 +6,7 @@ import Tutorial from "./components/Tutorial";
 import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
+import Contact from "./components/Contact";
 import Info from "./components/Info";
 import Registry from "./components/Registry";
 import ExaminationInfo from "./components/ExaminationInfo";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/info" element={<Info />} />
         <Route path="/registry" element={<Registry />} />
         <Route path="/ishihara_info" element={<ExaminationInfo />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
