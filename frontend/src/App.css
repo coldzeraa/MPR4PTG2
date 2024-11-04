@@ -370,11 +370,6 @@ button.start-button {
     align-items: center;
 }
 
-.checkbox {
-    margin: 20px;
-    margin-right: 5px;
-}
-
 
 
 @media (min-width: 576px) {
