@@ -29,7 +29,7 @@ VR Box used: TODO
 - **[React](https://reactjs.org/)**: A JavaScript library for building user interfaces.
 - **[axios](https://axios-http.com/)** (v1.6.8): Promise-based HTTP client for making API requests.
 - **[bcryptjs](https://www.npmjs.com/package/bcryptjs)**: A JavaScrip library to automatically hash strings
-
+- **[react-markdown](https://www.npmjs.com/package/react-markdown/v/8.0.6)**: Renders Markdown in HTML.
 
 ### Installing
 
