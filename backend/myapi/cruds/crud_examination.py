@@ -1,10 +1,10 @@
-from datetime import date
+from datetime import datetime
 
 from myapi.models import Examination, Patient
 from django.db.models import AutoField
 
 
-def create_examination(exDate: date, pat: Patient, type: str):
+def create_examination(exDate: datetime, pat: Patient, type: str):
     """
         Create a new Examination object
 
@@ -30,7 +30,7 @@ def get_examination_by_id(exID: AutoField):
     """
     return Examination.objects.get(exID=exID)
 
-def update_examination(exID: AutoField, exDate: date, pat: Patient, type: str):
+def update_examination(exID: AutoField, exDate: datetime, pat: Patient, type: str):
     """
           Update Examination
 

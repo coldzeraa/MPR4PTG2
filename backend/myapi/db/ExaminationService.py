@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from django.db.models import AutoField
 from myapi.cruds import crud_examination
 
@@ -14,7 +14,7 @@ class ExaminationService:
         return crud_examination.get_all_examinations()
     
     @staticmethod
-    def store(patID: AutoField, type: str, exDate = datetime.date.today()):
+    def store(patID: AutoField, type: str, exDate = datetime):
         """
             Store examination in database
 
