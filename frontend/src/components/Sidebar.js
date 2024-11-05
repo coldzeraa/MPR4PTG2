@@ -32,8 +32,8 @@ export default function Sidebar() {
                     <>
                         <h3 className="menu-title">Menü</h3>
                         <div className="menu-items">
-
                                 {Object.entries(IconMap).map(([key, item], index) => (
+                                    key !== "contact" &&
                                     <MenuItem
                                         key={index}
                                         icon={item.icon}

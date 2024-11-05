@@ -2,10 +2,10 @@ import "./../App.css";
 import Info from "./Info";
 import Sidebar from "./Sidebar";
 import LogoTop from "./LogoTop";
-import React, {useState} from "react";
-import {IconMap} from "../data/IconMap";
+import React, { useState } from "react";
+import { IconMap } from "../data/IconMap";
 
-const Title = ({icon, label}) => (
+const Title = ({ icon, label }) => (
     <span className="title-item-content">
         <i className={`${icon} title-icon`}></i>
         <h3>{label}</h3>
@@ -13,31 +13,33 @@ const Title = ({icon, label}) => (
 );
 
 function Contact() {
-    const {icon, label} = IconMap['contact'];
+    const { icon, label } = IconMap['contact'] || { icon: "", label: "Contact" };
     const [message, setMessage] = useState("");
     const [subject, setSubject] = useState("");
 
     const sendMail = () => {
         const email = "optimate.development@gmail.com";
-        const subject = encodeURIComponent("BESCHWERDE"); // TODO from file
-        const body = encodeURIComponent(message);
-        const mailtoLink = `mailto:${email}?subject=[ ISSUE ] ${subject}&body=${body}`;
+        const mailSubject = encodeURIComponent(subject);
+        const mailBody = encodeURIComponent(message);
+        const mailtoLink = `mailto:${email}?subject=[Issue] ${mailSubject}&body=${mailBody}`;
         window.location.href = mailtoLink;
     };
 
-    // TODO add "[ISSUE] " to subject
-    // TODO add subject text area
-
     return (
         <div className="container-fluid p-3 background-all">
-            <div>
-                <Sidebar/>
-                <LogoTop/>
-                <div className="centered-component">
-                    <Title icon={icon} label={label}/>
-                    <input placeholder="Betreff"></input>
+            <Sidebar />
+            <LogoTop />
+            <div className="contact-box">
+                <div className="content-box">
+                    <Title icon={icon} label={label} />
+                    <input
+                        className="input-field"
+                        placeholder="Betreff"
+                        value={subject}
+                        onChange={(e) => setSubject(e.target.value)}
+                    />
                     <textarea
-                        className="wide-input"
+                        className="input-field"
                         placeholder="Geben Sie hier Ihre Nachricht ein..."
                         rows="5"
                         value={message}

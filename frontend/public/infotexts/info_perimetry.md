@@ -1,4 +1,4 @@
-#### Gesichtsfeldmessung
+#### Allgemeines
 Die Perimetrie ist ein diagnostisches Verfahren, das verwendet wird, um das Gesichtsfeld eines Patienten zu messen.
 Sie hilft dabei, Ausfälle oder Einschränkungen im Sichtfeld zu identifizieren, die auf verschiedene Augenkrankheiten
 oder neurologische Störungen hinweisen können. Die Durchführung einer Perimetrie ist entscheidend für die Diagnose und

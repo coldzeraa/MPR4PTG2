@@ -1,4 +1,4 @@
-### Ishihara-Test
+#### Allgemeines
 
 Der Ishihara-Test ist ein augenärztliches Verfahren zur Diagnose von Rot-Grün-Farbsehschwächen und Rot-Grün-Blindheit, bekannt als Protanomalie/Protanopie und Deuteranomalie/Deuteranopie.
 
