@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import '../App.css';
-import {IconMap} from '../data/IconMap';
+import './App.css';
+import {IconMap} from './data/IconMap';
 
 const MenuItem = ({ icon, label, expanded, link }) => (
     <div
@@ -58,7 +58,7 @@ export default function Sidebar() {
                             >
                                 Find us on{' '}
                                 <img
-                                    src={require('../icons/github.svg').default}
+                                    src={require('./icons/github.svg').default}
                                     alt="GitHub Logo"
                                     width={15}
                                     height={15}

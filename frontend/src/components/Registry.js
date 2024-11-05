@@ -3,20 +3,12 @@ import { useState } from "react";
 import nameIcon from "./../images/nameIcon.png";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
-import LogoTop from "./LogoTop";
+import LogoTop from "../LogoTop";
+import BackButton from "../BackButton"
 
 function Registry() {
   // Create navigate
   const navigate = useNavigate();
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {

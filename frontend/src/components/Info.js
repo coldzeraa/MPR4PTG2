@@ -1,9 +1,10 @@
 import {useNavigate} from "react-router-dom";
 import "./../App.css";
 import {IconMap} from "../data/IconMap";
-import LogoTop from "./LogoTop";
+import LogoTop from "../LogoTop";
 import React, {useEffect, useState} from "react";
 import ReactMarkdown from "react-markdown";
+import BackButton from "../BackButton"
 
 const InfoTitle = ({icon, label}) => (
     <span className="title-item-content">
@@ -19,13 +20,6 @@ function Info() {
     const infoItem = 'optimate'
 
     const navigate = useNavigate();
-
-    function BackButton() {
-        const navigate = useNavigate();
-        return (
-            <button className="button back-button" onClick={() => navigate(-1)}>← Zurück</button>
-        );
-    }
 
     useEffect(() => {
         const loadText = async () => {

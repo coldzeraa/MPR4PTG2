@@ -1,5 +1,5 @@
-import LogoTop from "./LogoTop";
-import Sidebar from "./Sidebar";
+import LogoTop from "../LogoTop";
+import Sidebar from "../Sidebar";
 
 function ExportPage() {
   // Extract data from localStorage

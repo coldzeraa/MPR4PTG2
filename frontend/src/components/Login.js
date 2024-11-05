@@ -3,7 +3,8 @@ import { useState } from "react";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import bcrypt from "bcryptjs";
-import LogoTop from "./LogoTop";
+import LogoTop from "../LogoTop";
+import BackButton from "../BackButton"
 
 function Login() {
   // Create navigate
@@ -14,16 +15,6 @@ function Login() {
     navigate("/dashboard");
   };
 
-
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {

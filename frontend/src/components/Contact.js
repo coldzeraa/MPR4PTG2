@@ -1,7 +1,7 @@
 import "./../App.css";
 import Info from "./Info";
-import Sidebar from "./Sidebar";
-import LogoTop from "./LogoTop";
+import Sidebar from "../Sidebar";
+import LogoTop from "../LogoTop";
 import React, { useState } from "react";
 import { IconMap } from "../data/IconMap";
 

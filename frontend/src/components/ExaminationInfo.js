@@ -1,7 +1,7 @@
 
 import React, {useState, useEffect} from "react";
-import Sidebar from "./Sidebar";
-import LogoTop from "./LogoTop";
+import Sidebar from "../Sidebar";
+import LogoTop from "../LogoTop";
 import {IconMap} from "../data/IconMap";
 import "./../App.css";
 import { useNavigate } from "react-router-dom";
