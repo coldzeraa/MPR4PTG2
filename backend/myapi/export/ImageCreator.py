@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-import myapi.db.PointResultService as PRS
+import myapi.db.ResultPerimetryService as PRS
 
 class ImageCreator:
     
