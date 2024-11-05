@@ -26,7 +26,7 @@ class Patient(models.Model):
 
 class Examination(models.Model):
     exID = models.AutoField(primary_key=True)    # ID
-    date = models.DateField()                       # date of examination
+    date = models.DateTimeField()                       # Date and time of examination
     type = models.CharField(max_length=1, default=None)       # Type of examination
     pat = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
 
