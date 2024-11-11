@@ -52,9 +52,9 @@ export default function Sidebar() {
                           
                         </div>
                         <div className="small-links">
-                            <a href="#" className="small-link">Über Optimate</a>
-                            <a href="#" className="small-link">Kontakt</a>
-                            <a href="#" className="small-link">Ausloggen</a>
+                            <a href="info" className="small-link">Über Optimate</a>
+                            <a href="contact" className="small-link">Kontakt</a>
+                            <a href="/" className="small-link">Ausloggen</a>
                         </div>
                         <div className="flex justify-center items-center">
                             <a

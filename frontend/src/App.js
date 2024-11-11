@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
 import ExaminationInfo from "./components/ExaminationInfo";
+import Contact from "./components/Contact";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
         <Route path="/ishihara" element={<ExaminationInfo />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
