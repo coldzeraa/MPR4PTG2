@@ -3,7 +3,7 @@ import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
-import backend.myapi.db.ResultPerimetryService as PRS
+import myapi.db.PointResultService as PRS
 
 from myapi.cruds.crud_point import create_point
 from myapi.cruds.crud_examination import create_examination
