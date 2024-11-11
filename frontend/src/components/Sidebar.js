@@ -16,7 +16,8 @@ const MenuItem = ({ icon, label, expanded, link }) => (
 );
 
 export default function Sidebar() {
-  const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);
+     const isPatientLoggedIn = Boolean(localStorage.getItem('email'));
 
   const toggleSidebar = () => {
     setExpanded((prev) => !prev);
@@ -26,14 +27,12 @@ export default function Sidebar() {
     localStorage.clear();
   };
 
-  return (
-    <div>
-      <button onClick={toggleSidebar} className="toggle-button">
-        <i
-          className={`fas ${expanded ? "fa-chevron-right" : "fa-bars"}`}
-          style={{ fontSize: "24px" }}
-        ></i>
-      </button>
+    return (
+        isPatientLoggedIn && (
+            <div>
+                <button onClick={toggleSidebar} className="toggle-button">
+                    <i className={`fas ${expanded ? 'fa-chevron-right' : 'fa-bars'}`} style={{fontSize: '24px'}}></i>
+                </button>
 
       <div className={`sidebar ${expanded ? "expanded" : "collapsed"}`}>
         {expanded && (
