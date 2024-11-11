@@ -13,7 +13,7 @@ const Title = ({ icon, label }) => (
 );
 
 function Contact() {
-    const { icon, label } = IconMap['contact'] || { icon: "", label: "Contact" };
+    const { icon, label } = IconMap['contact'] || { icon: "", label: "Kontakt" };
     const [message, setMessage] = useState("");
     const [subject, setSubject] = useState("");
 
