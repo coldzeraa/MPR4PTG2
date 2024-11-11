@@ -22,7 +22,7 @@ function App() {
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
-        <Route path="/contact" element={<Contact />} /
+        <Route path="/contact" element={<Contact />} />
         <Route path="/registry" element={<Registry />} />
         <Route path="/ishihara_info" element={<ExaminationInfo />} />
       </Routes>

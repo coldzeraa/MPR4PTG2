@@ -19,7 +19,6 @@ export const IconMap = {
         link: "/ishihara_info",
         nextLink: "", // TODO
         infoTextPath: "",
-        nextLink: "",
     },
     'archive': {
         icon: "fas fa-archive",
@@ -38,7 +37,6 @@ export const IconMap = {
         icon: "fas fa-envelope",
         label: "Kontakt",
         link: "/contact",
-    }
         infoText: "",
         nextLinkPath: "",
     },
