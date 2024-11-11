@@ -59,7 +59,6 @@ function WelcomeScreen() {
 
   // Function to handle ok click
   const handleOkClick = () => {
-    // TODO send empty form to backend to create a dummy patient!!!!
     switch (selectedOption) {
       case "perimetry":
         closePopup();
