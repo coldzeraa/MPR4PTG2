@@ -7,6 +7,7 @@ import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
+import Registry from "./components/Registry";
 import ExaminationInfo from "./components/ExaminationInfo";
 import Contact from "./components/Contact";
 
@@ -17,12 +18,13 @@ function App() {
         <Route path="/" element={<WelcomeScreen />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/tutorial" element={<ExaminationInfo />} />
+        <Route path="/perimetry_info" element={<ExaminationInfo />} />
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
-        <Route path="/ishihara" element={<ExaminationInfo />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<Contact />} /
+        <Route path="/registry" element={<Registry />} />
+        <Route path="/ishihara_info" element={<ExaminationInfo />} />
       </Routes>
     </BrowserRouter>
   );

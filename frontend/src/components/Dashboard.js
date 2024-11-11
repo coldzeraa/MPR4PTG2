@@ -2,41 +2,26 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
+import BackButton from "../BackButton"
 
 function Dashboard() {
-
   const navigate = useNavigate();
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
-
-  // Handle click events
-  const handleBackClick = () => {
-    navigate("/login");
+  
+  const handlePerimetryClick = () => {
+    navigate("/perimetry_info");
   };
 
-  const handlePerimetryClick = () => {
-    navigate("/tutorial");
-  }
-
   const handleRedGreenClick = () => {
-    navigate("/ishihara")
-  }
+    navigate("/ishihara_info");
+  };
 
   const handleArchiveClick = () => {
     // TODO Change to Real Archive
-    navigate("/archive")
-  }
-
+    navigate("/archive");
+  };
 
   return (
-    <div className="container-fluid p-3 background-all" >
+    <div className="container-fluid p-3 background-all">
       <Sidebar />
       <LogoTop />
       {/* Dashboard content */}
@@ -47,7 +32,7 @@ function Dashboard() {
             <div
               className="card text-center shadow-sm text-decoration-none"
               onClick={handlePerimetryClick}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <div className="card-body">
                 <div className="icon mb-3">
@@ -58,7 +43,8 @@ function Dashboard() {
                 </div>
                 <h5 className="card-title">Gesichtsfeldmessung</h5>
                 <p className="card-text">
-                  Führen Sie hier die Gesichtsfeldmessung durch. Sie benötigen dafür eine VR-Brille.
+                  Führen Sie hier die Gesichtsfeldmessung durch. Sie benötigen
+                  dafür eine VR-Brille.
                 </p>
               </div>
             </div>
@@ -71,7 +57,7 @@ function Dashboard() {
             <div
               className="card text-center shadow-sm text-decoration-none"
               onClick={handleRedGreenClick}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <div className="card-body">
                 <div className="icon mb-3">
@@ -95,7 +81,7 @@ function Dashboard() {
             <div
               className="card text-center shadow-sm text-decoration-none"
               onClick={handleArchiveClick}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <div className="card-body">
                 <div className="icon mb-3">
@@ -115,6 +101,6 @@ function Dashboard() {
       </div>
     </div>
   );
-};
+}
 
 export default Dashboard;

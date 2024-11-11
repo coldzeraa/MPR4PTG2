@@ -3,11 +3,14 @@ export const IconMap = {
         icon: "fas fa-tachometer-alt",
         label: "Dashboard",
         link: "/dashboard",
+        infoTextPath: "",
+        nextLink: "",
     },
     'perimetry': {
         icon: "fas fa-eye",
         label: "Gesichtsfeldmessung",
         link: "/perimetry_info",
+        infoTextPath: "",
         nextLink: "/perimetry",
     },
     'ishihara': {
@@ -15,11 +18,15 @@ export const IconMap = {
         label: "Ishihara Test",
         link: "/ishihara_info",
         nextLink: "", // TODO
+        infoTextPath: "",
+        nextLink: "",
     },
     'archive': {
         icon: "fas fa-archive",
         label: "Archiv",
         link: "/archive",
+        infoText: "",
+        nextLinkPath: "",
     },
     'info': {
         icon: "fas fa-info-circle",
@@ -32,4 +39,7 @@ export const IconMap = {
         label: "Kontakt",
         link: "/contact",
     }
+        infoText: "",
+        nextLinkPath: "",
+    },
 };
