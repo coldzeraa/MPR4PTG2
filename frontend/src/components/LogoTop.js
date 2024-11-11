@@ -8,9 +8,5 @@ function LogoTop() {
             <p className="lead">simply VIEWtiful</p>
         </div>
     )
-
-
-
-    
 }
 export default LogoTop;

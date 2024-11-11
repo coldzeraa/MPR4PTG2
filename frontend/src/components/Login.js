@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import LogoTop from "./LogoTop";
+import BackButton from "../BackButton";
 
 function Login() {
   // Create navigate
@@ -10,17 +11,6 @@ function Login() {
   const navigateToDashboard = () => {
     navigate("/dashboard");
   };
-
-
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
@@ -175,7 +165,7 @@ function Login() {
     <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
       <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
-      <BackButton onClick={navigateToWelcomeScreen} />
+      <BackButton />
       <div className="container-fluid row d-flex justify-content-center">
         <div className="content">
           {/*Input Form*/}

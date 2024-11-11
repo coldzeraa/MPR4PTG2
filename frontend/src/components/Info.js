@@ -1,30 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
+import BackButton from "../BackButton"
 
 function Info() {
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   const navigate = useNavigate();
-
-  const handleBackClick = () => {
-    // Handle click event for the back button
-    navigate("/");
-  };
 
   return (
     // Formatting
     <div className="container-fluid p-3 background-all">
       <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
-      <BackButton onClick={handleBackClick} />
+      <BackButton />
       <div className="content">
         <h1>Information</h1>
         <div className="scroll-box border rounded p-3 content-left">
