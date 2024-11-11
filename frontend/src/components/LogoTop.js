@@ -9,4 +9,5 @@ function LogoTop() {
         </div>
     )
 }
+
 export default LogoTop;

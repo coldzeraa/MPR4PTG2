@@ -4,9 +4,10 @@ import Sidebar from "./Sidebar";
 import LogoTop from "./LogoTop";
 import {IconMap} from "../data/IconMap";
 import "./../App.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
-const ExaminationTitle = ({icon, label}) => (
+const ExaminationTitle = ({ icon, label }) => (
     <span className="title-item-content">
         <i className={`${icon} title-icon`}></i>
         <h3>{label}</h3>
@@ -16,31 +17,37 @@ const ExaminationTitle = ({icon, label}) => (
 function ExaminationInfo() {
     const [setIsSidebarExpanded] = useState(false);
     const [infoText, setInfoText] = useState('');
+    const [infoHtml, setInfoHtml] = useState('');
     const [isChecked, setIsChecked] = useState(false);
 
-    const handleSidebarToggle = (isExpanded) => {
-        setIsSidebarExpanded(isExpanded);
-    };
-    const handleCheckboxChange = () => {
-        setIsChecked(prevChecked => !prevChecked);
-    };
+  const handleSidebarToggle = (isExpanded) => {
+    setIsSidebarExpanded(isExpanded);
+  };
+  const handleCheckboxChange = () => {
+    setIsChecked((prevChecked) => !prevChecked);
+  };
 
-    const currentUrl = window.location.href;
-    const lastSegment = currentUrl.substring(currentUrl.lastIndexOf('/') + 1);
-    const {icon, label} = IconMap[lastSegment] || {icon: 'fas fa-question', label: 'Unknown'};
+  const currentUrl = window.location.href;
+  const lastSegment = currentUrl
+    .substring(currentUrl.lastIndexOf("/") + 1)
+    .split("_")[0];
+  const { icon, label } = IconMap[lastSegment] || {
+    icon: "fas fa-question",
+    label: "Unknown",
+  };
 
     useEffect(() => {
         const loadText = async () => {
             try {
-                const response = await fetch(`../infotexts/info_${lastSegment}.txt`);
+                const response = await fetch(`/infotexts/info_${lastSegment}.md`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch the text file");
                 }
                 const text = await response.text();
-                setInfoText(text);
+                setInfoHtml(text);
             } catch (error) {
                 console.error("Error loading the text file:", error);
-                setInfoText("Error loading information.");
+                setInfoHtml("Error loading information.");
             }
         };
 
@@ -84,13 +91,13 @@ function ExaminationInfo() {
             element.msRequestFullscreen();
         }
 
-        navigate("/Perimetry");
+        navigate("/perimetry");
     };
 
-    return (
-        <div className="container-fluid p-3 background-all">
-            <Sidebar onToggle={handleSidebarToggle}/>
-            <LogoTop/>
+  return (
+    <div className="container-fluid p-3 background-all">
+      <Sidebar onToggle={handleSidebarToggle} />
+      <LogoTop />
 
             <div
                 style={{
@@ -99,18 +106,9 @@ function ExaminationInfo() {
                 }}
             >
                 <div className="centered-component">
-                    <ExaminationTitle icon={icon} label={label}/>
-                    <h6>Information</h6>
-                    <span>{"TODO load text from file here..."}</span>
+                    <ExaminationTitle icon={icon} label={label} />
+                    <ReactMarkdown>{infoHtml}</ReactMarkdown>
                     <div className="d-flex flex-column align-items-center">
-                        <label>
-                            <input className="checkbox"
-                                   type="checkbox"
-                                   checked={isChecked}
-                                   onChange={handleCheckboxChange}
-                            />
-                            akzeptieren
-                        </label>
                         <button
                             className="btn btn-primary mt-2"
                             disabled={!isChecked}
@@ -121,8 +119,6 @@ function ExaminationInfo() {
                         >
                             ➠ Starten
                         </button>
-                    </div>
-                    <div>
                     </div>
                 </div>
             </div>

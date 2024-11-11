@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./../App.css";
+import { IconMap } from "../data/IconMap";
 import LogoTop from "./LogoTop";
 import BackButton from "../BackButton"
 
@@ -40,11 +41,7 @@ function Info() {
           Therapie ersetzt. Konsultieren Sie bei medizinischen Anliegen stets
           einen qualifizierten Facharzt.
         </div>
-        {/*Login Button*/}
-        <br />
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Info;
