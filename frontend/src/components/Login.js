@@ -4,6 +4,7 @@ import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import bcrypt from "bcryptjs";
 import LogoTop from "./LogoTop";
+import BackButton from "../BackButton";
 
 function Login() {
   // Create navigate
@@ -13,17 +14,6 @@ function Login() {
   const navigateToDashboard = () => {
     navigate("/dashboard");
   };
-
-
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
@@ -143,18 +133,38 @@ function Login() {
     <div className="container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light background-all">
       {/* Logo */}
       <LogoTop />
-      <BackButton onClick={navigateToWelcomeScreen} />
-      {/* Login Card */}
-      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="text-center mb-4">Einloggen</h2>
-        
-        <form method="POST" onSubmit={handleSubmit}>
-          {/* Email Field */}
-          <div className="mb-3">
-            <div className="input-group">
-              <span className="input-group-text">
-                <img src={emailIcon} alt="Email Icon" style={{ width: '20px' }} />
-              </span>
+      {/*Back Button, Logo and Text on Page*/}
+      <BackButton />
+      <div className="container-fluid row d-flex justify-content-center">
+        <div className="content">
+          {/*Input Form*/}
+          <h2>Persönliche Daten</h2>
+          <form method="POST">
+            <div style={{ marginBottom: "10px", marginTop: "20px" }}>
+              <label htmlFor="firstName" style={{ display: "block" }} />
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                placeholder="Vorname"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ marginBottom: "10px", marginTop: "10px" }}>
+              <label htmlFor="lastName" style={{ display: "block" }} />
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                placeholder="Nachname"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
+            <div style={{ marginBottom: "20px", marginTop: "10px" }}>
+              <label htmlFor="email" style={{ display: "block" }} />
+
               <input
                 type="email"
                 id="email"

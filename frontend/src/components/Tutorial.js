@@ -2,16 +2,9 @@ import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
+import BackButton from "../BackButton";
 
 function Tutorial() {
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
 
   const navigate = useNavigate();
 
@@ -58,11 +51,6 @@ function Tutorial() {
     navigate("/Perimetry");
   };
 
-  const handleBackClick = () => {
-    // Handle click event for the back button
-    navigate("/Dashboard");
-  };
-
   return (
     <div className="container-fluid p-3 background-all">
     <LogoTop/>
@@ -70,7 +58,7 @@ function Tutorial() {
     <div className="d-flex align-items-center justify-content-center">
       
       {/*TODO remove BackButton*/}
-      <BackButton onClick={handleBackClick} />
+      <BackButton />
       
       <div className="content">
         <h1>Information</h1>
