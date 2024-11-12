@@ -2,7 +2,6 @@ import React from "react";
 import Login from "./components/Login";
 import WelcomeScreen from "./components/WelcomeScreen";
 import Dashboard from "./components/Dashboard";
-import Tutorial from "./components/Tutorial";
 import ExportPage from "./components/ExportPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Perimetry from "./components/Perimetry";
