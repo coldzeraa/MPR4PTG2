@@ -18,13 +18,9 @@ function ExaminationInfo() {
     const [setIsSidebarExpanded] = useState(false);
     const [infoText, setInfoText] = useState('');
     const [infoHtml, setInfoHtml] = useState('');
-    const [isChecked, setIsChecked] = useState(false);
 
   const handleSidebarToggle = (isExpanded) => {
     setIsSidebarExpanded(isExpanded);
-  };
-  const handleCheckboxChange = () => {
-    setIsChecked((prevChecked) => !prevChecked);
   };
 
   const currentUrl = window.location.href;
@@ -111,7 +107,6 @@ function ExaminationInfo() {
                     <div className="d-flex flex-column align-items-center">
                         <button
                             className="btn btn-primary mt-2"
-                            disabled={!isChecked}
                             onClick={() => {
                                 handleExaminationID();
                                 navigateToPerimetry();
