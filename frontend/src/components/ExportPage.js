@@ -1,62 +1,37 @@
+// ExportPage.js
+import React from "react";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
+import PdfDownload from "./PdfDownload";
 
 function ExportPage() {
   // Extract data from localStorage
   const FIRST_NAME = localStorage.getItem("firstName");
   const LAST_NAME = localStorage.getItem("lastName");
   const EMAIL = localStorage.getItem("email");
+  const exID = localStorage.getItem("exID");
 
   // Boolean if data has been submitted
   const IS_DATA_AVAILABLE = FIRST_NAME && LAST_NAME && EMAIL;
 
-  const handlePdfDownload = async () => {
-    const blob = await generatePdfContent();
-    const url = window.URL.createObjectURL(new Blob([blob]));
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "Testergebnis.pdf");
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
-  };
-
-  // Function to download PDF
-  const generatePdfContent = async () => {
-    const exID = localStorage.getItem("exID");
-
-    const response = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/get_pdf?id=${encodeURIComponent(
-        exID
-      )}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      const blob = await response.blob();
-      return blob;
-    } else {
-      console.log("not okay");
-    }
-  };
-
   // Function to send email
   const handleEmailRequest = async () => {
     console.log(
-      "sending email...\nName: " +
-      FIRST_NAME +
-      ", " +
-      LAST_NAME +
-      "\nemail: " +
-      EMAIL
+      "Sending email...\nName: " +
+        FIRST_NAME +
+        ", " +
+        LAST_NAME +
+        "\nEmail: " +
+        EMAIL
     );
 
-    // Generate PDF content
-    const pdfContent = await generatePdfContent();
+    // Generate PDF content for email
+    const pdfContent = await PdfDownload.generatePdfContent();
+
+    if (!pdfContent) {
+      console.error("PDF content generation failed");
+      return;
+    }
 
     // Create blob with pdfContent inside it
     const blob = new Blob([pdfContent], { type: "application/pdf" });
@@ -71,7 +46,7 @@ function ExportPage() {
         firstName: FIRST_NAME,
         lastName: LAST_NAME,
         email: EMAIL,
-        pdfBase64: base64data
+        pdfBase64: base64data,
       };
 
       try {
@@ -103,13 +78,10 @@ function ExportPage() {
       <LogoTop />
       <Sidebar />
       <div className="d-flex align-items-center justify-content-center">
-        
         <div className="content">
           <h2>Auswertung abgeschlossen</h2>
           <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
-          <button className="button" onClick={handlePdfDownload}>
-            PDF Download
-          </button>
+          <PdfDownload exID={exID} />
           <button
             className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")}
             type="submit"

@@ -7,7 +7,7 @@ from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-import datetime
+from datetime import datetime, timezone
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.EmailSender import EmailSender
 from myapi.export.PdfCreator import PdfCreator
@@ -126,10 +126,12 @@ def examination(request):
     :param request: The HTTP request object containing the patient ID (patID)
     :return: A JsonResponse containing the examination ID (exID) of the newly created examination
     """
+
     if request.method == 'POST':
         patID = request.data.get("patID")
         pat = PatientService.get(patID)
-        ex = ExaminationService.store(pat, datetime.datetime.today())
+        type = 'P'
+        ex = ExaminationService.store(pat, type, datetime.now(timezone.utc))
     return JsonResponse({'exID': ex.exID}, status=200)
 
 @api_view(['GET'])
@@ -184,4 +186,31 @@ def registry(request):
         return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
     else:
         # Return a failed message
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+        return JsonResponse({'error': 'Invalid request method'}, status=405)@api_view(['GET'])
+def get_patient_info(request):
+    if request.method == 'GET':
+        # Fetch patient info based on patient_id
+        patient = PatientService.get(request.GET.get('patientID', ''))
+        data = {
+            "first_name": patient.firstName,
+            "last_name": patient.lastName,
+            "email": patient.email
+        }
+        return JsonResponse(data)
+
+@api_view(['GET'])
+def get_examinations(request):
+    # Fetch examination records for a given patient
+    examinations = ExaminationService.get_by_patient(request.GET.get('patientID'))
+    data = {
+        "examinations": [
+            {
+                "date_time": exam.date,
+                "type": exam.type,
+                "exID": exam.exID
+            }
+            for exam in examinations
+        ]
+    }
+    print(data)
+    return JsonResponse(data)
