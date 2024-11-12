@@ -1,6 +1,7 @@
 import datetime
 from django.db.models import AutoField
 from myapi.cruds import crud_examination
+from myapi.models import Patient
 
 
 class ExaminationService:
@@ -35,7 +36,7 @@ class ExaminationService:
         return crud_examination.get_examination_by_id(id)
 
     @staticmethod
-    def update(patID: AutoField, firstName: str, lastName: str):
+    def update(exID: AutoField, exDate: datetime, pat: Patient, type: str):
         """
             Update examination
 
@@ -44,7 +45,7 @@ class ExaminationService:
             :param lastName: new last name
             :return: updated Examination Object
         """
-        return crud_examination.update_examination(patID, firstName, lastName)
+        return crud_examination.update_examination(exID, exDate, pat, type)
 
     @staticmethod
     def delete(pID: AutoField):
