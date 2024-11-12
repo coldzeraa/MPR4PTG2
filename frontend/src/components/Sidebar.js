@@ -41,7 +41,7 @@ export default function Sidebar() {
                         <div className="menu-items">
 
                                 {Object.entries(IconMap).map(([key, item], index) => (
-                                    <MenuItem
+                                    key != 'contact' && <MenuItem
                                         key={index}
                                         icon={item.icon}
                                         label={item.label}
@@ -52,9 +52,9 @@ export default function Sidebar() {
                           
                         </div>
                         <div className="small-links">
-                            <a href="#" className="small-link">Über Optimate</a>
-                            <a href="#" className="small-link">Kontakt</a>
-                            <a href="#" className="small-link">Ausloggen</a>
+                            <a href="info" className="small-link">Über Optimate</a>
+                            <a href="contact" className="small-link">Kontakt</a>
+                            <a href="/" className="small-link">Ausloggen</a>
                         </div>
                         <div className="flex justify-center items-center">
                             <a

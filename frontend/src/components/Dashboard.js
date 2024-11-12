@@ -2,24 +2,11 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
+import BackButton from "../BackButton"
 
 function Dashboard() {
   const navigate = useNavigate();
-
-  // Define Back Button
-  function BackButton({ onClick }) {
-    return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
-
-  // Handle click events
-  const handleBackClick = () => {
-    navigate("/login");
-  };
-
+  
   const handlePerimetryClick = () => {
     navigate("/perimetry_info");
   };

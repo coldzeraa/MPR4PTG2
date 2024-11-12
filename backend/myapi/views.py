@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view
-from myapi.db.ResultPerimetryService import ResultPerimetryService
+from myapi.db.PointResultService import PointResultService
 from myapi.db.PointService import PointService
 from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
@@ -96,7 +96,7 @@ def perimetry(request):
         p = PointService.get(id)
         ex = ExaminationService.get(exID)
 
-        ResultPerimetryService.store(result, p, ex)
+        PointResultService.store(result, p, ex)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])

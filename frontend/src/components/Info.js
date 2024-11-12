@@ -1,62 +1,67 @@
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./../App.css";
+import { IconMap } from "../data/IconMap";
 import LogoTop from "./LogoTop";
+import React, {useEffect, useState} from "react";
+import ReactMarkdown from "react-markdown";
+import BackButton from "../BackButton"
+
+const InfoTitle = ({ icon, label }) => (
+    <span className="title-item-content">
+        <i className={`${icon} title-icon`}></i>
+        <h3>{label}</h3>
+    </span>
+);
+
 
 function Info() {
-  // Define Back Button
-  function BackButton({ onClick }) {
+    const [infoHtml, setInfoHtml] = useState('');
+    const { icon, label } = IconMap['info'];
+    const infoItem = 'optimate'
+
+    const navigate = useNavigate();
+
+    const handleBackClick = () => {
+        navigate("/");
+    };
+
+    useEffect(() => {
+        const loadText = async () => {
+            try {
+                const response = await fetch(`/infotexts/info_${infoItem}.md`);
+                if (!response.ok) {
+                    throw new Error("Failed to fetch the text file");
+                }
+                const text = await response.text();
+                setInfoHtml(text);
+            } catch (error) {
+                console.error("Error loading the text file:", error);
+                setInfoHtml("Error loading information.");
+            }
+        };
+
+        loadText();
+    }, []);
+
     return (
-      <button className="button back-button" onClick={onClick}>
-        ← Zurück
-      </button>
-    );
-  }
-
-  const navigate = useNavigate();
-
-  const handleBackClick = () => {
-    // Handle click event for the back button
-    navigate("/");
-  };
-
-  return (
-    // Formatting
-    <div className="container-fluid p-3 background-all">
-      <LogoTop />
-      {/*Back Button, Logo and Text on Page*/}
-      <BackButton onClick={handleBackClick} />
-      <div className="content">
-        <h1>Information</h1>
-        <div className="scroll-box border rounded p-3 content-left">
-          <h6>
-            <i>
-              <b>Allgemeines</b>
-            </i>
-          </h6>
-          OptiMate ist eine Web-Applikation, die durch Simulation einer
-          Gesichtsfeldmessung die Erkennung von Ausfällen des Gesichtsfeldes
-          erleichtern soll. Hierfür werden Punkte angezeigt, deren Wahrnehmung
-          dann über Spracherkennung mitgeteilt wird. Anschließend erfolgt eine
-          Auswertung der Messung, die sowohl lokal als auch per Email exportiert
-          werden kann. OptiMate wurde im Rahmen eines Studienprojekts des
-          Studiengangs Medizin- und Bioinformatik an der FH Oberösterreich,
-          Campus Hagenberg entwickelt.
-          <h6>
-            <i>
-              <br />
-              <b>Wichtiger Hinweis</b>
-            </i>
-          </h6>
-          Bitte beachten Sie, dass OptiMate kein zertifiziertes Medizinprodukt
-          ist und keinesfalls eine professionelle medizinische Diagnostik oder
-          Therapie ersetzt. Konsultieren Sie bei medizinischen Anliegen stets
-          einen qualifizierten Facharzt.
+        <div className="container-fluid p-3 background-all">
+            <LogoTop/>
+            <BackButton/>
+            <div
+                style={{
+                    transition: 'margin-left 0.3s ease',
+                    padding: '20px',
+                }}
+            >
+                <div className="centered-component">
+                    <InfoTitle icon={icon} label={label}/>
+                    <ReactMarkdown>{infoHtml}</ReactMarkdown>
+                    <div className="d-flex flex-column align-items-center">
+                    </div>
+                </div>
+            </div>
         </div>
-        {/*Login Button*/}
-        <br />
-      </div>
-    </div>
-  );
+    );
 }
 
 export default Info;
