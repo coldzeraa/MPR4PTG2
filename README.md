@@ -22,6 +22,7 @@ VR Box used: TODO
 - **[psycopg2](https://www.psycopg.org/)** (v2.9.9): PostgreSQL adapter for Python.
 - **[reportlab](https://www.reportlab.com/opensource/)** (v4.2.0): PDF generation library.
 - **[requests](https://docs.python-requests.org/)** (v2.31.0): Simple HTTP library for making network requests.
+- **[bcrypt](https://pypi.org/project/bcrypt/)** (v2.31.0): Modern password hashing for your software and your servers
 
 
 #### Frontend (React/Node.js)

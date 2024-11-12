@@ -1,5 +1,6 @@
 from django.db.models import AutoField
 from myapi.cruds import crud_patient
+from typing import Dict
 
 DEFAULT_FIRSTNAME = None
 DEFAULT_LASTNAME = None
@@ -61,4 +62,16 @@ class PatientService:
         """
         return crud_patient.delete_patient(pID)
 
+    @staticmethod
+    def filter(criteria: Dict[str, any]):
+        """
+            Filter patients based on specified criteria.
+
+            :param criteria: Dictionary of field names and values to filter by
+            :return: QuerySet of Patient objects matching the criteria
+        """
+        return crud_patient.filter_patients(criteria)
     
+    @staticmethod
+    def getByEmail(email: str):
+        return crud_patient.get_patient_by_email(email)

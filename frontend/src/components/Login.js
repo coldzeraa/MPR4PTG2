@@ -2,19 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
-import bcrypt from "bcryptjs";
 import LogoTop from "./LogoTop";
 
 function Login() {
   // Create navigate
   const navigate = useNavigate();
-
-  // Navigate to Dashboard
-  const navigateToDashboard = () => {
-    navigate("/dashboard");
-  };
-
-
 
   // Define Back Button
   function BackButton({ onClick }) {
@@ -28,23 +20,6 @@ function Login() {
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
     navigate("/");
-  };
-
-  // Show alert if just one name was entered
-  const showNameError = () => {
-    window.alert("Bitte Vor- und Nachname eingeben.");
-  };
-
-  // Show alert if email was invalid
-  const showEmailError = () => {
-    window.alert("Bitte geben Sie eine valide Email ein.");
-  };
-
-  // Show alert if enterd name contains numbers or special characters
-  const showInvalidNameError = () => {
-    window.alert(
-      "Vor- und Nachname dürfen keine Zahlen oder Sonderzeichen enthalten!"
-    );
   };
 
   // Show alert if no data was provided and "weiter" button was clicked
@@ -67,35 +42,37 @@ function Login() {
   const checkResponse = (e) => {
     // Check response of backend
     switch (e) {
-      // Case just one name was entered
-      case "NOT_BOTH_NAMES":
-        showNameError();
-        break;
-      // Case email was invalid
-      case "NOT_AN_EMAIL":
-        showEmailError();
-        break;
-      // Case names contain numbers or special characters
-      case "INVALID_NAMES":
-        showInvalidNameError();
-        break;
-      // Default case just navigate to next page
+      // Case password is wrong
+      case "WRONG_PASSWORD":
+        window.alert("Das Passwort ist falsch!");
+        return false;
+      // Case case no account with that email
+      case "NO_PATIENT_FOUND":
+        window.alert("Kein Account mit dieser Email registriert!");
+        return false;
+      // Case invalid request method
+      case "INVALID_REQUEST_METHOD":
+        return false;
+      // Default case return true
       default:
-        navigateToDashboard();
-        break;
+        return true;
     }
   };
 
   // Function to hash password
   const hashPassword = async () => {
-    // Use bcrypt to hash password
-    const saltRounds = 10;
+    // Create SHA-256 hash
+    const encoder = new TextEncoder();
+    const data = encoder.encode(formData.password);
+    const sha256Hash = await crypto.subtle.digest("SHA-256", data);
 
-    try {
-      formData.password = await bcrypt.hash(formData.password, saltRounds);
-    } catch (error) {
-      console.log("Could not hash password!");
-    }
+    // Transform SHA-256 hash to a hexadecimal format
+    const hashArray = Array.from(new Uint8Array(sha256Hash));
+    const hexHash = hashArray
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    formData.password = hexHash;
   };
 
   // Function to handle sumbission
@@ -129,31 +106,38 @@ function Login() {
 
       // Parse response as JSON
       const responseData = await response.json();
-      localStorage.setItem("patientID", responseData.patientID);
 
-      // TODO SESSION
-
-      // Check response
-      checkResponse(responseData.message);
+      if (checkResponse(responseData.message)) {
+        localStorage.setItem("patientID", responseData.patientID);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error("Failed to submit form:", error);
     }
   };
+
   return (
     <div className="container-fluid d-flex flex-column min-vh-100 justify-content-center align-items-center bg-light background-all">
       {/* Logo */}
       <LogoTop />
       <BackButton onClick={navigateToWelcomeScreen} />
       {/* Login Card */}
-      <div className="card shadow-sm p-4" style={{ maxWidth: '400px', width: '100%' }}>
+      <div
+        className="card shadow-sm p-4"
+        style={{ maxWidth: "400px", width: "100%" }}
+      >
         <h2 className="text-center mb-4">Einloggen</h2>
-        
+
         <form method="POST" onSubmit={handleSubmit}>
           {/* Email Field */}
           <div className="mb-3">
             <div className="input-group">
               <span className="input-group-text">
-                <img src={emailIcon} alt="Email Icon" style={{ width: '20px' }} />
+                <img
+                  src={emailIcon}
+                  alt="Email Icon"
+                  style={{ width: "20px" }}
+                />
               </span>
               <input
                 type="email"
@@ -172,7 +156,11 @@ function Login() {
           <div className="mb-3">
             <div className="input-group">
               <span className="input-group-text">
-                <img src={passwordIcon} alt="Password Icon" style={{ width: '20px' }} />
+                <img
+                  src={passwordIcon}
+                  alt="Password Icon"
+                  style={{ width: "20px" }}
+                />
               </span>
               <input
                 type="password"
@@ -190,27 +178,26 @@ function Login() {
           {/* Register Link */}
           <div className="text-center mb-3">
             <small>
-              Du hast noch keinen Account? <a href="/registry">Registriere dich hier!</a>
+              Du hast noch keinen Account?{" "}
+              <a href="/registry">Registriere dich hier!</a>
             </small>
           </div>
 
           {/* Submit Button */}
           <div className="d-grid">
-          <button
-            className="button"
-            type="submit"
-            style={{ margin: "20px" }}
-            onClick={handleSubmit}
-          >
-            Weiter
-          </button>
+            <button
+              className="button"
+              type="submit"
+              style={{ margin: "20px" }}
+              onClick={handleSubmit}
+            >
+              Weiter
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
-};
-  
-
+}
 
 export default Login;

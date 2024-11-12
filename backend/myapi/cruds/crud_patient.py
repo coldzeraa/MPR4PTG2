@@ -1,4 +1,5 @@
 from django.db.models import AutoField
+from typing import Dict, List
 
 from myapi.models import Patient
 
@@ -62,4 +63,15 @@ def delete_patient(patID: AutoField):
     patient = Patient.objects.get(patID=patID)  # Corrected from Patient.objects.get(patID=patID)
     patient.delete()
 
+def filter_patients(filter_criteria: Dict[str, any]) -> List[Patient]:
+    """
+    Filter patients based on specified criteria.
 
+    :param filter_criteria: Dictionary of field names and values to filter by
+    :return: QuerySet of Patient objects matching the criteria
+    """
+    return Patient.objects.filter(**filter_criteria)
+
+
+def get_patient_by_email(email: str):
+    return Patient.objects.get(email = email)

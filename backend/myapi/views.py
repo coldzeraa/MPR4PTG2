@@ -11,6 +11,8 @@ import datetime
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.EmailSender import EmailSender
 from myapi.export.PdfCreator import PdfCreator
+from myapi.models import Patient
+import bcrypt
 
 
 @api_view(['POST'])
@@ -23,38 +25,26 @@ def login(request):
     """
     if request.method == 'POST':
         # Get data from request
-        first_name = str(request.data.get('firstName'))
-        last_name = str(request.data.get('lastName'))
         email = str(request.data.get('email'))
-        
-        # Check if first_name, last_name and email is empty and save dummy in database
-        if (not first_name and not last_name and not email):
-            pat = PatientService.store()
-            return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
-        
-        # Check for invalid names
-        if (not first_name.isalpha() or not last_name.isalpha()):
-            return JsonResponse({"message": "INVALID_NAMES"})
-        
-        # Check if both names are entered
-        if (not first_name and last_name) or (first_name and not last_name):
-            return JsonResponse({"message": "NOT_BOTH_NAMES"})
-    
-        # Validate email
-        try:
-            validate_email(email)
-        except ValidationError:
-            return JsonResponse({"message": "NOT_AN_EMAIL"})
-        
-        # Save patient in database
-        pat = PatientService.store(first_name, last_name, email)
+        password = str(request.data.get('password'))
 
-        # Return a success message
-        return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
+        try:
+            # Search patient by email
+            pat = PatientService.getByEmail(email)
+        except Patient.DoesNotExist:
+            # Case there is no patient with this email
+            return JsonResponse({'message': 'NO_PATIENT_FOUND'}, status=200)
+
+        # Check if password is correct
+        if bcrypt.checkpw(password.encode('utf-8'), pat.password.encode('utf-8')):
+            return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
+        # Case password is incorrect
+        else:
+            return JsonResponse({'message': 'WRONG_PASSWORD'}, status=200)
+
     else:
-        
         # Return a failed message
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+        return JsonResponse({'error': 'INVALID_REQUEST_METHOD'}, status=405)
 
 @api_view(['POST'])
 def emailing(request):
@@ -155,3 +145,43 @@ def get_pdf(request):
         # Call PDF creator with current exID
         return PdfCreator.createPDF(request.GET.get('id', ''))
 
+@api_view(['POST'])
+def registry(request):
+    """
+    Handles the login process for patients by validating and saving the provided information.
+
+    :param request: The HTTP request object containing patient data (first name, last name, email, password)
+    :return: A JsonResponse with a success message and patientID if successful, or an error message otherwise
+    """
+    if request.method == 'POST':
+        # Get data from request
+        first_name = str(request.data.get('firstName'))
+        last_name = str(request.data.get('lastName'))
+        email = str(request.data.get('email'))
+        password = str(request.data.get('password'))
+        
+        # Check if there is already a patient with this email
+        if PatientService.filter({'email': email}):
+            return JsonResponse({"message": "PATIENT_ALREADY_EXISTS"})
+        
+        # Check for invalid names
+        if (not first_name.isalpha() or not last_name.isalpha()):
+            return JsonResponse({"message": "INVALID_NAMES"})
+        
+        # Validate email
+        try:
+            validate_email(email)
+        except ValidationError:
+            return JsonResponse({"message": "NOT_AN_EMAIL"})
+        
+        # Use bcrypt to hash password
+        hashedPassword = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        
+        # Save patient in database
+        pat = PatientService.store(first_name, last_name, email, hashedPassword)
+
+        # Return a success message
+        return JsonResponse({'message': 'SUCCESS', 'patientID': pat.patID}, status=200)
+    else:
+        # Return a failed message
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
