@@ -9,6 +9,7 @@ import Perimetry from "./components/Perimetry";
 import Info from "./components/Info";
 import Registry from "./components/Registry";
 import ExaminationInfo from "./components/ExaminationInfo";
+import Contact from "./components/Contact";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/perimetry" element={<Perimetry />} />
         <Route path="/export" element={<ExportPage />} />
         <Route path="/info" element={<Info />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/registry" element={<Registry />} />
         <Route path="/ishihara_info" element={<ExaminationInfo />} />
       </Routes>
