@@ -57,4 +57,10 @@ class ExaminationService:
         """
         return crud_examination.delete_examination(pID)
 
-    
+    def get_by_patient(pID: AutoField):
+        """
+            Get Examination by Patient ID.
+
+            :param pID: ID of patient
+        """
+        return crud_examination.get_examinations_by_patient(pID)

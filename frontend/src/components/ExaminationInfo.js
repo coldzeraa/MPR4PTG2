@@ -111,7 +111,7 @@ function ExaminationInfo() {
                     <div className="d-flex flex-column align-items-center">
                         <button
                             className="btn btn-primary mt-2"
-                            disabled={!isChecked}
+                            
                             onClick={() => {
                                 handleExaminationID();
                                 navigateToPerimetry();
