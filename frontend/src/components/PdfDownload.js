@@ -32,7 +32,7 @@ function PdfDownload({ exID }) {
       const blob = await response.blob();
       return blob;
     } else {
-      console.log("Failed to fetch PDF content");
+      console.error("Failed to fetch PDF content");
     }
   };
 

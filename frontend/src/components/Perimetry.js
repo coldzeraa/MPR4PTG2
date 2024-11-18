@@ -99,8 +99,6 @@ function Perimetry() {
         exID: ex,
         result: result,
       };
-      console.log(data.x, data.y, data.exID, data.result);
-
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/perimetry/`,
         {

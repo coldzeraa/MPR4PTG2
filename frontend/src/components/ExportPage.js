@@ -16,15 +16,6 @@ function ExportPage() {
 
   // Function to send email
   const handleEmailRequest = async () => {
-    console.log(
-      "Sending email...\nName: " +
-        FIRST_NAME +
-        ", " +
-        LAST_NAME +
-        "\nEmail: " +
-        EMAIL
-    );
-
     // Generate PDF content for email
     const pdfContent = await PdfDownload.generatePdfContent();
 

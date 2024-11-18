@@ -174,7 +174,9 @@ def get_examinations(request):
         ]
     }
     print(data)
-    return JsonResponse(data)@api_view(['POST'])
+    return JsonResponse(data)
+
+@api_view(['POST'])
 def registry(request):
     """
     Handles the login process for patients by validating and saving the provided information.
