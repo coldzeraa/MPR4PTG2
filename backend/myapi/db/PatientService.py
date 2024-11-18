@@ -1,7 +1,10 @@
 from django.db.models import AutoField
 from myapi.cruds import crud_patient
-from typing import Dict
 
+DEFAULT_FIRSTNAME = None
+DEFAULT_LASTNAME = None
+DEFAULT_EMAIL = None
+DEFAULT_PASSWORD = None
 
 class PatientService:
     @staticmethod    
@@ -14,16 +17,17 @@ class PatientService:
         return crud_patient.get_all_patients()
     
     @staticmethod
-    def store(firstName: str = "", lastName: str = "", email: str = ""):
+    def store(firstName: str = DEFAULT_FIRSTNAME, lastName: str = DEFAULT_LASTNAME, email: str = DEFAULT_EMAIL, password: str = DEFAULT_PASSWORD):
         """
             Store patient in database
 
             :param firstName: first name of patient
             :param lastName: last name of patient
             :param email: email of patient
+            :param password: password of patient
             :return: new patient
         """
-        return crud_patient.create_patient(firstName, lastName, email)
+        return crud_patient.create_patient(firstName, lastName, email, password)
     
     @staticmethod
     def get(id:AutoField):
@@ -36,16 +40,17 @@ class PatientService:
         return crud_patient.get_patient_by_id(id)
 
     @staticmethod
-    def update(patID: AutoField, firstName: str, lastName: str):
+    def update(patID: AutoField, firstName: str, lastName: str, password: str):
         """
             Update patient
 
             :param patID: ID of patient
             :param firstName: new first name
             :param lastName: new last name
+            :param password: new password
             :return: updated Patient Object
         """
-        return crud_patient.update_patient(patID, firstName, lastName)
+        return crud_patient.update_patient(patID, firstName, lastName, password)
 
     @staticmethod
     def delete(pID: AutoField):
@@ -57,15 +62,5 @@ class PatientService:
         return crud_patient.delete_patient(pID)
 
     @staticmethod
-    def filter(criteria: Dict[str, any]):
-        """
-            Filter patients based on specified criteria.
-
-            :param criteria: Dictionary of field names and values to filter by
-            :return: QuerySet of Patient objects matching the criteria
-        """
-        return crud_patient.filter_patients(criteria)
-    
-    @staticmethod
-    def getByEmail(email: str):
+    def get_by_email(email: str):
         return crud_patient.get_patient_by_email(email)

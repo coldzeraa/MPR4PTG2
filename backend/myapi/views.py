@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.decorators import api_view
-from myapi.db.PointResultService import PointResultService
+from myapi.db.ResultPerimetryService import ResultPerimetryService
 from myapi.db.PointService import PointService
 from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
@@ -30,7 +30,7 @@ def login(request):
 
         try:
             # Search patient by email
-            pat = PatientService.getByEmail(email)
+            pat = PatientService.get_by_email(email)
         except Patient.DoesNotExist:
             # Case there is no patient with this email
             return JsonResponse({'message': 'NO_PATIENT_FOUND'}, status=200)
@@ -86,7 +86,7 @@ def perimetry(request):
         p = PointService.get(id)
         ex = ExaminationService.get(exID)
 
-        PointResultService.store(result, p, ex)
+        #PointResultService.store(result, p, ex)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])
@@ -161,7 +161,7 @@ def registry(request):
         password = str(request.data.get('password'))
         
         # Check if there is already a patient with this email
-        if PatientService.filter({'email': email}):
+        if PatientService.get_by_email(email):
             return JsonResponse({"message": "PATIENT_ALREADY_EXISTS"})
         
         # Check for invalid names
