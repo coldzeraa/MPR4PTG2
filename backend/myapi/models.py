@@ -30,7 +30,7 @@ class Examination(models.Model):
 
     exID = models.AutoField(primary_key=True)  # ID
     date = models.DateTimeField()              # date and time of examination
-    type = models.CharField(max_length=1, choices=TYPE_CHOICES, default=None)  # type of examination
+    type = models.CharField(max_length=1, choices=TYPE_CHOICES)  # type of examination
     pat = models.ForeignKey(Patient, on_delete=models.CASCADE)   # patient
 
 
@@ -51,3 +51,4 @@ class ResultIshihara(Result):
     recognized = models.BooleanField()              # boolean if number was recognized
     filename = models.CharField(max_length=50)      # name of the file
     
+

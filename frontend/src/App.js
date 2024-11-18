@@ -9,6 +9,7 @@ import Info from "./components/Info";
 import Registry from "./components/Registry";
 import ExaminationInfo from "./components/ExaminationInfo";
 import Contact from "./components/Contact";
+import Archive from "./components/Archive";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/registry" element={<Registry />} />
         <Route path="/ishihara_info" element={<ExaminationInfo />} />
+        <Route path="/archive" element={<Archive />} />
       </Routes>
     </BrowserRouter>
   );
