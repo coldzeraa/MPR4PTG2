@@ -1,19 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useRef } from "react";
 import nameIcon from "./../images/nameIcon.png";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import LogoTop from "./LogoTop";
 import BackButton from "../BackButton";
+import "primereact/resources/themes/lara-light-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import { Toast } from "primereact/toast";
 
 function Registry() {
   // Create navigate
   const navigate = useNavigate();
 
-  // Navigate to welcome screen
-  const navigateToWelcomeScreen = () => {
-    navigate("/");
-  };
+  // Toast
+  const toast = useRef(null);
 
   // React hook state to define state "formData"
   const [formData, setFormData] = useState({
@@ -48,18 +50,29 @@ function Registry() {
     formData.password = hexHash;
   };
 
+  // Function to show toast
+  const showToast = (message, type) => {
+    toast.current.show({
+      severity: type,
+      summary: type === "error" ? "Fehler" : "Erfolg",
+      detail: message,
+      life: 3000,
+    });
+  };
+
   // Function to check response from backend
   const checkResponse = (e) => {
     switch (e) {
       case "NOT_AN_EMAIL":
-        window.alert("Bitte geben Sie eine valide Email ein.");
+        showToast("Bitte geben Sie eine valide Email ein.", "error");
         return false;
       case "PATIENT_ALREADY_EXISTS":
-        window.alert("Es existiert bereits ein Account mit dieser Email");
+        showToast("Es existiert bereits ein Account mit dieser Email", "error");
         return false;
       case "INVALID_NAMES":
-        window.alert(
-          "Vor- und Nachname dürfen keine Zahlen oder Sonderzeichen enthalten!"
+        showToast(
+          "Vor- und Nachname dürfen keine Zahlen oder Sonderzeichen enthalten!",
+          "error"
         );
         return false;
       default:
@@ -73,7 +86,7 @@ function Registry() {
 
     // Check if all data has been entered
     if (!isFormFilled()) {
-      window.alert("Bitte geben Sie Ihre Daten ein!");
+      showToast("Bitte geben Sie Ihre Daten ein!", "error");
       return;
     }
 
@@ -103,7 +116,15 @@ function Registry() {
       // Check response
       if (checkResponse(responseData.message)) {
         localStorage.setItem("patientID", responseData.patientID);
-        navigate("/login");
+        navigate("/login", { state: { showToast: true } });
+      } else {
+        // Clear inputs
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+        });
       }
     } catch (error) {
       console.error("Failed to submit form:", error);
@@ -117,7 +138,8 @@ function Registry() {
       <LogoTop />
       {/*Back Button, Logo and Text on Page*/}
       <BackButton />
-
+      {/* Toast */}
+      <Toast ref={toast} />
       {/*Registry Card*/}
       <div
         className="card shadow-sm p-4"
@@ -215,8 +237,25 @@ function Registry() {
           </div>
           <div className="text-center mb-3">
             <small>
-              Du hast schon einen Account? <br /> Melde dich{" "}
-              <a href="/login"> hier</a> an!
+              Du hast schon einen Account? <br />
+              Melde dich{" "}
+              <button
+                type="button"
+                onClick={() =>
+                  navigate("/login", { state: { showToast: false } })
+                }
+                style={{
+                  border: "none",
+                  background: "none",
+                  color: "blue",
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  padding: 0,
+                }}
+              >
+                hier
+              </button>{" "}
+              an!
             </small>
           </div>
           <div className="d-grid">

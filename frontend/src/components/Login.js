@@ -1,13 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import LogoTop from "./LogoTop";
-import BackButton from "../BackButton";
+import { Toast } from "primereact/toast";
+import "primereact/resources/themes/lara-light-blue/theme.css";
+import "primereact/resources/primereact.min.css";
 
 function Login() {
   // Create navigate
   const navigate = useNavigate();
+
+  // Toast
+  const toast = useRef(null);
+
+  const location = useLocation();
 
   // Define Back Button
   function BackButton({ onClick }) {
@@ -17,6 +24,13 @@ function Login() {
       </button>
     );
   }
+
+  // Show a toast on initial render
+  useEffect(() => {
+    if (location.state?.showToast) {
+      showToast("Account erfolgreich erstellt!", "success");
+    }
+  }, [location.state]);
 
   // Navigate to welcome screen
   const navigateToWelcomeScreen = () => {
@@ -45,11 +59,11 @@ function Login() {
     switch (e) {
       // Case password is wrong
       case "WRONG_PASSWORD":
-        window.alert("Das Passwort ist falsch!");
+        showToast("Das Passwort ist falsch!", "error");
         return false;
       // Case case no account with that email
       case "NO_PATIENT_FOUND":
-        window.alert("Kein Account mit dieser Email registriert!");
+        showToast("Kein Account mit dieser Email registriert!", "error");
         return false;
       // Case invalid request method
       case "INVALID_REQUEST_METHOD":
@@ -58,6 +72,16 @@ function Login() {
       default:
         return true;
     }
+  };
+
+  // Function to show toast
+  const showToast = (message, type) => {
+    toast.current.show({
+      severity: type,
+      summary: type === "error" ? "Fehler" : "Erfolg",
+      detail: message,
+      life: 3000,
+    });
   };
 
   // Function to hash password
@@ -111,6 +135,12 @@ function Login() {
       if (checkResponse(responseData.message)) {
         localStorage.setItem("patientID", responseData.patientID);
         navigate("/dashboard");
+      } else {
+        // Clear inputs
+        setFormData({
+          email: "",
+          password: "",
+        });
       }
     } catch (error) {
       console.error("Failed to submit form:", error);
@@ -122,6 +152,7 @@ function Login() {
       {/* Logo */}
       <LogoTop />
       <BackButton onClick={navigateToWelcomeScreen} />
+      <Toast ref={toast} />
       {/* Login Card */}
       <div
         className="card shadow-sm p-4"
