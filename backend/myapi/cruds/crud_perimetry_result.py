@@ -69,6 +69,3 @@ def get_perimetry_result_by_exID(exID: AutoField):
     """
     
     return ResultPerimetry.objects.filter(ex = exID)
-    
-    
-    

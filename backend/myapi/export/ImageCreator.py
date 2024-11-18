@@ -13,7 +13,7 @@ class ImageCreator:
             Returns:
                 Image: created image
         """
-        pointResults = PRS.PointResultService.getByExID(exID)
+        pointResults = PRS.ResultPerimetryService.getByExID(exID)
         
         leftImage = ImageCreator.draw_points(ImageCreator.split_array_in_half(pointResults)[0])
         rightImage = ImageCreator.draw_points(ImageCreator.split_array_in_half(pointResults)[1])
