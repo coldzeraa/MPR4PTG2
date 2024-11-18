@@ -28,11 +28,11 @@ def login(request):
         email = str(request.data.get('email'))
         password = str(request.data.get('password'))
 
-        try:
-            # Search patient by email
-            pat = PatientService.get_by_email(email)
-        except Patient.DoesNotExist:
-            # Case there is no patient with this email
+        # Search patient by email
+        pat = PatientService.get_by_email(email)
+        
+        # Check if patient was found
+        if not pat:
             return JsonResponse({'message': 'NO_PATIENT_FOUND'}, status=200)
 
         # Check if password is correct

@@ -31,6 +31,7 @@ VR Box used: TODO
 - **[axios](https://axios-http.com/)** (v1.6.8): Promise-based HTTP client for making API requests.
 - **[bcryptjs](https://www.npmjs.com/package/bcryptjs)**: A JavaScrip library to automatically hash strings
 - **[react-markdown](https://www.npmjs.com/package/react-markdown/v/8.0.6)**: Renders Markdown in HTML.
+- **[primereact] (https://primereact.org/)**: Comprehensive suite of customizable, feature-rich UI components
 
 ### Installing
 
