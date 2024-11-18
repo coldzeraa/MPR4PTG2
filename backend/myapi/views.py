@@ -86,7 +86,7 @@ def perimetry(request):
         p = PointService.get(id)
         ex = ExaminationService.get(exID)
 
-        #PointResultService.store(result, p, ex)
+        ResultPerimetryService.store(result, p, ex)
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])
@@ -147,7 +147,34 @@ def get_pdf(request):
         # Call PDF creator with current exID
         return PdfCreator.createPDF(request.GET.get('id', ''))
 
-@api_view(['POST'])
+@api_view(['GET'])
+def get_patient_info(request):
+    if request.method == 'GET':
+        # Fetch patient info based on patient_id
+        patient = PatientService.get(request.GET.get('patientID', ''))
+        data = {
+            "first_name": patient.firstName,
+            "last_name": patient.lastName,
+            "email": patient.email
+        }
+        return JsonResponse(data)
+
+@api_view(['GET'])
+def get_examinations(request):
+    # Fetch examination records for a given patient
+    examinations = ExaminationService.get_by_patient(request.GET.get('patientID'))
+    data = {
+        "examinations": [
+            {
+                "date_time": exam.date,
+                "type": exam.type,
+                "exID": exam.exID
+            }
+            for exam in examinations
+        ]
+    }
+    print(data)
+    return JsonResponse(data)@api_view(['POST'])
 def registry(request):
     """
     Handles the login process for patients by validating and saving the provided information.
