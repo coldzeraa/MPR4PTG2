@@ -115,7 +115,6 @@ function Registry() {
 
       // Check response
       if (checkResponse(responseData.message)) {
-        localStorage.setItem("patientID", responseData.patientID);
         navigate("/login", { state: { showToast: true } });
       } else {
         // Clear inputs
