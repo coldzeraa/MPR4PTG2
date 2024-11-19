@@ -504,3 +504,26 @@ input {
   font-size: 14px;
   margin-top: 10px;
 }
+
+.countdown-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.countdown-circle {
+  margin-bottom: 10px;
+}
+
+.countdown-number {
+  font-size: 36px; /* Increased font size for better readability */
+  font-weight: bold;
+  color: #66a8d4;
+}
+
+

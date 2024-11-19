@@ -14,14 +14,11 @@ const Point = ({ x, y }) => {
 
 function Perimetry() {
   const SIDES = ["left", "right"];
-
   const VISIBILITY_SPAN = 100;
   const INTERVAL = 50;
-
   const VOLUME_THRESHOLD = 15;
 
   const [startRecording, stopRecording, volume] = useVolumeLevel();
-
   const navigate = useNavigate();
 
   const navigateToExport = () => {
@@ -41,7 +38,6 @@ function Perimetry() {
         document.msExitFullscreen();
       }
     }
-    // Handle Navigation To Export Page
     navigate("/export");
   };
 
@@ -50,6 +46,12 @@ function Perimetry() {
   const [currentPointIndex, setCurrentPointIndex] = useState(0);
   const [showPoint, setShowPoint] = useState(false);
   const [side, setSide] = useState();
+  const [countdown, setCountdown] = useState(10); // Countdown starts from 10 seconds
+  const [isCountingDown, setIsCountingDown] = useState(true);
+
+  const radius = 70; // Adjusted radius for larger circle without clipping
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (countdown / 10) * circumference;
 
   const fetchPoints = async () => {
     try {
@@ -67,13 +69,8 @@ function Perimetry() {
         throw new Error("Fetching points failed");
       }
 
-      // Get JSON data from response
       const data = await response.json();
-
-      // Convert to array
       const pointArray = data.points;
-
-      // Map points to array
       const fetchedPoints = pointArray.map((point) => ({
         x: point.x,
         y: point.y,
@@ -84,12 +81,21 @@ function Perimetry() {
     }
   };
 
-  // Get Points from Backend
   useEffect(() => {
     fetchPoints();
   }, []);
 
-  // Function to save points to backend
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsCountingDown(false);
+      startRecording();
+      runPerimetryTest();
+    }
+  }, [countdown]);
+
   const handleResults = async (x, y, result) => {
     try {
       const ex = localStorage.getItem("exID");
@@ -118,13 +124,6 @@ function Perimetry() {
       console.error("Failed to submit results:", error);
     }
   };
-
-  useEffect(() => {
-    if (points.length !== 0) {
-      startRecording();
-      runPerimetryTest();
-    }
-  }, [points]);
 
   const runPerimetryTest = async () => {
     for (let sideIndex = 0; sideIndex < SIDES.length; sideIndex++) {
@@ -155,34 +154,52 @@ function Perimetry() {
 
   return (
     <div className="split-container">
-      <div className={side === "left" ? "split-focus" : "split-unfocus"}>
-        {/* Render the current point */}
-        {side === "left" && showPoint && (
-          <Point
-            key={currentPointIndex}
-            x={points[currentPointIndex].x * 0.5}
-            y={points[currentPointIndex].y}
-          />
-        )}
-      </div>
-      <div
-        className="split-midpoint"
-        style={{ left: side === "left" ? "calc(25%)" : "calc(75%)" }}
-      >
-        <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
-          +
-        </p>
-      </div>
-      <div className={side === "right" ? "split-focus" : "split-unfocus"}>
-        {/* Render the current point */}
-        {side === "right" && showPoint && (
-          <Point
-            key={currentPointIndex}
-            x={50 + points[currentPointIndex].x * 0.5}
-            y={points[currentPointIndex].y}
-          />
-        )}
-      </div>
+      {isCountingDown ? (
+        <div className="countdown-container">
+          <svg width="200" height="200" className="countdown-circle">
+            <circle
+              cx="100" // Centered horizontally
+              cy="100" // Centered vertically
+              r={radius}
+              stroke="#66a8d4"
+              strokeWidth="10"
+              fill="transparent"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+            />
+          </svg>
+          <div className="countdown-number">{countdown}</div>
+        </div>
+      ) : (
+        <>
+          <div className={side === "left" ? "split-focus" : "split-unfocus"}>
+            {side === "left" && showPoint && (
+              <Point
+                key={currentPointIndex}
+                x={points[currentPointIndex].x * 0.5}
+                y={points[currentPointIndex].y}
+              />
+            )}
+          </div>
+          <div
+            className="split-midpoint"
+            style={{ left: side === "left" ? "calc(25%)" : "calc(75%)" }}
+          >
+            <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
+              +
+            </p>
+          </div>
+          <div className={side === "right" ? "split-focus" : "split-unfocus"}>
+            {side === "right" && showPoint && (
+              <Point
+                key={currentPointIndex}
+                x={50 + points[currentPointIndex].x * 0.5}
+                y={points[currentPointIndex].y}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 }
