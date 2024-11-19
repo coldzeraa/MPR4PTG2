@@ -2,11 +2,11 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
-import BackButton from "../BackButton"
+import BackButton from "../BackButton";
 
 function Dashboard() {
   const navigate = useNavigate();
-  
+
   const handlePerimetryClick = () => {
     navigate("/perimetry_info");
   };
@@ -30,12 +30,12 @@ function Dashboard() {
         <div className="col-md-3 mb-3">
           <div className="card text-center shadow-sm">
             <div
-              className="card text-center shadow-sm text-decoration-none"
+              className="card text-center shadow-sm text-decoration-none custom-card"
               onClick={handlePerimetryClick}
               style={{ cursor: "pointer" }}
             >
               <div className="card-body">
-                <div className="icon mb-3">
+                <div className="icon mb-3 custom-icon-field">
                   {/* Placeholder for the icon */}
                   <span role="img" aria-label="icon">
                     👁️
@@ -55,12 +55,12 @@ function Dashboard() {
         <div className="col-md-3 mb-3">
           <div className="card text-center shadow-sm">
             <div
-              className="card text-center shadow-sm text-decoration-none"
+              className="card text-center shadow-sm text-decoration-none custom-card"
               onClick={handleRedGreenClick}
               style={{ cursor: "pointer" }}
             >
               <div className="card-body">
-                <div className="icon mb-3">
+                <div className="icon mb-3 custom-icon-field">
                   {/* Placeholder for the icon */}
                   <span role="img" aria-label="icon">
                     🩸
@@ -79,12 +79,12 @@ function Dashboard() {
         <div className="col-md-3 mb-3">
           <div className="card text-center shadow-sm">
             <div
-              className="card text-center shadow-sm text-decoration-none"
+              className="card text-center shadow-sm text-decoration-none custom-card"
               onClick={handleArchiveClick}
               style={{ cursor: "pointer" }}
             >
               <div className="card-body">
-                <div className="icon mb-3">
+                <div className="icon mb-3 custom-icon-field">
                   {/* Placeholder for the icon */}
                   <span role="img" aria-label="icon">
                     📂
