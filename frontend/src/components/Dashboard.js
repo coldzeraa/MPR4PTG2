@@ -2,11 +2,11 @@ import { useNavigate, Link } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
-import BackButton from "../BackButton"
+import BackButton from "../BackButton";
 
 function Dashboard() {
   const navigate = useNavigate();
-  
+
   const handlePerimetryClick = () => {
     navigate("/perimetry_info");
   };
@@ -16,7 +16,6 @@ function Dashboard() {
   };
 
   const handleArchiveClick = () => {
-    // TODO Change to Real Archive
     navigate("/archive");
   };
 
