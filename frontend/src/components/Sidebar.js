@@ -43,6 +43,7 @@ export default function Sidebar() {
                 ([key, item], index) =>
                   key !== "contact" &&
                   key !== "info" && (
+
                     <MenuItem
                       key={index}
                       icon={item.icon}
