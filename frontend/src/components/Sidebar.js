@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
 import { IconMap } from "../data/IconMap";
 
@@ -43,7 +44,6 @@ export default function Sidebar() {
                 ([key, item], index) =>
                   key !== "contact" &&
                   key !== "info" && (
-
                     <MenuItem
                       key={index}
                       icon={item.icon}
@@ -70,7 +70,12 @@ export default function Sidebar() {
               >
                 Kontakt
               </Link>
-              <Link to="/" state={{ from: "sidebar" }} className="small-link">
+              <Link
+                to="/"
+                state={{ from: "sidebar" }}
+                className="small-link"
+                onClick={deleteSession()}
+              >
                 Ausloggen
               </Link>
             </div>
