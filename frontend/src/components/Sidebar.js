@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../App.css";
 import { IconMap } from "../data/IconMap";
-import { Link } from "react-router-dom";
 
 const MenuItem = ({ icon, label, expanded, link }) => (
   <div
@@ -14,6 +13,10 @@ const MenuItem = ({ icon, label, expanded, link }) => (
     {expanded && <span>{label}</span>}
   </div>
 );
+
+function deleteSession() {
+  localStorage.clear();
+}
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);

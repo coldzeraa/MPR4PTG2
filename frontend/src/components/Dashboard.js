@@ -15,7 +15,6 @@ function Dashboard() {
   };
 
   const handleArchiveClick = () => {
-    // TODO Change to Real Archive
     navigate("/archive");
   };
 
