@@ -1,8 +1,7 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./../App.css";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
-import BackButton from "../BackButton";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -16,7 +15,6 @@ function Dashboard() {
   };
 
   const handleArchiveClick = () => {
-    // TODO Change to Real Archive
     navigate("/archive");
   };
 
