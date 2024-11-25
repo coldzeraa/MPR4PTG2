@@ -2,13 +2,6 @@ import React, { useState } from "react";
 import "../App.css";
 import { IconMap } from "../data/IconMap";
 
-const menuItems = [
-  { icon: "fas fa-tachometer-alt", label: "Dashboard" },
-  { icon: "fas fa-eye", label: "Perimetrie" },
-  { icon: "fas fa-eye-dropper", label: "Ishihara-Test" },
-  { icon: "fas fa-archive", label: "Archiv" },
-];
-
 const MenuItem = ({ icon, label, expanded, link }) => (
   <div
     className="menu-item"
@@ -48,7 +41,8 @@ export default function Sidebar() {
             <div className="menu-items">
               {Object.entries(IconMap).map(
                 ([key, item], index) =>
-                  key != "contact" && (
+                  key !== "contact" &&
+                  key !== "info" && (
                     <MenuItem
                       key={index}
                       icon={item.icon}
@@ -60,15 +54,24 @@ export default function Sidebar() {
               )}
             </div>
             <div className="small-links">
-              <a href="info" className="small-link">
+              {/* Use Links in order to pass a state */}
+              <Link
+                to="/info"
+                state={{ from: "sidebar" }}
+                className="small-link"
+              >
                 Über Optimate
-              </a>
-              <a href="contact" className="small-link">
+              </Link>
+              <Link
+                to="/contact"
+                state={{ from: "sidebar" }}
+                className="small-link"
+              >
                 Kontakt
-              </a>
-              <a href="/" className="small-link" onClick={deleteSession()}>
+              </Link>
+              <Link to="/" state={{ from: "sidebar" }} className="small-link">
                 Ausloggen
-              </a>
+              </Link>
             </div>
             <div className="flex justify-center items-center">
               <a
