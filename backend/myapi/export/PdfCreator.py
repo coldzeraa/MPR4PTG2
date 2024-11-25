@@ -48,8 +48,9 @@ class PdfCreator:
         
         # Date
         p.setFont('Helvetica', 10)
-        p.drawString(500, 740, str(examination.date))
-        
+        formatted_date = examination.date.strftime("%d.%m.%Y %H:%M")
+        p.drawString(480, 740, formatted_date) 
+
         # Patient information
         if (patient.firstName is not None and patient.lastName is not None):
             p.setFont("Helvetica", 12)

@@ -224,7 +224,7 @@ button.start-button {
 .sidebar {
     height: 100vh;
     width: 250px;
-    background-color: #7f848b;
+    background-color: #b5b7b9;
     position: fixed;
     top: 0;
     left: 0;
@@ -292,7 +292,7 @@ button.start-button {
 }
 
 .small-link:hover {
-    color: blue;
+    color: rgb(5, 84, 243);
     text-decoration: underline;
 }
 
@@ -309,7 +309,7 @@ button.start-button {
     align-items: center;
     padding: 12px 20px;
     border-radius: 8px;
-    background-color: #7f848b;
+    background-color: #b5b7b9;
     color: black;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
@@ -343,6 +343,53 @@ button.start-button {
 }
 
 
+/*Contact*/
+
+.wide-input {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    min-height: 100px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-y: 10px;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.content-box {
+    width: 60%;
+    max-width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
 /*Examination Info*/
 
 .title-item-content {
@@ -368,11 +415,6 @@ button.start-button {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.checkbox {
-    margin: 20px;
-    margin-right: 5px;
 }
 
 
@@ -505,6 +547,7 @@ input {
   margin-top: 10px;
 }
 
+
 .countdown-container {
   position: fixed;
   top: 50%;
@@ -526,4 +569,45 @@ input {
   color: #66a8d4;
 }
 
+/*Toast*/
 
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.toast {
+  display: block;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  opacity: 1;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.5s ease-in-out;
+}
+
+/* Card adaptations */
+
+.custom-card {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.custom-card:hover {
+  background-color: #ebe9e9;
+  color: #000;
+}
+
+.custom-icon-field {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.custom-card:hover .custom-icon-field {
+  background-color: #ebe9e9;
+  color: #fff;
+}

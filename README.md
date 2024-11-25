@@ -22,6 +22,7 @@ VR Box used: TODO
 - **[psycopg2](https://www.psycopg.org/)** (v2.9.9): PostgreSQL adapter for Python.
 - **[reportlab](https://www.reportlab.com/opensource/)** (v4.2.0): PDF generation library.
 - **[requests](https://docs.python-requests.org/)** (v2.31.0): Simple HTTP library for making network requests.
+- **[bcrypt](https://pypi.org/project/bcrypt/)** (v2.31.0): Modern password hashing for your software and your servers
 
 
 #### Frontend (React/Node.js)
@@ -29,7 +30,8 @@ VR Box used: TODO
 - **[React](https://reactjs.org/)**: A JavaScript library for building user interfaces.
 - **[axios](https://axios-http.com/)** (v1.6.8): Promise-based HTTP client for making API requests.
 - **[bcryptjs](https://www.npmjs.com/package/bcryptjs)**: A JavaScrip library to automatically hash strings
-
+- **[react-markdown](https://www.npmjs.com/package/react-markdown/v/8.0.6)**: Renders Markdown in HTML.
+- **[primereact] (https://primereact.org/)**: Comprehensive suite of customizable, feature-rich UI components
 
 ### Installing
 

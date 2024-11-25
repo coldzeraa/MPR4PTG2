@@ -7,62 +7,46 @@ from myapi.db.PatientService import PatientService as PatS
 class TestPatientServiceMethods(TestCase):
     def test_get_all_patients(self):
         patientsCorr = [
-            PatS.store("Martina", "Pletz"),
-            PatS.store("Nico", "Pointner"),
-            PatS.store("David", "Derntl"),
-            PatS.store("Alexandra", "Denk")
+            PatS.store("Martina", "Pletz", "martina.pletz@fhooe.at", "martina_password"),
+            PatS.store("Nico", "Pointner", "nico.pointner@fhooe.at", "nico_password"),
+            PatS.store("David", "Derntl", "david.derntl@fhooe.at", "david_password"),
+            PatS.store("Alexandra", "Denk", "alex.denk@fhooe.at", "alex_password")
         ]
         patientsRes = PatS.get_all()
         for index, patient in enumerate(patientsCorr):
             self.assertEqual(patient, patientsRes[index])
 
     def test_store_patient_def_valid(self):
-        pat = PatS.store("", "", "")
-        self.assertEqual(pat.firstName, "John")
-        self.assertEqual(pat.lastName, "Doe")
-        self.assertEqual(pat.email, "unknown")
-
-    def test_store_patient_fn_ln_valid(self):
-        firstName = "Nico"
-        lastName = "Pointner"
-        pat = PatS.store(firstName, lastName, "")
-        self.assertEqual(pat.firstName, firstName)
-        self.assertEqual(pat.lastName, lastName)
-
-    def test_store_patient_mail_valid(self):
-        email = "nico.pointner@gmail.com"
-        pat = PatS.store("", "", email)
-        self.assertEqual(pat.firstName, "John")
-        self.assertEqual(pat.lastName, "Doe")
-        self.assertEqual(pat.email, email)
+        pat = PatS.store()
+        self.assertEqual(pat.firstName, None)
+        self.assertEqual(pat.lastName, None)
+        self.assertEqual(pat.email, None)
+        self.assertEqual(pat.password, None)
 
     def test_store_patient_fn_ln_mail_valid(self):
         firstName = "Nico"
         lastName = "Pointner"
         email = "nico.pointner@gmail.com"
-        pat = PatS.store(firstName, lastName, email)
+        password = "nico_password"
+        pat = PatS.store(firstName, lastName, email, password)
         self.assertEqual(pat.firstName, firstName)
         self.assertEqual(pat.lastName, lastName)
         self.assertEqual(pat.email, email)
-
-    def test_get_patient_valid_id(self):
-        pat1 = PatS.store("Martina", "Pletz")
-        pat2 = PatS.get(pat1.patID)
-        self.assertEqual(pat1.firstName, pat2.firstName)
-        self.assertEqual(pat1.lastName, pat2.lastName)
+        self.assertEqual(pat.password, password)
 
     def test_get_patient_invalid_id(self):
         with self.assertRaises(ObjectDoesNotExist):
             PatS.get(-1)
 
     def test_update_point_valid(self):
-        patOld = PatS.store("David", "Derntl")
-        patNew = PatS.update(patOld.patID, "Davina", "Derntl")
+        patOld = PatS.store("David", "Derntl", "david.derntl@fhooe.at", "david_password")
+        patNew = PatS.update(patOld.patID, "Davina", "Derntl", "david_password")
         self.assertEqual(patNew.firstName, "Davina")
         self.assertEqual(patNew.lastName, "Derntl")
+        self.assertEqual(patNew.password, "david_password")
 
     def test_delete_patient_valid(self):
-        pat = PatS.store("Elisabeth", "Mayrhuber")
+        pat = PatS.store("Elisabeth", "Mayrhuber", "elisabeth.mayrhuber@fhooe.at", "elisabeth_password")
         patID = pat.patID
         PatS.delete(patID)
         with self.assertRaises(ObjectDoesNotExist):
