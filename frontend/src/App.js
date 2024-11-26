@@ -10,6 +10,7 @@ import Registry from "./components/Registry";
 import ExaminationInfo from "./components/ExaminationInfo";
 import Contact from "./components/Contact";
 import Archive from "./components/Archive";
+import Ishihara from "./components/Ishihara";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/registry" element={<Registry />} />
         <Route path="/ishihara_info" element={<ExaminationInfo />} />
         <Route path="/archive" element={<Archive />} />
+        <Route path="/ishihara" element={<Ishihara />} />
       </Routes>
     </BrowserRouter>
   );

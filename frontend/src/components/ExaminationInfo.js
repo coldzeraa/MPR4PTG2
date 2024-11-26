@@ -75,19 +75,20 @@ function ExaminationInfo() {
         }
     };
 
-    const navigateToPerimetry = () => {
-        const element = document.documentElement;
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
+    const navigateToExamination = () => {
+        if (lastSegment === "perimetry") {  // request full screen depending on browser
+            const element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
         }
-
-        navigate("/perimetry");
+        navigate(`/${lastSegment}`);
     };
 
   return (
@@ -109,7 +110,7 @@ function ExaminationInfo() {
                             className="btn btn-primary mt-2"
                             onClick={() => {
                                 handleExaminationID();
-                                navigateToPerimetry();
+                                navigateToExamination();
                             }}
                         >
                             ➠ Starten
