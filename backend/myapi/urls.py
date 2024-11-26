@@ -11,5 +11,7 @@ urlpatterns = [
     path('registry/', views.registry, name='registry'),
     path('get_patient_info/', views.get_patient_info, name='get_patient_info'),
     path('get_examinations/', views.get_examinations, name='get_examinations'),
-    path('ishihara/', views.ishihara, name='ishihara')
+    path('ishihara/', views.ishihara, name='ishihara'),
+    path('create_dummy_patient/', views.create_dummy_patient, name='create_dummy_patient'),
+    path('delete_patient_data/', views.delete_patient_data, name='delete_patient_data')
 ]

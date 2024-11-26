@@ -630,3 +630,12 @@ input {
     background-color: #ebe9e9;
     color: #fff;
 }
+/*ResultPage*/
+.custom-box {
+  padding: 20px;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  color: #721c24;
+  font-weight: bold;
+}
