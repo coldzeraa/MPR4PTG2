@@ -1,222 +1,223 @@
 @import url('https://fonts.googleapis.com/css?family=Oxanium');
 @import url('https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css');
+
 .p {
-  font-family: 'Oxanium', sans-serif;
+    font-family: 'Oxanium', sans-serif;
 }
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 90px;
-  padding-bottom: 25px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 3s ease-in-out;
+    height: 90px;
+    padding-bottom: 25px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
 }
 
 .App-logo.visible {
-  opacity: 1;
+    opacity: 1;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /*GENERAL DESIGN*/
 
 html, body {
-  height: 100%; 
+    height: 100%;
 }
 
 .container-fluid {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 /*BODY WELCOME SCREEN*/
 
 .welcome-screen {
-  background: radial-gradient(circle at center, #66a8d4, white);
-  height: 100%; 
-  display: flex;
-  align-items: center; 
-  justify-content: center;
-  font-family: 'Oxanium', sans-serif; 
-  font-weight: bold; 
+    background: radial-gradient(circle at center, #66a8d4, white);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oxanium', sans-serif;
+    font-weight: bold;
 }
 
 .content {
-  text-align: center;
+    text-align: center;
 }
 
 .content-left {
-  text-align: left;
+    text-align: left;
 }
 
 /*DASHBOARD*/
 .dashboard-font-design {
-  font-family: 'Oxanium', sans-serif;
-  margin-top: 50px;
-  font-weight: bold;
-  color: #ffffff
+    font-family: 'Oxanium', sans-serif;
+    margin-top: 50px;
+    font-weight: bold;
+    color: #ffffff
 }
 
 /*POPUP*/
 .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .popup-content {
-  background-color: #3498db;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+    background-color: #3498db;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .background-all {
-  background: linear-gradient(180deg, #5ea7d8 0%, #ffffff 50%);
+    background: linear-gradient(180deg, #5ea7d8 0%, #ffffff 50%);
 }
 
 
 /*BUTTONS*/
 
 .button {
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 10px;
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 70px;
+.welcome-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 70px;
 }
 
 button.start-button {
-  width: 200px;
-  margin: 5px 0;
+    width: 200px;
+    margin: 5px 0;
 }
 
-.button-disabled{
-  background-color: #9d9d9d;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-right: 10px;
+.button-disabled {
+    background-color: #9d9d9d;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 .back-button {
-  position: fixed;
-  top: 10px; 
-  left: 10px; 
+    position: fixed;
+    top: 10px;
+    left: 10px;
 }
 
 .start-button {
-  position: relative;
-  margin-top: 10px;
+    position: relative;
+    margin-top: 10px;
 }
 
 .info-button {
-  position: absolute;
-  top: 10px; 
-  right: 10px; 
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 /*SCROLLABLE TEXT*/
 .scroll-box {
-  width: 80%; 
-  height: 400px;
+    width: 80%;
+    height: 400px;
 
-  border: 1px solid #ccc;
-  overflow: scroll; 
-  padding: 10px; 
-  margin: 0 auto;
+    border: 1px solid #ccc;
+    overflow: scroll;
+    padding: 10px;
+    margin: 0 auto;
 }
 
 /*LOGO TOP*/
 .logo-top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Oxanium', sans-serif;
-  font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oxanium', sans-serif;
+    font-weight: bold;
 }
 
 /*PERIMETRY*/
 
 .split-container {
-  display: flex;
-  height: 100vh;
+    display: flex;
+    height: 100vh;
 }
 
 .split-focus {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .split-unfocus {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
 }
 
 .split-midpoint {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 999;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
 }
 
 /* SIDEBAR */
@@ -342,6 +343,38 @@ button.start-button {
     transition: color 0.3s ease;
 }
 
+/*Ishihara*/
+
+.ishihara-image {
+    width:70%;
+    max-width: 400px;
+}
+
+.ishihara-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.image-input {
+    text-align: center;
+    width: 70%;
+    max-width: 400px;
+}
+
+.p-inputtext {
+    max-width: 400px;
+    width: 70%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
 
 /*Contact*/
 
@@ -418,175 +451,182 @@ button.start-button {
 }
 
 
-
 @media (min-width: 576px) {
-  .position-sm-static {
-    position: static !important;
-  }
-  .position-sm-relative {
-    position: relative !important;
-  }
-  .position-sm-absolute {
-    position: absolute !important;
-  }
-  .position-sm-fixed {
-    position: fixed !important;
-  }
-  .position-sm-sticky {
-    position: sticky !important;
-  }
+    .position-sm-static {
+        position: static !important;
+    }
+
+    .position-sm-relative {
+        position: relative !important;
+    }
+
+    .position-sm-absolute {
+        position: absolute !important;
+    }
+
+    .position-sm-fixed {
+        position: fixed !important;
+    }
+
+    .position-sm-sticky {
+        position: sticky !important;
+    }
 }
 
 @media (min-width: 768px) {
-  .position-md-static {
-    position: static !important;
-  }
-  .position-md-relative {
-    position: relative !important;
-  }
-  .position-md-absolute {
-    position: absolute !important;
-  }
-  .position-md-fixed {
-    position: fixed !important;
-  }
-  .position-md-sticky {
-    position: sticky !important;
-  }
+    .position-md-static {
+        position: static !important;
+    }
+
+    .position-md-relative {
+        position: relative !important;
+    }
+
+    .position-md-absolute {
+        position: absolute !important;
+    }
+
+    .position-md-fixed {
+        position: fixed !important;
+    }
+
+    .position-md-sticky {
+        position: sticky !important;
+    }
 }
 
 
 /* Login */
 
 .icon {
-  background-color: #f1f1f1;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .icon img {
-  width: 23px; 
-  height: 20px;
+    width: 23px;
+    height: 20px;
 }
 
 .input-container {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
-  width: 250px; 
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    width: 250px;
+    margin-bottom: 10px;
 }
 
 input {
-  border: none; 
-  outline: none;
-  flex: 1;
-  padding: 10px;
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 10px;
 }
 
 /* POPUP */
 
 .popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
 .popup-content {
-  background: rgb(211, 238, 247);
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  width: 300px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: rgb(211, 238, 247);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .popup-content h2 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
 }
 
 .popup-options label {
-  display: block;
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #333;
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .popup-options input[type="radio"] {
-  margin-right: 10px;
-  accent-color: #4a90e2;
+    margin-right: 10px;
+    accent-color: #4a90e2;
 }
 
 .popup-button {
-  background: transparent;
-  border: none;
-  color: #4a90e2;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-right: 10px;
+    background: transparent;
+    border: none;
+    color: #4a90e2;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 .error-message {
-  color: red;
-  font-size: 14px;
-  margin-top: 10px;
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
 }
 
 
 /*Toast*/
 
 #toast-container {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 .toast {
-  display: block;
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-  opacity: 1;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: opacity 0.5s ease-in-out;
+    display: block;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    opacity: 1;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.5s ease-in-out;
 }
 
 /* Card adaptations */
 
 .custom-card {
-  background-color: #ffffff;
-  color: #333;
+    background-color: #ffffff;
+    color: #333;
 }
 
 .custom-card:hover {
-  background-color: #ebe9e9;
-  color: #000;
+    background-color: #ebe9e9;
+    color: #000;
 }
 
 .custom-icon-field {
-  background-color: #ffffff;
-  color: #333;
+    background-color: #ffffff;
+    color: #333;
 }
 
 .custom-card:hover .custom-icon-field {
-  background-color: #ebe9e9;
-  color: #fff;
+    background-color: #ebe9e9;
+    color: #fff;
 }

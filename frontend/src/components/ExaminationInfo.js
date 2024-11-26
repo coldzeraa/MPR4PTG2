@@ -27,6 +27,7 @@ function ExaminationInfo() {
   const lastSegment = currentUrl
     .substring(currentUrl.lastIndexOf("/") + 1)
     .split("_")[0];
+
   const { icon, label } = IconMap[lastSegment] || {
     icon: "fas fa-question",
     label: "Unknown",
