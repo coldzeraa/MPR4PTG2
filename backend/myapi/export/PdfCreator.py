@@ -21,10 +21,10 @@ class PdfCreator:
         """
         
         # Get examination
-        examination = ExaminationService.get(exID)
+        examination = ExaminationService.get(id=exID)
         
         # Get patient
-        patient = PatientService.get(examination.pat.patID)
+        patient = PatientService.get(id=examination.pat.patID)
         
         buffer = io.BytesIO()
         
