@@ -216,6 +216,7 @@ def registry(request):
     else:
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)@api_view(['GET'])
+
 def get_patient_info(request):
     if request.method == 'GET':
         # Fetch patient info based on patient_id
@@ -241,5 +242,4 @@ def get_examinations(request):
             for exam in examinations
         ]
     }
-    print(data)
     return JsonResponse(data)
