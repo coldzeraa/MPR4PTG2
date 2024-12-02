@@ -130,7 +130,7 @@ def examination(request):
     if request.method == 'POST':
         patID = request.data.get("patID")
         pat = PatientService.get(patID)
-        type = 'P'
+        type = request.data.get("type")
         ex = ExaminationService.store(pat, type, datetime.now(timezone.utc))
     return JsonResponse({'exID': ex.exID}, status=200)
 

@@ -56,9 +56,12 @@ function ExaminationInfo() {
     const handleExaminationID = async () => {
         const patient = {
             patID: localStorage.getItem("patientID"),
+            type: lastSegment[0].toUpperCase()
         };
 
         try {
+            console.log(localStorage.getItem("patientID"))
+            console.log(patient);
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/api/examination/`,
                 {

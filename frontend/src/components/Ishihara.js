@@ -1,59 +1,52 @@
-import React, {useState, useEffect} from "react";
-import {InputText} from 'primereact/inputtext';
+import React, { useState } from "react";
+import { InputText } from 'primereact/inputtext';
 import Sidebar from "./Sidebar";
 import LogoTop from "./LogoTop";
-import {IconMap} from "../data/IconMap";
+import { IconMap } from "../data/IconMap";
 import "./../App.css";
-import {useNavigate} from "react-router-dom";
-import ReactMarkdown from "react-markdown";
-
+import { useNavigate } from "react-router-dom";
 
 function Ishihara() {
-    const [setIsSidebarExpanded] = useState(false);
     const [text, setText] = useState("");
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
     const navigate = useNavigate();
 
-    const picturePath = "/ishihara_images";
+    const picturePath = process.env.PUBLIC_URL + "/ishihara_images";
+
     const totalImages = 12;
 
-    const handleChange = (e) => {
-        setText(e.target.value);
-    };
+    const handleChange = (e) => setText(e.target.value);
 
     const nextImage = () => {
         if (currentImageIndex < totalImages - 1) {
-            setCurrentImageIndex(currentImageIndex + 1);
+            setCurrentImageIndex((prev) => prev + 1);
+            setText("");
+        } else {
+            navigate("/export");
         }
-        setText("");
     };
 
     const prevImage = () => {
         if (currentImageIndex > 0) {
-            setCurrentImageIndex(currentImageIndex - 1);
+            setCurrentImageIndex((prev) => prev - 1);
         }
         setText("");
     };
 
-    const {icon, label} = IconMap['picture'];
+    const { icon, label } = IconMap["picture"];
 
-    const handleSidebarToggle = (isExpanded) => {
-        setIsSidebarExpanded(isExpanded);
-    };
-
-    const PictureTitle = ({icon, label, num}) => (
+    const PictureTitle = ({ icon, label, num }) => (
         <span className="title-item-content">
-        <i className={`${icon} title-icon`}></i>
-        <h3>{label} {num}</h3>
-    </span>
+            <i className={`${icon} title-icon`}></i>
+            <h3>{label} {num}</h3>
+        </span>
     );
 
     return (
         <div className="container-fluid p-3 background-all">
-            <Sidebar onToggle={handleSidebarToggle}/>
-            <LogoTop/>
-            <PictureTitle icon={icon} label={label} num={currentImageIndex + 1}/>
+            <Sidebar onToggle={() => {}} />
+            <LogoTop />
+            <PictureTitle icon={icon} label={label} num={currentImageIndex + 1} />
             <div className="ishihara-container">
                 <img
                     className="ishihara-image"
@@ -76,13 +69,23 @@ function Ishihara() {
                     >
                         Zurück
                     </button>
-                    <button
-                        className="btn btn-primary mt-2"
-                        onClick={nextImage}
-                        disabled={!text || currentImageIndex === totalImages - 1}
-                    >
-                        Weiter
-                    </button>
+                    {currentImageIndex < totalImages - 1 ? (
+                        <button
+                            className="btn btn-primary mt-2"
+                            onClick={nextImage}
+                            disabled={!text}
+                        >
+                            Weiter
+                        </button>
+                    ) : (
+                        <button
+                            className="btn btn-success mt-2"
+                            onClick={nextImage}
+                            disabled={!text}
+                        >
+                            Fertig
+                        </button>
+                    )}
                 </div>
             </div>
         </div>
