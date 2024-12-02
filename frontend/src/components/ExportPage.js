@@ -10,17 +10,17 @@ function ExportPage() {
   // extract data from localStorage
   const exaID = localStorage.getItem("exID");
   const patID = localStorage.getItem("patientID");
-  
+
   const [patientInfo, setPatientInfo] = useState(null);
   const [skipButton, setSkipButton] = useState(null);
   const [dataAvailable, setDataAvailable] = useState(false);
   const [emailSentSuccessfully, setEmailSent] = useState(false);
 
-  useEffect(()  => {
+  useEffect(() => {
     fetchPatientInfo(patID);
     const storedValue = localStorage.getItem("skip_button");
     setSkipButton(storedValue);
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (patientInfo) {
@@ -28,9 +28,9 @@ function ExportPage() {
       setDataAvailable(isAvailable);
     }
   }, [patientInfo]);
-  
+
   useEffect(() => {
-    if (skipButton === "true") {  
+    if (skipButton === "true") {
       handleSkipValues(exaID, patID);
       localStorage.clear();
     }
@@ -38,7 +38,7 @@ function ExportPage() {
 
   const fetchPatientInfo = async (patID) => {
     if (patID == null) return;
-    
+
     const response = await fetch(
       `${process.env.REACT_APP_API_URL}/api/get_patient_info?patientID=${encodeURIComponent(patID)}`,
       {
@@ -49,7 +49,7 @@ function ExportPage() {
     if (response.ok) {
       const json = await response.json();
       setPatientInfo(json);
-      
+
       return json;
     } else {
       console.log("Failed to fetch patient info");
@@ -106,23 +106,23 @@ function ExportPage() {
   };
 
   const handleSkipValues = async (exaID, patID) => {
-    console.log("In HANDLESKIPVALUES; ExID: ",exaID, "PatID: ", patID);
+    console.log("In HANDLESKIPVALUES; ExID: ", exaID, "PatID: ", patID);
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/delete_patient_data/`, 
+        `${process.env.REACT_APP_API_URL}/api/delete_patient_data/`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ patID }), 
+          body: JSON.stringify({ patID }),
         }
       );
-  
+
       if (!response.ok) {
         throw new Error("Failed to delete patient data");
       }
-  
+
     } catch (error) {
       console.error("Error deleting patient data:", error);
     }
@@ -145,7 +145,14 @@ function ExportPage() {
           >
             Als E-Mail erhalten
           </button>
-          {/* TODO {emailSentSuccessfully ? (<p>Ihre Email wurde versandt!</p>): (<p>Das hat leider nicht funktioniert!</p>)}*/}
+          {emailSentSuccessfully ? (
+            <div className="content">
+              <br></br>
+              <div className="alert alert-info" role="alert">
+                Ihre Email wurde versandt!
+              </div>
+            </div>
+          ) : null}
           {skipButton === "true" && (
             <div className="content">
               <br></br>

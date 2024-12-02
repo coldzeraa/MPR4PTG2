@@ -15,8 +15,8 @@ const Point = ({ x, y }) => {
 function Perimetry() {
   const SIDES = ["left", "right"];
 
-  const VISIBILITY_SPAN = 100;
-  const INTERVAL = 50;
+  const VISIBILITY_SPAN = 50;
+  const INTERVAL = 20;
 
   const VOLUME_THRESHOLD = 15;
 
