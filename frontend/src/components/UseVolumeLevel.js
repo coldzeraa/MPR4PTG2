@@ -26,10 +26,11 @@ function useVolumeLevel() {
   const volumeRef = useRef(0); // useRef verwenden, um volume zu halten
 
   const stopRecording = () => {
-    setLevel(0);
-    window.soundMeter.stop();
-    setIsRecording(false);
-    console.log("reset");
+    if (window.soundMeter && isRecording) {
+      setLevel(0);
+      window.soundMeter.stop();
+      setIsRecording(false);
+    }
   };
 
   const startRecording = () => {

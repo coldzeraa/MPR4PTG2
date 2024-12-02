@@ -216,6 +216,7 @@ def registry(request):
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)@api_view(['GET'])
 
+
 def validate_names(first_name, last_name):
     # Create list with all first names and all last names
     names = []
@@ -228,7 +229,7 @@ def validate_names(first_name, last_name):
             return False
 
     return True
-
+  
 def get_patient_info(request):
     if request.method == 'GET':
         # Fetch patient info based on patient_id
@@ -254,5 +255,4 @@ def get_examinations(request):
             for exam in examinations
         ]
     }
-    print(data)
     return JsonResponse(data)

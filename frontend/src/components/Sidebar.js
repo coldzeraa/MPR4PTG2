@@ -15,15 +15,15 @@ const MenuItem = ({ icon, label, expanded, link }) => (
   </div>
 );
 
-function deleteSession() {
-  localStorage.clear();
-}
-
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
 
   const toggleSidebar = () => {
     setExpanded((prev) => !prev);
+  };
+
+  const deleteSession = () => {
+    localStorage.clear();
   };
 
   return (
@@ -74,7 +74,7 @@ export default function Sidebar() {
                 to="/"
                 state={{ from: "sidebar" }}
                 className="small-link"
-                onClick={deleteSession()}
+                onClick={deleteSession}
               >
                 Ausloggen
               </Link>

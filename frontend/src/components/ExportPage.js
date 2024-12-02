@@ -65,7 +65,10 @@ function ExportPage() {
   };
 
   return (
-    <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
+    <div
+      className="container-fluid p-3 background-all"
+      style={{ height: "100vh" }}
+    >
       <LogoTop />
       <Sidebar />
       <div className="d-flex align-items-center justify-content-center">
