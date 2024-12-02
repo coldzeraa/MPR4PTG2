@@ -11,7 +11,6 @@ from datetime import datetime, timezone
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.EmailSender import EmailSender
 from myapi.export.PdfCreator import PdfCreator
-from myapi.models import Patient
 import bcrypt
 
 
@@ -190,13 +189,13 @@ def registry(request):
         last_name = str(request.data.get('lastName'))
         email = str(request.data.get('email'))
         password = str(request.data.get('password'))
-        
+                
         # Check if there is already a patient with this email
         if PatientService.get_by_email(email):
             return JsonResponse({"message": "PATIENT_ALREADY_EXISTS"})
         
-        # Check for invalid names
-        if (not first_name.isalpha() or not last_name.isalpha()):
+        # Check for invalid names by splitting at space to allow multiple first or lastnames
+        if not validate_names(first_name, last_name):
             return JsonResponse({"message": "INVALID_NAMES"})
         
         # Validate email
@@ -217,6 +216,20 @@ def registry(request):
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)@api_view(['GET'])
 
+
+def validate_names(first_name, last_name):
+    # Create list with all first names and all last names
+    names = []
+    names += first_name.replace("-", " ").split()
+    names += last_name.replace("-", " ").split()
+
+    # Check if every letter is alphabetic
+    for name in names:
+        if not all(c.isalpha() or c == '-' for c in name):
+            return False
+
+    return True
+  
 def get_patient_info(request):
     if request.method == 'GET':
         # Fetch patient info based on patient_id
