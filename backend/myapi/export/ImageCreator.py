@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 from scipy.interpolate import griddata
 from io import BytesIO
+from matplotlib.colors import LinearSegmentedColormap
 
 
 class ImageCreator:
@@ -37,6 +38,53 @@ class ImageCreator:
         combined_image.paste(leftImage, (0, 0))
         combined_image.paste(rightImage, (leftImage.width, 0))
         
+        combined_image = ImageCreator.add_colorbar(combined_image)
+        
+        return combined_image
+    
+    @staticmethod
+    def add_colorbar(image):
+        """
+        Fügt eine Farbskala (Colorbar) mittig unter dem Bild hinzu.
+
+        Args:
+            image (Image): Das kombinierte Bild ohne Farbskala.
+
+        Returns:
+            Image: Das Bild mit der Farbskala mittig darunter.
+        """
+        # Erstelle eine Farbskala
+        fig, ax = plt.subplots(figsize=(image.width / 100, 1))  # Breite an Bild anpassen
+        fig.subplots_adjust(bottom=0.5)
+
+        # Colormap definieren
+        colors = [(1, 1, 1), (0.2, 0.2, 0.2)]  # Von Grau zu Weiß
+        custom_cmap = LinearSegmentedColormap.from_list("custom_greys", colors)
+        color_data = np.linspace(0, 1, 256).reshape(1, -1)
+        ax.imshow(color_data, cmap=custom_cmap, aspect='auto')
+
+        # Beschriftung der Farbskala
+        ax.set_xticks([0, 255])
+        ax.set_xticklabels(['gesehen', 'nicht gesehen'], fontsize=14)
+        ax.set_yticks([])
+
+        # Farbskala in Puffer speichern
+        buffer = BytesIO()
+        plt.savefig(buffer, format='png', bbox_inches='tight', pad_inches=0.2)
+        plt.close()
+        buffer.seek(0)
+
+        # Farbskala in PIL.Image umwandeln
+        colorbar_image = Image.open(buffer)
+
+        # Neue Bildgröße definieren
+        new_height = image.height + colorbar_image.height
+
+        # Neues Bild erstellen und die beiden Bilder kombinieren
+        combined_image = Image.new("RGB", (image.width, new_height), "white")
+        combined_image.paste(image, (0, 0))  # Originalbild oben
+        combined_image.paste(colorbar_image, (((image.width - colorbar_image.width) // 2) + 11, image.height))
+
         return combined_image
 
     @staticmethod
@@ -58,17 +106,21 @@ class ImageCreator:
                                 np.linspace(min(y), max(y), 500))
 
         grid_z = griddata((x, y), seen, (grid_x, grid_y), method='linear')
+        
+        colors = [(1, 1, 1), (0.2, 0.2, 0.2)]  # Von Grau zu Weiß (RGB)
+        custom_cmap = LinearSegmentedColormap.from_list("custom_greys", colors)
 
+        plt.figure(figsize=(10, 10))
         plt.imshow(grid_z, extent=(min(x), max(x), min(y), max(y)), origin='lower',
-                   cmap='Greys', aspect='auto')
-        plt.colorbar(label='Sichtbarkeit (0 = gesehen, 1 = nicht gesehen)')
+                   cmap=custom_cmap, aspect='equal')
+        #plt.colorbar(label='Sichtbarkeit (0 = gesehen, 1 = nicht gesehen)', orientation='horizontal')
+        plt.axis('off')
+        plt.axhline(50, color='black', linewidth=2, linestyle="--")  # Horizontale Linie durch (0, 0)
+        plt.axvline(50, color='black', linewidth=2,  linestyle="--")
         plt.scatter(x, y, color="white", edgecolor='k')
-        plt.xlabel('X-Koordinate')
-        plt.ylabel('Y-Koordinate')
-        plt.tight_layout()
 
         buffer = BytesIO()
-        plt.savefig(buffer, format='png')
+        plt.savefig(buffer, format='png', bbox_inches='tight', pad_inches=0.1)
         plt.close()
         buffer.seek(0)
         img = Image.open(buffer).copy()
