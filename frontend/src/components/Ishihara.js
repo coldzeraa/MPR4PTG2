@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {InputText} from "primereact/inputtext";
 import Sidebar from "./Sidebar";
 import LogoTop from "./LogoTop";
@@ -31,21 +31,16 @@ function Ishihara() {
             [imgName]: result,
         };
 
-        console.log("Updated Results in state:", updatedResults);
-
         const examinationData = {
             exID: localStorage.getItem("exID"),
             exResults: updatedResults,
         };
-
-        console.log(examinationData.exID, examinationData.exResults);
 
         await sendExaminationData(examinationData);
         navigate('/export');
     };
 
     const sendExaminationData = async (examinationData) => {
-        console.log("IN SEND EXAMINATION DATA");
         const formattedExResults = Object.entries(examinationData.exResults);
 
         try {
@@ -94,12 +89,6 @@ function Ishihara() {
       </h3>
     </span>
     );
-
-    useEffect(() => {
-        if (Object.keys(results).length > 0) {
-            console.log("Updated Results in useEffect: ", results);
-        }
-    }, [results]);
 
 
     return (
