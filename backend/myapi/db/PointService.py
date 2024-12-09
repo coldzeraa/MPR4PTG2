@@ -25,6 +25,10 @@ class PointService:
         return crud_point.get_points_by_quadrant(quadrant)
     
     @staticmethod
+    def get_point_by_x_and_y(x: int, y: int):
+        return crud_point.get_point_by_x_and_y(x, y)
+    
+    @staticmethod
     def store_by_parameters(x: int, y: int, q: int):
         """
             Store point in database

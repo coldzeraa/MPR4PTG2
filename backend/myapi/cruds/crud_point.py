@@ -80,6 +80,10 @@ def delete_point(pID: int):
     :param pID: id of point
     """
     (Point.objects.get(pID=pID)).delete()
+    
+
+def get_point_by_x_and_y(x: int, y: int):
+    return Point.objects.get(x=x, y=y)
 
 
 def valid_quadrant(q: int):

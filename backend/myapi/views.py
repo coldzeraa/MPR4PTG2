@@ -11,6 +11,8 @@ from datetime import datetime, timezone
 from myapi.point_administrator.PointAdministrator import PointAdministrator
 from myapi.export.EmailSender import EmailSender
 from myapi.export.PdfCreator import PdfCreator
+from myapi.models import Patient
+import random
 import bcrypt
 import json
 
@@ -130,28 +132,17 @@ def ishihara(request):
 @api_view(['GET'])
 def get_points(request):
     """
-    Retrieves a uniformly distributed list of points from all quadrants and returns them as a JSON response.
+    Retrieves a list of points and returns them as a JSON response.
 
     :param request: The HTTP request object
     :return: A JsonResponse containing a list of points with their x and y coordinates
     """
     
-    # Raw list for points
-    points = []
+    # Get points from database
+    points = PointAdministrator.load_points()
     
-    print("get_points")
-    # Request method
-    if request.method == "GET":
-        # Every quadrant
-        for quadrant in range(1, 5):
-            
-            # Get all points of quadrant
-            currentPoints = PointAdministrator.load_points(quadrant)
-            # Get uniformly distributed indices
-            pointIndices = PointAdministrator.get_uniformed_list(currentPoints)
-
-            # Add points to point list
-            points.extend([currentPoints[i] for i in pointIndices])
+    # Shuffle points
+    random.shuffle(points)
     
     # Send point list to frontend as json
     return JsonResponse({'points': [{'x': p.x, 'y': p.y} for p in points]}, status=200)
@@ -168,8 +159,10 @@ def examination(request):
     if request.method == 'POST':
         patID = request.data.get("patID")
         pat = PatientService.get(patID)
+
         type = request.data.get("type")
         ex = ExaminationService.store(pat, type, datetime.now(timezone.utc))
+
     return JsonResponse({'exID': ex.exID}, status=200)
 
 @api_view(['GET'])
