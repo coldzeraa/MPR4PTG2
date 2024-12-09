@@ -174,7 +174,10 @@ function Archive() {
                           {IconMap.perimetry.label}
                         </p>
                       ) : (
-                        <p className="mb-0"> {exam.type}</p>
+                        <p className="mb-0">
+                          <i className={`${IconMap.ishihara.icon} mr-2`}></i>{" "}
+                          {IconMap.ishihara.label}
+                        </p>
                       )}
                     </div>
                   </div>
