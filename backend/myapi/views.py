@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.decorators import api_view
 from myapi.db.ResultPerimetryService import ResultPerimetryService
+from myapi.db.ResultIshiharaService import ResultIshiharaService
 from myapi.db.PointService import PointService
 from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
@@ -13,6 +13,7 @@ from myapi.export.EmailSender import EmailSender
 from myapi.export.PdfCreator import PdfCreator
 from myapi.models import Patient
 import bcrypt
+import json
 
 
 @api_view(['POST'])
@@ -75,7 +76,7 @@ def perimetry(request):
     Handles the process of storing perimetry results, associating them with a specific point and examination.
 
     :param request: The HTTP request object containing the x and y coordinates, examination ID (exID), and result
-    :return: A JsonResponse with a success message if the result is stored successfully, or an error message if the request method is invalid
+    :return: A JsonResponse with a success message if the result is stored successfully
     """
     if request.method == 'POST':
         x = request.data.get('x')
@@ -87,6 +88,44 @@ def perimetry(request):
         ex = ExaminationService.get(exID)
 
         ResultPerimetryService.store(result, p, ex)
+        return JsonResponse({'message': 'SUCCESS'}, status=200)
+
+@api_view(['POST'])
+def ishihara(request):
+    """
+    Handles the process of storing ishihara results, associating them with a specific examination.
+
+    :param request: The HTTP request object containing the filename, user input and examination ID (exID)
+    :return: A JsonResponse with a success message if the result is stored successfully
+    """
+    print('REQ', request)
+    print('EXID', request.data.get('exID'))
+
+    if request.method == 'POST':
+        exID = request.data.get('exID')    # extract examination id
+        ex = ExaminationService.get(exID)
+
+        with open('C:\\Users\\alexa\Documents\_FH\\4. Semester\MPR\MPR4PTG2\MPR4PTG2\\backend\data\ishihara_results.json', 'r') as file:    # read result file content
+            content = json.load(file)
+            print('file content', content)
+
+        print('blub', request.data.get('exResults'))
+
+        for name, num in request.data.get('exResults'):  # store results
+            print('IMG NAME', name)
+            print('NUM', num)
+
+            img_name = name
+            guess = int(num)
+
+            image_number = int(img_name.replace('image-', ''))
+            solution_data = content['solutions'][image_number - 1]
+            correct_number = solution_data[str(image_number)]['number']
+
+            correctly_guessed = correct_number == guess
+
+            ResultIshiharaService.store(img_name, correctly_guessed, ex)
+
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])

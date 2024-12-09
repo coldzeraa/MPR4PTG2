@@ -60,8 +60,6 @@ function ExaminationInfo() {
         };
 
         try {
-            console.log(localStorage.getItem("patientID"))
-            console.log(patient);
             const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/api/examination/`,
                 {
