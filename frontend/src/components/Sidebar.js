@@ -75,7 +75,7 @@ export default function Sidebar() {
                 to="/"
                 state={{ from: "sidebar" }}
                 className="small-link"
-                onClick={deleteSession()}
+                onClick={deleteSession}
               >
                 Ausloggen
               </Link>
