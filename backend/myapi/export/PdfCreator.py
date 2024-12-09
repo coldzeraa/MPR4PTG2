@@ -48,6 +48,7 @@ class PdfCreator:
         
         # Date
         p.setFont('Helvetica', 10)
+        print(examination.date)
         formatted_date = examination.date.strftime("%d.%m.%Y %H:%M")
         p.drawString(480, 740, formatted_date) 
 

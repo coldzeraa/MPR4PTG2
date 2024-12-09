@@ -158,7 +158,15 @@ function Archive() {
                     <div>
                       <p className="mb-1">
                         <strong>Datum:</strong>{" "}
-                        {new Date(exam.date_time).toLocaleString()}
+                        {new Date(exam.date_time).toLocaleString("at-AT", {
+                          timeZone: "UTC",
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                          second: "2-digit",
+                        })}
                       </p>{" "}
                       {exam.type === "P" ? (
                         <p className="mb-0">
