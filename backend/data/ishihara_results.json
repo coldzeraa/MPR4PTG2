@@ -1,0 +1,76 @@
+{
+  "solutions": [
+    {
+      "1": {
+        "imageName": "image-1",
+        "number": 12
+      }
+    },
+    {
+      "2": {
+        "imageName": "image-2",
+        "number": 3
+      }
+    },
+    {
+      "3": {
+        "imageName": "image-3",
+        "number": 7
+      }
+    },
+    {
+      "4": {
+        "imageName": "image-4",
+        "number": 29
+      }
+    },
+    {
+      "5": {
+        "imageName": "image-5",
+        "number": 8
+      }
+    },
+    {
+      "6": {
+        "imageName": "image-6",
+        "number": 5
+      }
+    },
+    {
+      "7": {
+        "imageName": "image-7",
+        "number": 97
+      }
+    },
+    {
+      "8": {
+        "imageName": "image-8",
+        "number": 6
+      }
+    },
+    {
+      "9": {
+        "imageName": "image-9",
+        "number": 42
+      }
+    },
+    {
+      "10": {
+        "imageName": "image-10",
+        "number": 45
+      }
+    },
+    {
+      "11": {
+        "imageName": "image-11",
+        "number": 74
+      }
+    },
+    {
+      "12": {
+        "imageName": "image-12",
+        "number": 2
+      }
+    }
+  ]
+}

@@ -17,7 +17,7 @@ export const IconMap = {
     icon: "fas fa-eye-dropper",
     label: "Ishihara Test",
     link: "/ishihara_info",
-    nextLink: "", // TODO
+    nextLink: "/ishihara",
     infoTextPath: "",
   },
   archive: {
@@ -40,4 +40,8 @@ export const IconMap = {
     infoText: "",
     nextLinkPath: "",
   },
+  picture: {
+    icon: "fas fa-image",
+    label: "Bild"
+  }
 };

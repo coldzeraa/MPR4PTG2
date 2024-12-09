@@ -88,7 +88,7 @@ function WelcomeScreen() {
         <h3>Simply VIEWtiful</h3>
 
         {/* Button Container */}
-        <div className="button-container">
+        <div className="welcome-button-container">
           <button className="button start-button" onClick={navigateToLogin}>
             🔑 Einloggen
           </button>
