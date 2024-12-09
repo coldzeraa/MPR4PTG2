@@ -105,7 +105,7 @@ def ishihara(request):
         exID = request.data.get('exID')    # extract examination id
         ex = ExaminationService.get(exID)
 
-        with open('C:\\Users\\alexa\Documents\_FH\\4. Semester\MPR\MPR4PTG2\MPR4PTG2\\backend\data\ishihara_results.json', 'r') as file:    # read result file content
+        with open('../backend/data/ishihara_results.json', 'r') as file:    # read result file content
             content = json.load(file)
             print('file content', content)
 
