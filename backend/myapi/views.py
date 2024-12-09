@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.decorators import api_view
 from myapi.db.ResultPerimetryService import ResultPerimetryService
+from myapi.db.ResultIshiharaService import ResultIshiharaService
 from myapi.db.PointService import PointService
 from myapi.db.PatientService import PatientService
 from myapi.db.ExaminationService import ExaminationService
@@ -14,6 +14,7 @@ from myapi.export.PdfCreator import PdfCreator
 from myapi.models import Patient
 import random
 import bcrypt
+import json
 
 
 @api_view(['POST'])
@@ -76,7 +77,7 @@ def perimetry(request):
     Handles the process of storing perimetry results, associating them with a specific point and examination.
 
     :param request: The HTTP request object containing the x and y coordinates, examination ID (exID), and result
-    :return: A JsonResponse with a success message if the result is stored successfully, or an error message if the request method is invalid
+    :return: A JsonResponse with a success message if the result is stored successfully
     """
     if request.method == 'POST':
         x = request.data.get('x')
@@ -88,6 +89,44 @@ def perimetry(request):
         ex = ExaminationService.get(exID)
 
         ResultPerimetryService.store(result, p, ex)
+        return JsonResponse({'message': 'SUCCESS'}, status=200)
+
+@api_view(['POST'])
+def ishihara(request):
+    """
+    Handles the process of storing ishihara results, associating them with a specific examination.
+
+    :param request: The HTTP request object containing the filename, user input and examination ID (exID)
+    :return: A JsonResponse with a success message if the result is stored successfully
+    """
+    print('REQ', request)
+    print('EXID', request.data.get('exID'))
+
+    if request.method == 'POST':
+        exID = request.data.get('exID')    # extract examination id
+        ex = ExaminationService.get(exID)
+
+        with open('../backend/data/ishihara_results.json', 'r') as file:    # read result file content
+            content = json.load(file)
+            print('file content', content)
+
+        print('blub', request.data.get('exResults'))
+
+        for name, num in request.data.get('exResults'):  # store results
+            print('IMG NAME', name)
+            print('NUM', num)
+
+            img_name = name
+            guess = int(num)
+
+            image_number = int(img_name.replace('image-', ''))
+            solution_data = content['solutions'][image_number - 1]
+            correct_number = solution_data[str(image_number)]['number']
+
+            correctly_guessed = correct_number == guess
+
+            ResultIshiharaService.store(img_name, correctly_guessed, ex)
+
         return JsonResponse({'message': 'SUCCESS'}, status=200)
 
 @api_view(['GET'])
@@ -120,8 +159,10 @@ def examination(request):
     if request.method == 'POST':
         patID = request.data.get("patID")
         pat = PatientService.get(patID)
-        type = 'P'
-        ex = ExaminationService.store(pat, type, datetime.now())
+
+        type = request.data.get("type")
+        ex = ExaminationService.store(pat, type, datetime.now(timezone.utc))
+
     return JsonResponse({'exID': ex.exID}, status=200)
 
 @api_view(['GET'])
@@ -180,13 +221,13 @@ def registry(request):
         last_name = str(request.data.get('lastName'))
         email = str(request.data.get('email'))
         password = str(request.data.get('password'))
-        
+                
         # Check if there is already a patient with this email
         if PatientService.get_by_email(email):
             return JsonResponse({"message": "PATIENT_ALREADY_EXISTS"})
         
-        # Check for invalid names
-        if (not first_name.isalpha() or not last_name.isalpha()):
+        # Check for invalid names by splitting at space to allow multiple first or lastnames
+        if not validate_names(first_name, last_name):
             return JsonResponse({"message": "INVALID_NAMES"})
         
         # Validate email
@@ -207,6 +248,20 @@ def registry(request):
         # Return a failed message
         return JsonResponse({'error': 'Invalid request method'}, status=405)@api_view(['GET'])
 
+
+def validate_names(first_name, last_name):
+    # Create list with all first names and all last names
+    names = []
+    names += first_name.replace("-", " ").split()
+    names += last_name.replace("-", " ").split()
+
+    # Check if every letter is alphabetic
+    for name in names:
+        if not all(c.isalpha() or c == '-' for c in name):
+            return False
+
+    return True
+  
 def get_patient_info(request):
     if request.method == 'GET':
         # Fetch patient info based on patient_id

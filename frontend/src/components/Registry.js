@@ -5,7 +5,7 @@ import nameIcon from "./../images/nameIcon.png";
 import emailIcon from "./../images/emailIcon.png";
 import passwordIcon from "./../images/passwordIcon.png";
 import LogoTop from "./LogoTop";
-import BackButton from "../BackButton";
+import BackButton from "./BackButton";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import { Toast } from "primereact/toast";

@@ -27,6 +27,7 @@ function ExaminationInfo() {
   const lastSegment = currentUrl
     .substring(currentUrl.lastIndexOf("/") + 1)
     .split("_")[0];
+
   const { icon, label } = IconMap[lastSegment] || {
     icon: "fas fa-question",
     label: "Unknown",
@@ -55,6 +56,7 @@ function ExaminationInfo() {
     const handleExaminationID = async () => {
         const patient = {
             patID: localStorage.getItem("patientID"),
+            type: lastSegment[0].toUpperCase()
         };
 
         try {
@@ -75,19 +77,20 @@ function ExaminationInfo() {
         }
     };
 
-    const navigateToPerimetry = () => {
-        const element = document.documentElement;
-        if (element.requestFullscreen) {
-            element.requestFullscreen();
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
+    const navigateToExamination = () => {
+        if (lastSegment === "perimetry") {  // request full screen depending on browser
+            const element = document.documentElement;
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
         }
-
-        navigate("/perimetry");
+        navigate(`/${lastSegment}`);
     };
 
   return (
@@ -109,7 +112,7 @@ function ExaminationInfo() {
                             className="btn btn-primary mt-2"
                             onClick={() => {
                                 handleExaminationID();
-                                navigateToPerimetry();
+                                navigateToExamination();
                             }}
                         >
                             ➠ Starten

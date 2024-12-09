@@ -4,7 +4,7 @@ import LogoTop from "./LogoTop";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import BackButton from "../BackButton";
+import BackButton from "./BackButton";
 import Sidebar from "./Sidebar";
 
 const InfoTitle = ({ icon, label }) => (

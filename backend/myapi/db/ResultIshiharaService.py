@@ -1,5 +1,5 @@
 from django.db.models import AutoField
-from backend.myapi.cruds import crud_ishihara_result
+from myapi.cruds import crud_ishihara_result
 from myapi.model.Examination import Examination
 
 

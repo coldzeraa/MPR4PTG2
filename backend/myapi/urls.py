@@ -10,5 +10,6 @@ urlpatterns = [
     path('get_pdf/', views.get_pdf, name='get_pdf'),
     path('registry/', views.registry, name='registry'),
     path('get_patient_info/', views.get_patient_info, name='get_patient_info'),
-    path('get_examinations/', views.get_examinations, name='get_examinations')
+    path('get_examinations/', views.get_examinations, name='get_examinations'),
+    path('ishihara/', views.ishihara, name='ishihara')
 ]
