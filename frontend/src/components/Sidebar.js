@@ -1,15 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import '../App.css';
 import {IconMap} from '../data/IconMap';
 
-const menuItems = [
-    { icon: 'fas fa-tachometer-alt', label: 'Dashboard'},
-    { icon: 'fas fa-eye', label: 'Perimetrie'},
-    { icon: 'fas fa-eye-dropper', label: 'Ishihara-Test'},
-    { icon: 'fas fa-archive', label: 'Archiv'},
-];
-
-const MenuItem = ({ icon, label, expanded, link }) => (
+const MenuItem = ({icon, label, expanded, link}) => (
     <div
         className="menu-item"
         onClick={() => window.location.href = link}
@@ -23,22 +16,24 @@ const MenuItem = ({ icon, label, expanded, link }) => (
 
 export default function Sidebar() {
     const [expanded, setExpanded] = useState(false);
+    const isPatientLoggedIn = !localStorage.getItem('skip_button');
 
     const toggleSidebar = () => {
         setExpanded(prev => !prev);
     };
 
     return (
-        <div>
-            <button onClick={toggleSidebar} className="toggle-button">
-                <i className={`fas ${expanded ? 'fa-chevron-right' : 'fa-bars'}`} style={{ fontSize: '24px' }}></i>
-            </button>
+        isPatientLoggedIn && (
+            <div>
+                <button onClick={toggleSidebar} className="toggle-button">
+                    <i className={`fas ${expanded ? 'fa-chevron-right' : 'fa-bars'}`} style={{fontSize: '24px'}}></i>
+                </button>
 
-            <div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`}>
-                {expanded && (
-                    <>
-                        <h3 className="menu-title">Menü</h3>
-                        <div className="menu-items">
+                <div className={`sidebar ${expanded ? 'expanded' : 'collapsed'}`}>
+                    {expanded && (
+                        <>
+                            <h3 className="menu-title">Menü</h3>
+                            <div className="menu-items">
 
                                 {Object.entries(IconMap).map(([key, item], index) => (
                                     key != 'contact' && <MenuItem
@@ -76,5 +71,6 @@ export default function Sidebar() {
                 )}
             </div>
         </div>
+        )
     );
 }
