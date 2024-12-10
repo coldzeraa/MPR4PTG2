@@ -64,7 +64,6 @@ function WelcomeScreen() {
   const handleOkClick = async () => {
     // TODO send empty form to backend to create a dummy patient!!!!
     localStorage.clear();
-    console.log(localStorage.getItem("firstName"), localStorage.getItem("lastName"), localStorage.getItem("patientID"), localStorage.getItem("exID"));
 
     try {
       const response = await fetch(
@@ -84,10 +83,6 @@ function WelcomeScreen() {
 
       const dummyResponseData = await response.json();
       localStorage.setItem("patientID", dummyResponseData.patientID);
-
-      console.log(localStorage.getItem("firstName"), localStorage.getItem("lastName"), localStorage.getItem("patientID"), localStorage.getItem("exID"));
-
-
       switch (selectedOption) {
         case "perimetry":
           localStorage.setItem("skip_button", dummyResponseData.skip_button);
