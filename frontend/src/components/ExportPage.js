@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
-import PdfDownload, { generatePdfContent } from "./PdfDownload";
+import PdfDownload, {generatePdfContent} from "./PdfDownload";
 
 
 function ExportPage() {
@@ -17,10 +17,17 @@ function ExportPage() {
   const [emailSentSuccessfully, setEmailSent] = useState(false);
 
   useEffect(() => {
-    fetchPatientInfo(patID);
-    const storedValue = localStorage.getItem("skip_button");
-    setSkipButton(storedValue);
+    async function fetchData() {
+      if (patID) {
+        await fetchPatientInfo(patID);
+      }
+      const storedValue = localStorage.getItem("skip_button");
+      setSkipButton(storedValue);
+    }
+  
+    fetchData();
   }, []);
+
 
   useEffect(() => {
     if (patientInfo) {
@@ -29,12 +36,18 @@ function ExportPage() {
     }
   }, [patientInfo]);
 
+
   useEffect(() => {
-    if (skipButton === "true") {
-      handleSkipValues(exaID, patID);
+    const clearLocalStorage = () => {
       localStorage.clear();
-    }
-  }, [skipButton]);
+    };
+
+    window.addEventListener("unload", clearLocalStorage);
+
+    return () => {
+      window.removeEventListener("unload", clearLocalStorage);
+    };
+  }, []);
 
   const fetchPatientInfo = async (patID) => {
     if (patID == null) return;
@@ -52,7 +65,7 @@ function ExportPage() {
 
       return json;
     } else {
-      console.log("Failed to fetch patient info");
+      console.error("Failed to fetch patient info");
     }
   };
 
@@ -95,7 +108,6 @@ function ExportPage() {
         if (response.ok) {
           const data = await response.json();
           setEmailSent(true);
-          console.log("Email sent successfully:", data);
         } else {
           console.error("Failed to send email:", response.statusText);
         }
@@ -105,28 +117,7 @@ function ExportPage() {
     };
   };
 
-  const handleSkipValues = async (exaID, patID) => {
-    console.log("In HANDLESKIPVALUES; ExID: ", exaID, "PatID: ", patID);
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/delete_patient_data/`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ patID }),
-        }
-      );
 
-      if (!response.ok) {
-        throw new Error("Failed to delete patient data");
-      }
-
-    } catch (error) {
-      console.error("Error deleting patient data:", error);
-    }
-  };
 
   return (
     <div className="container-fluid p-3 background-all" style={{ height: "100vh" }}>
@@ -159,7 +150,7 @@ function ExportPage() {
               <div className="alert alert-warning" role="alert">
                 <strong>Wichtiger Hinweis!</strong><br></br>Sie haben kein Konto erstellt. Bitte beachten
                 Sie, dass keine persönlichen Daten gespeichert werden und Sie nach Verlassen der Seite
-                nicht mehr darauf zugreifen können.
+                nicht mehr darauf zugreifen können. Beachten Sie auch, dass Sie nur einen Download tätigen können.
               </div>
             </div>
           )}

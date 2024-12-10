@@ -31,7 +31,7 @@ function Archive() {
       setPatientInfo(json);
       return json;
     } else {
-      console.log("Failed to fetch patient info");
+      console.error("Failed to fetch patient info");
     }
   };
 
@@ -49,7 +49,7 @@ function Archive() {
       setExaminations(json.examinations);
       return json;
     } else {
-      console.log("Failed to fetch examinations");
+      console.error("Failed to fetch examinations");
     }
   };
 
