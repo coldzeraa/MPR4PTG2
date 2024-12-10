@@ -49,13 +49,13 @@ class ExaminationService:
         return crud_examination.update_examination(patID, firstName, lastName, type)
 
     @staticmethod
-    def delete(pID: AutoField):
+    def delete(exID: AutoField):
         """
             Delete examination
 
-            :param patID: ID of patient
+            :param exID: ID of examination
         """
-        return crud_examination.delete_examination(pID)
+        return crud_examination.delete_examination(exID=exID)
 
     def get_by_patient(pID: AutoField):
         """

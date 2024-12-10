@@ -1,23 +1,65 @@
 // ExportPage.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LogoTop from "./LogoTop";
 import Sidebar from "./Sidebar";
-import PdfDownload from "./PdfDownload";
+import PdfDownload, {generatePdfContent} from "./PdfDownload";
+
 
 function ExportPage() {
-  // Extract data from localStorage
-  const FIRST_NAME = localStorage.getItem("firstName");
-  const LAST_NAME = localStorage.getItem("lastName");
-  const EMAIL = localStorage.getItem("email");
-  const exID = localStorage.getItem("exID");
 
-  // Boolean if data has been submitted
-  const IS_DATA_AVAILABLE = FIRST_NAME && LAST_NAME && EMAIL;
+  // extract data from localStorage
+  const exaID = localStorage.getItem("exID");
+  const patID = localStorage.getItem("patientID");
 
-  // Function to send email
+  const [patientInfo, setPatientInfo] = useState(null);
+  const [skipButton, setSkipButton] = useState(null);
+  const [dataAvailable, setDataAvailable] = useState(false);
+  const [emailSentSuccessfully, setEmailSent] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (patID) {
+        await fetchPatientInfo(patID);
+      }
+      const storedValue = localStorage.getItem("skip_button");
+      setSkipButton(storedValue);
+    }
+  
+    fetchData();
+  }, []);
+
+
+  useEffect(() => {
+    if (patientInfo) {
+      const isAvailable = patientInfo.first_name && patientInfo.last_name && patientInfo.email;
+      setDataAvailable(isAvailable);
+    }
+  }, [patientInfo]);
+
+
+  const fetchPatientInfo = async (patID) => {
+    if (patID == null) return;
+
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/api/get_patient_info?patientID=${encodeURIComponent(patID)}`,
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    if (response.ok) {
+      const json = await response.json();
+      setPatientInfo(json);
+
+      return json;
+    } else {
+      console.error("Failed to fetch patient info");
+    }
+  };
+
   const handleEmailRequest = async () => {
     // Generate PDF content for email
-    const pdfContent = await PdfDownload.generatePdfContent();
+    const pdfContent = await generatePdfContent(exaID);
 
     if (!pdfContent) {
       console.error("PDF content generation failed");
@@ -32,11 +74,10 @@ function ExportPage() {
     reader.readAsDataURL(blob);
     reader.onloadend = async () => {
       const base64data = reader.result.split(",")[1]; // Strip out the base64 header
-
       const requestBody = {
-        firstName: FIRST_NAME,
-        lastName: LAST_NAME,
-        email: EMAIL,
+        firstName: patientInfo.first_name,
+        lastName: patientInfo.last_name,
+        email: patientInfo.email,
         pdfBase64: base64data,
       };
 
@@ -54,7 +95,7 @@ function ExportPage() {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("Email sent successfully:", data);
+          setEmailSent(true);
         } else {
           console.error("Failed to send email:", response.statusText);
         }
@@ -63,6 +104,8 @@ function ExportPage() {
       }
     };
   };
+
+
 
   return (
     <div
@@ -75,15 +118,33 @@ function ExportPage() {
         <div className="content">
           <h2>Auswertung abgeschlossen</h2>
           <p>Wie wollen Sie Ihr Ergebnis erhalten?</p>
-          <PdfDownload exID={exID} />
+          <PdfDownload exID={exaID} />
           <button
-            className={"" + (IS_DATA_AVAILABLE ? "button" : "button-disabled")}
+            className={"" + (dataAvailable ? "button" : "button-disabled")}
             type="submit"
             onClick={handleEmailRequest}
-            disabled={!IS_DATA_AVAILABLE}
+            disabled={!dataAvailable}
           >
             Als E-Mail erhalten
           </button>
+          {emailSentSuccessfully ? (
+            <div className="content">
+              <br></br>
+              <div className="alert alert-info" role="alert">
+                Ihre Email wurde versandt!
+              </div>
+            </div>
+          ) : null}
+          {skipButton === "true" && (
+            <div className="content">
+              <br></br>
+              <div className="alert alert-warning" role="alert">
+                <strong>Wichtiger Hinweis!</strong><br></br>Sie haben kein Konto erstellt. Bitte beachten
+                Sie, dass keine persönlichen Daten gespeichert werden und Sie nach Verlassen der Seite
+                nicht mehr darauf zugreifen können. Beachten Sie auch, dass Sie nur einen Download tätigen können.
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
