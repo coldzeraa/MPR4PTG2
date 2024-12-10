@@ -23,6 +23,31 @@ export const generatePdfContent = async (exID) => {
   }
 };
 
+async function deletePatient() {
+  const patient = {
+    patID: localStorage.getItem("patientID"),
+  };
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/delete_patient_data/`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(patient),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Deleting PatID Failed");
+      }
+    } catch (error) {
+      console.error("Error deleting Patient from DB: ", error);
+    }
+  
+}
+
 function PdfDownload({ exID }) {
   const [firstDownload, setFirstDownload] = useState(false);
   const [skipButton, setSkipButton] = useState(false);
@@ -49,6 +74,11 @@ function PdfDownload({ exID }) {
       // Update localStorage and state
       localStorage.setItem("firstDownload", true);
       setFirstDownload(true);
+
+      if(skipButton) {
+        deletePatient();
+      }
+
     } catch (error) {
       console.error("Error during PDF download:", error);
     }

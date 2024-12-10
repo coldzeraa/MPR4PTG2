@@ -37,18 +37,6 @@ function ExportPage() {
   }, [patientInfo]);
 
 
-  useEffect(() => {
-    const clearLocalStorage = () => {
-      localStorage.clear();
-    };
-
-    window.addEventListener("unload", clearLocalStorage);
-
-    return () => {
-      window.removeEventListener("unload", clearLocalStorage);
-    };
-  }, []);
-
   const fetchPatientInfo = async (patID) => {
     if (patID == null) return;
 

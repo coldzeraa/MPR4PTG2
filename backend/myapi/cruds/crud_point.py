@@ -48,7 +48,6 @@ def get_point_by_id(pID: int):
        :param pID: point ID
        :return: Point Object
     """
-    print(pID)
     return Point.objects.get(pID=pID)
 
 
