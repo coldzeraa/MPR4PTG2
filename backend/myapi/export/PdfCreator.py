@@ -21,10 +21,10 @@ class PdfCreator:
         """
         
         # Get examination
-        examination = ExaminationService.get(exID)
+        examination = ExaminationService.get(id=exID)
         
         # Get patient
-        patient = PatientService.get(examination.pat.patID)
+        patient = PatientService.get(id=examination.pat.patID)
         
         buffer = io.BytesIO()
         
@@ -48,7 +48,6 @@ class PdfCreator:
         
         # Date
         p.setFont('Helvetica', 10)
-        print(examination.date)
         formatted_date = examination.date.strftime("%d.%m.%Y %H:%M")
         p.drawString(480, 740, formatted_date) 
 

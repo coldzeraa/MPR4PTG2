@@ -15,8 +15,8 @@ const Point = ({ x, y }) => {
 function Perimetry() {
   const SIDES = ["left", "right"];
 
-  const VISIBILITY_SPAN = 100;
-  const INTERVAL = 50;
+  const VISIBILITY_SPAN = 50;
+  const INTERVAL = 20;
 
   const VOLUME_THRESHOLD = 15;
 
@@ -128,7 +128,7 @@ function Perimetry() {
   const runPerimetryTest = async () => {
     for (let sideIndex = 0; sideIndex < SIDES.length; sideIndex++) {
       setSide(SIDES[sideIndex]);
-      for (let i = 0; i < points.length; i++) {
+      for (let i = 0; i < 3; i++) { // TODO change points.length
         setShowPoint(true);
         await new Promise((resolve) => setTimeout(resolve, VISIBILITY_SPAN));
         setShowPoint(false);

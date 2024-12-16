@@ -6,6 +6,7 @@ import "./../App.css";
 function WelcomeScreen() {
   const [isVisible, setIsVisible] = useState(false);
 
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -32,11 +33,13 @@ function WelcomeScreen() {
   // Handle Navigation To Login Page
   const navigate = useNavigate();
   const navigateToLogin = () => {
+    localStorage.clear();
     navigate("/login");
   };
 
   // Handle Navigation To Registry Page
   const navigateToRegistry = () => {
+    localStorage.clear();
     navigate("/registry");
   };
 
@@ -58,20 +61,47 @@ function WelcomeScreen() {
   };
 
   // Function to handle ok click
-  const handleOkClick = () => {
+  const handleOkClick = async () => {
     // TODO send empty form to backend to create a dummy patient!!!!
-    switch (selectedOption) {
-      case "perimetry":
-        closePopup();
-        navigate("/perimetry_info");
-        break;
-      case "redGreen":
-        closePopup();
-        navigate("/ishihara_info");
-        break;
-      default:
-        setError("Bitte wählen Sie eine Untersuchung aus.");
+    localStorage.clear();
+
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/create_dummy_patient/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // Send empty object to backend
+          body: JSON.stringify({}),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to create dummy patient");
+      }
+
+      const dummyResponseData = await response.json();
+      localStorage.setItem("patientID", dummyResponseData.patientID);
+      switch (selectedOption) {
+        case "perimetry":
+          localStorage.setItem("skip_button", dummyResponseData.skip_button);
+          localStorage.setItem("skip_button", "true"); 
+          navigate("/perimetry_info");
+          break;
+        case "redGreen":
+          localStorage.setItem("skip_button", dummyResponseData.skip_button);
+          localStorage.setItem("skip_button", "true"); 
+          navigate("/ishihara_info");
+          break;
+        default:
+          setError("Bitte wählen Sie eine Untersuchung aus.");
+      }
+    } catch (error) {
+      console.error("Error handling skip: ", error);
     }
+
+
   };
 
   return (
