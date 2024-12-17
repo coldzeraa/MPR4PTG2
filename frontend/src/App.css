@@ -641,15 +641,6 @@ input {
   font-weight: bold;
 }
 
-.split-container {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f4f4f4; /* Optionaler Hintergrund */
-  }
   
   .centered-fullscreen {
     display: flex;

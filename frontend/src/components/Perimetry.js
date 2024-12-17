@@ -38,7 +38,7 @@ function Perimetry() {
         document.msExitFullscreen();
       }
     }
-    navigate("/perimetry");
+    navigate("/export");
   };
 
   // States
