@@ -13,7 +13,7 @@ function Ishihara() {
     const navigate = useNavigate();
 
     const picturePath = process.env.PUBLIC_URL + "/ishihara_images";
-    const totalImages = 12;
+    const totalImages = 2; // TODO change
 
     const handleChange = (e) => setText(e.target.value);
 
