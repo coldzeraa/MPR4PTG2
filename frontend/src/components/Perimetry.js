@@ -46,13 +46,12 @@ function Perimetry() {
   const [currentPointIndex, setCurrentPointIndex] = useState(0);
   const [showPoint, setShowPoint] = useState(false);
   const [side, setSide] = useState();
-  const [countdown, setCountdown] = useState(15); // Startzeit des Countdowns
+  const [countdown, setCountdown] = useState(15); // countdown
   const [isCountingDown, setIsCountingDown] = useState(true);
 
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
 
-  // Dynamische Berechnung: Leer bei 0s, voll bei 15s
   const strokeDashoffset =
     circumference - (countdown / 15) * circumference;
 
@@ -193,7 +192,7 @@ function Perimetry() {
               <div
                 className="countdown-number"
                 style={{
-                  position: "absolute", // Fehler behoben
+                  position: "absolute",
                   color: "#66a8d4",
                   fontSize: "48px",
                   fontWeight: "bold",
