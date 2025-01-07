@@ -14,14 +14,11 @@ const Point = ({ x, y }) => {
 
 function Perimetry() {
   const SIDES = ["left", "right"];
-
-  const VISIBILITY_SPAN = 50;
-  const INTERVAL = 20;
-
+  const VISIBILITY_SPAN = 100;
+  const INTERVAL = 50;
   const VOLUME_THRESHOLD = 15;
 
   const [startRecording, stopRecording, volume] = useVolumeLevel();
-
   const navigate = useNavigate();
 
   const navigateToExport = () => {
@@ -41,7 +38,6 @@ function Perimetry() {
         document.msExitFullscreen();
       }
     }
-    // Handle Navigation To Export Page
     navigate("/export");
   };
 
@@ -50,6 +46,14 @@ function Perimetry() {
   const [currentPointIndex, setCurrentPointIndex] = useState(0);
   const [showPoint, setShowPoint] = useState(false);
   const [side, setSide] = useState();
+  const [countdown, setCountdown] = useState(15); // countdown
+  const [isCountingDown, setIsCountingDown] = useState(true);
+
+  const radius = 70;
+  const circumference = 2 * Math.PI * radius;
+
+  const strokeDashoffset =
+    circumference - (countdown / 15) * circumference;
 
   const fetchPoints = async () => {
     try {
@@ -67,13 +71,8 @@ function Perimetry() {
         throw new Error("Fetching points failed");
       }
 
-      // Get JSON data from response
       const data = await response.json();
-
-      // Convert to array
       const pointArray = data.points;
-
-      // Map points to array
       const fetchedPoints = pointArray.map((point) => ({
         x: point.x,
         y: point.y,
@@ -84,12 +83,21 @@ function Perimetry() {
     }
   };
 
-  // Get Points from Backend
   useEffect(() => {
     fetchPoints();
   }, []);
 
-  // Function to save points to backend
+  useEffect(() => {
+    if (countdown > 0) {
+      const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setIsCountingDown(false);
+      startRecording();
+      runPerimetryTest();
+    }
+  }, [countdown]);
+
   const handleResults = async (x, y, result) => {
     try {
       const ex = localStorage.getItem("exID");
@@ -99,6 +107,7 @@ function Perimetry() {
         exID: ex,
         result: result,
       };
+
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/api/perimetry/`,
         {
@@ -118,17 +127,10 @@ function Perimetry() {
     }
   };
 
-  useEffect(() => {
-    if (points.length !== 0) {
-      startRecording();
-      runPerimetryTest();
-    }
-  }, [points]);
-
   const runPerimetryTest = async () => {
     for (let sideIndex = 0; sideIndex < SIDES.length; sideIndex++) {
       setSide(SIDES[sideIndex]);
-      for (let i = 0; i < 3; i++) { // TODO change points.length
+      for (let i = 0; i < points.length; i++) {
         setShowPoint(true);
         await new Promise((resolve) => setTimeout(resolve, VISIBILITY_SPAN));
         setShowPoint(false);
@@ -154,36 +156,88 @@ function Perimetry() {
 
   return (
     <div className="split-container">
-      <div className={side === "left" ? "split-focus" : "split-unfocus"}>
-        {/* Render the current point */}
-        {side === "left" && showPoint && (
-          <Point
-            key={currentPointIndex}
-            x={points[currentPointIndex].x * 0.5}
-            y={points[currentPointIndex].y}
-          />
-        )}
-      </div>
-      <div
-        className="split-midpoint"
-        style={{ left: side === "left" ? "calc(25%)" : "calc(75%)" }}
-      >
-        <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
-          +
-        </p>
-      </div>
-      <div className={side === "right" ? "split-focus" : "split-unfocus"}>
-        {/* Render the current point */}
-        {side === "right" && showPoint && (
-          <Point
-            key={currentPointIndex}
-            x={50 + points[currentPointIndex].x * 0.5}
-            y={points[currentPointIndex].y}
-          />
-        )}
-      </div>
+      {isCountingDown ? (
+        <div
+          className="countdown-wrapper"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100%",
+            width: "100%",
+          }}
+        >
+          {countdown > 0 && (
+            <>
+              <svg
+                width="200"
+                height="200"
+                className="countdown-circle"
+                style={{ transform: "rotate(-90deg)" }}
+              >
+                <circle
+                  cx="100"
+                  cy="100"
+                  r={radius}
+                  stroke="#66a8d4"
+                  strokeWidth="10"
+                  fill="transparent"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                />
+              </svg>
+              <div
+                className="countdown-number"
+                style={{
+                  position: "absolute",
+                  color: "#66a8d4",
+                  fontSize: "48px",
+                  fontWeight: "bold",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              >
+                {countdown}
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <>
+          <div className={side === "left" ? "split-focus" : "split-unfocus"}>
+            {side === "left" && showPoint && (
+              <Point
+                key={currentPointIndex}
+                x={points[currentPointIndex].x * 0.5}
+                y={points[currentPointIndex].y}
+              />
+            )}
+          </div>
+          <div
+            className="split-midpoint"
+            style={{ left: side === "left" ? "calc(25%)" : "calc(75%)" }}
+          >
+            <p style={{ fontSize: "20px", fontWeight: "bold", color: "green" }}>
+              +
+            </p>
+          </div>
+          <div className={side === "right" ? "split-focus" : "split-unfocus"}>
+            {side === "right" && showPoint && (
+              <Point
+                key={currentPointIndex}
+                x={50 + points[currentPointIndex].x * 0.5}
+                y={points[currentPointIndex].y}
+              />
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
-}
+}  
 
 export default Perimetry;
