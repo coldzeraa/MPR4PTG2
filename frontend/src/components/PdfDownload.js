@@ -2,13 +2,8 @@ import React, { useState, useEffect } from "react";
 import html2pdf from "html2pdf.js";
 
 export const generatePdfContent = async (exID) => {
-  console.log("IN GENERATE PDF CONTENT ", exID);
-
   let exType = await getExaminationType(exID);
   let exName = exType === "P" ? "perimetry" : "ishihara";
-
-  console.log("EXTYPE", exType);
-  console.log("EXNAME", exName);
 
   if (exType === "P") {
     const response = await fetch(
@@ -23,7 +18,6 @@ export const generatePdfContent = async (exID) => {
 
     if (response.ok) {
       const blob = await response.blob();
-      console.log("PDF Blob Retrieved", blob);
       return blob;
     } else {
       console.error("Failed to fetch PDF content");
@@ -31,14 +25,12 @@ export const generatePdfContent = async (exID) => {
     }
   } else {
     const htmlContent = await fetchHtmlContent(exID);
-    console.log("HTML Content Retrieved", htmlContent);
     return htmlContent;
   }
 };
 
 
 async function getExaminationType(exID) {
-  console.log("BLLLLLUB", exID);
   const response = await fetch(
     `${process.env.REACT_APP_API_URL}/api/get_examination_type?id=${encodeURIComponent(exID)}`,
     {
@@ -51,7 +43,6 @@ async function getExaminationType(exID) {
 
   if (response.ok) {
     const data = await response.json();
-    console.log("Examination Type:", data.exType);
     return data.exType;
   } else {
     console.error("Failed to fetch examination type");
@@ -71,9 +62,8 @@ async function fetchHtmlContent(exID) {
   );
 
   if (response.ok) {
-    // Use response.text() to get the HTML content as a string
     const htmlContent = await response.text();
-    console.log("Fetched HTML Content:", htmlContent); // Log to check the content
+    console.log("Fetched HTML Content:", htmlContent);
     return htmlContent;
   } else {
     console.error("Failed to fetch HTML content", response.status, response.statusText);
