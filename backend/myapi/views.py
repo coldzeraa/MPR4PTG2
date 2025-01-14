@@ -115,7 +115,7 @@ def ishihara(request):
             solution_data = content['solutions'][image_number - 1]
             correct_number = solution_data[str(image_number)]['number']
 
-            correctly_guessed = correct_number == guess
+            correctly_guessed = (correct_number == guess)
 
             ResultIshiharaService.store(img_name, correctly_guessed, ex)
 
