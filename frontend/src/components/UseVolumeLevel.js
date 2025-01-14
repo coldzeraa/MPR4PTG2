@@ -1,78 +1,80 @@
-import { useState, useEffect, useRef } from "react";
-import { SoundMeter } from "./Soundmeter";
+import { useEffect, useRef } from "react";
 
-function handleSuccess(stream) {
-  window.stream = stream;
-  const soundMeter = (window.soundMeter = new SoundMeter(window.audioContext));
-  soundMeter.connectToSource(stream, function (e) {
-    if (e) {
-      alert(e);
-      return;
-    }
-  });
-}
-
-function handleError(error) {
-  console.log(
-    "navigator.MediaDevices.getUserMedia error: ",
-    error.message,
-    error.name
-  );
-}
-
-function useVolumeLevel() {
-  const [level, setLevel] = useState(0);
-  const [isRecording, setIsRecording] = useState(false);
-  const volumeRef = useRef(0); // useRef verwenden, um volume zu halten
-
-  const stopRecording = () => {
-    if (window.soundMeter && isRecording) {
-      setLevel(0);
-      window.soundMeter.stop();
-      setIsRecording(false);
-    }
-  };
+const useVolumeLevel = () => {
+  const audioContextRef = useRef(null);
+  const analyserRef = useRef(null);
+  const volumeRef = useRef(0);
+  const volumeHistory = useRef([]); 
+  let animationFrameId = null;
 
   const startRecording = () => {
-    const constraints = (window.constraints = {
-      audio: true,
-      video: false,
-    });
-    try {
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
-      window.audioContext = new AudioContext();
-    } catch (e) {
-      alert("Web Audio API not supported.");
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.error("Browser does not support audio recording.");
+      return;
     }
 
     navigator.mediaDevices
-      .getUserMedia(constraints)
-      .then(handleSuccess)
-      .catch(handleError);
+      .getUserMedia({ audio: true })
+      .then((stream) => {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        audioContextRef.current = audioContext;
 
-    setIsRecording(true);
+        const analyser = audioContext.createAnalyser();
+        analyser.fftSize = 256;
+        analyserRef.current = analyser;
+
+        const source = audioContext.createMediaStreamSource(stream);
+        source.connect(analyser);
+
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+        const updateVolume = () => {
+          analyser.getByteFrequencyData(dataArray);
+          const sum = dataArray.reduce((a, b) => a + b, 0);
+          const average = sum / dataArray.length;
+
+          volumeRef.current = average;
+          volumeHistory.current.push(average); // Speichern der Lautstärkewerte
+          console.log(average)
+
+          animationFrameId = requestAnimationFrame(updateVolume);
+        };
+
+        updateVolume();
+      })
+      .catch((error) => {
+        console.error("Error accessing microphone:", error);
+      });
   };
 
-  const updateVolume = () => {
-    if (window.soundMeter && isRecording) {
-      // let v = window.soundMeter.instant * 200;
-      // setLevel(Math.min(v, 100));
-      // console.log(level);
-      let v = window.soundMeter.instant * 200;
-      setLevel(Math.min(v, 100));
-      volumeRef.current = v; // volumeRef aktualisieren
-      console.log(volumeRef.current); // Aktuellen Wert von `volume` überprüfen
+  const stopRecording = () => {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
     }
+
+    if (audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
+
+    volumeRef.current = 0;
+    volumeHistory.current = []; // Reset der Lautstärkewerte
   };
 
   useEffect(() => {
-    let intervalId;
-    intervalId = setInterval(updateVolume, 50);
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
 
-    return () => clearInterval(intervalId);
-  });
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
+    };
+  }, []);
 
-  return [startRecording, stopRecording, volumeRef];
-}
+  return [startRecording, stopRecording, volumeRef, volumeHistory]; // Rückgabe von volumeHistory
+};
 
 export default useVolumeLevel;
