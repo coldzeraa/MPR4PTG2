@@ -18,7 +18,7 @@ function Perimetry() {
   const INTERVAL = 50;
   const VOLUME_THRESHOLD = 15;
 
-  const [startRecording, stopRecording, volume] = useVolumeLevel();
+  const [startRecording, stopRecording, volumeRef, volumeHistory] = useVolumeLevel();
   const navigate = useNavigate();
 
   const navigateToExport = () => {
@@ -52,20 +52,16 @@ function Perimetry() {
   const radius = 70;
   const circumference = 2 * Math.PI * radius;
 
-  const strokeDashoffset =
-    circumference - (countdown / 15) * circumference;
+  const strokeDashoffset = circumference - (countdown / 15) * circumference;
 
   const fetchPoints = async () => {
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/get_points/`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/get_points/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Fetching points failed");
@@ -108,16 +104,13 @@ function Perimetry() {
         result: result,
       };
 
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/perimetry/`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/perimetry/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to send results");
@@ -138,11 +131,14 @@ function Perimetry() {
         const currentPoint = points[i];
         const currentX = currentPoint.x;
         const currentY = currentPoint.y;
-        await handleResults(
-          currentX,
-          currentY,
-          volume.current >= VOLUME_THRESHOLD
-        );
+
+        const maxVolume = Math.max(...volumeHistory.current); 
+        const result = maxVolume >= VOLUME_THRESHOLD;
+
+        console.log(maxVolume + "..............")
+        await handleResults(currentX, currentY, result);
+
+        volumeHistory.current = []; 
 
         setCurrentPointIndex((prevIndex) => prevIndex + 1);
 
@@ -238,6 +234,6 @@ function Perimetry() {
       )}
     </div>
   );
-}  
+}
 
 export default Perimetry;
