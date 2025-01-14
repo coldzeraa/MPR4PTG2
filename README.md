@@ -32,6 +32,7 @@ VR Box used: TODO
 - **[bcryptjs](https://www.npmjs.com/package/bcryptjs)**: A JavaScrip library to automatically hash strings
 - **[react-markdown](https://www.npmjs.com/package/react-markdown/v/8.0.6)**: Renders Markdown in HTML.
 - **[primereact] (https://primereact.org/)**: Comprehensive suite of customizable, feature-rich UI components
+- **[html2pdf]**: Converts HTML content, including CSS styles and embedded resources, into high-quality PDF documents, commonly used for generating reports, invoices, and printable documents.
 
 ### Installing
 
