@@ -124,7 +124,7 @@ class PdfCreator:
         for filename in os.listdir(ishihara_path):
             image_files.append(os.path.join(ishihara_path, filename))
 
-        image_files.sort(key=lambda x: int(x.split('-')[1].replace(".png", "").strip()))
+        image_files.sort(key=lambda x: int(x.split('image-')[1].replace(".png", "").strip()))
 
         return image_files
 
