@@ -152,7 +152,7 @@ def examination(request):
         pat = PatientService.get(patID)
 
         type = request.data.get("type")
-        ex = ExaminationService.store(pat, type, datetime.now(timezone.utc))
+        ex = ExaminationService.store(pat, type, datetime.now())
 
     return JsonResponse({'exID': ex.exID}, status=200)
 
