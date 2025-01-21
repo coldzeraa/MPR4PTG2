@@ -169,7 +169,7 @@ class PdfCreator:
             solution_data = results_json['solutions'][idx]
             correct_number = solution_data[str(idx + 1)]['number']
 
-            p.drawString(x + text_img_offset, y + 55, f"Zahl: {correct_number}")
+            p.drawString(x + text_img_offset, y + 55, f"Lösung: {correct_number}")
             p.drawString(x + text_img_offset, y + 30,
                          'korrekt' if ex_results[idx].recognized else 'nicht korrekt')
 
