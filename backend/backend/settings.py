@@ -28,9 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     # Allowing Localhost
-    "localhost",
+    'optimate.projekte.fh-hagenberg.at', '193.170.192.251', 'localhost',
     socket.gethostbyname(socket.gethostname())
 ]
+
 
 
 # Application definition
